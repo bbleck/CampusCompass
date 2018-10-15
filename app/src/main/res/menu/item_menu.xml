@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+  <item android:id="@+id/blue_phone"
+    android:icon="@drawable/ic_menu_gallery"
+    android:title="@string/find_a_blue_phone"
+    app:showAsAction="never"/>
+  <item android:id="@+id/building"
+  android:icon="@drawable/ic_menu_gallery"
+  android:title="@string/find_a_building"
+  app:showAsAction="never"/>
+  <item android:id="@+id/restroom"
+    android:icon="@drawable/ic_menu_gallery"
+    android:title="@string/find_a_restroom"
+    app:showAsAction="never"/>
+  <item android:id="@+id/healthy_vending"
+    android:icon="@drawable/ic_menu_gallery"
+    android:title="@string/find_healthy_vending"
+    app:showAsAction="never"/>
+  <item android:id="@+id/dining"
+    android:icon="@drawable/ic_menu_gallery"
+    android:title="@string/find_dining"
+    app:showAsAction="never"/>
+  <item android:id="@+id/computer_pod"
+    android:icon="@drawable/ic_menu_gallery"
+    android:title="@string/find_a_computer_pod"
+    app:showAsAction="never"/>
+  <item android:id="@+id/breast_feeding"
+    android:icon="@drawable/ic_menu_gallery"
+    android:title="@string/find_a_breast_feeding_station"
+    app:showAsAction="never"/>
+
+
+
+</menu>

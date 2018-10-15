@@ -6,4 +6,19 @@
   <string name="nav_header_subtitle">android.studio@android.com</string>
   <string name="nav_header_desc">Navigation header</string>
   <string name="action_settings">Settings</string>
+  <string name="blue_phone">Blue Phone</string>
+  <string name="building">Building</string>
+  <string name="restroom">Restroom</string>
+  <string name="healthy_vending">Healthy Vending</string>
+  <string name="dining">dining</string>
+  <string name="computer_pod">Computer Pod</string>
+  <string name="breast_feeding_station">Breast Feeding Station</string>
+  <string name="title_activity_maps">Map</string>
+  <string name="find_a_blue_phone">Find A Blue Phone</string>
+  <string name="find_a_building">Find A Building</string>
+  <string name="find_a_restroom">Find A Restroom</string>
+  <string name="find_healthy_vending">Find Healthy Vending</string>
+  <string name="find_dining">Find Dining</string>
+  <string name="find_a_computer_pod">Find A Computer Pod</string>
+  <string name="find_a_breast_feeding_station">Find A Breast Feeding Station</string>
 </resources>
