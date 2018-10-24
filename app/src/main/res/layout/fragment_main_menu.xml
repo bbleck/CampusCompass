@@ -121,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_0"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_0"
         app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_0"
-        tools:text="Find Building" />
+        tools:text="@string/image_title_0" />
 
     <TextView
         android:id="@+id/tv_main_frag_3"
@@ -131,7 +131,7 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_3"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_3"
         app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_3"
-        tools:text="Find Computer Pod" />
+        tools:text="@string/image_title_3" />
 
     <TextView
         android:id="@+id/tv_main_frag_6"
@@ -141,7 +141,7 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_6"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_6"
         app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_6"
-        tools:text="Find Library" />
+        tools:text="@string/image_title_6" />
 
     <TextView
         android:id="@+id/tv_main_frag_7"
@@ -151,7 +151,7 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_7"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_7"
         app:layout_constraintTop_toTopOf="@+id/tv_main_frag_6"
-        tools:text="Find Metered Parking" />
+        tools:text="@string/image_title_7" />
 
     <TextView
         android:id="@+id/tv_main_frag_8"
@@ -161,7 +161,7 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_9"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_9"
         app:layout_constraintTop_toTopOf="@+id/tv_main_frag_6"
-        tools:text="Find Shuttle Stop" />
+        tools:text="@string/image_title_8" />
 
     <TextView
         android:id="@+id/tv_main_frag_4"
@@ -171,7 +171,7 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_4"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_4"
         app:layout_constraintTop_toTopOf="@+id/tv_main_frag_3"
-        tools:text="Find Healthy Vending" />
+        tools:text="@string/image_title_4" />
 
     <TextView
         android:id="@+id/tv_main_frag_5"
@@ -181,14 +181,14 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_5"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_5"
         app:layout_constraintTop_toTopOf="@+id/tv_main_frag_4"
-        tools:text="Find Dining" />
+        tools:text="@string/image_title_5" />
 
     <TextView
         android:id="@+id/tv_main_frag_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Find Restroom"
+        android:text="@string/image_title_1"
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_1"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_1"
         app:layout_constraintTop_toTopOf="@+id/tv_main_frag_0" />
@@ -201,5 +201,5 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_2"
         app:layout_constraintStart_toStartOf="@+id/iv_main_frag_2"
         app:layout_constraintTop_toTopOf="@+id/tv_main_frag_1"
-        tools:text="Find Blue Phone" />
+        tools:text="@string/image_title_2" />
 </android.support.constraint.ConstraintLayout>
