@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_main_frag_0"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/iv_main_frag_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_main_frag_1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_menu_camera" />
+
+    <ImageView
+        android:id="@+id/iv_main_frag_1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_0"
+        app:layout_constraintEnd_toStartOf="@+id/iv_main_frag_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/iv_main_frag_0"
+        app:layout_constraintTop_toTopOf="@+id/iv_main_frag_0"
+        app:srcCompat="@drawable/ic_menu_gallery" />
+
+    <ImageView
+        android:id="@+id/iv_main_frag_2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/iv_main_frag_1"
+        app:layout_constraintTop_toTopOf="@+id/iv_main_frag_1"
+        app:srcCompat="@drawable/ic_menu_manage" />
+
+    <ImageView
+        android:id="@+id/iv_main_frag_3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/iv_main_frag_6"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_0"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_0"
+        app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_0"
+        app:srcCompat="@drawable/ic_menu_send" />
+
+    <ImageView
+        android:id="@+id/iv_main_frag_4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_3"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_1"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_1"
+        app:layout_constraintTop_toTopOf="@+id/iv_main_frag_3"
+        app:srcCompat="@drawable/ic_menu_share" />
+
+    <ImageView
+        android:id="@+id/iv_main_frag_5"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_4"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_2"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_2"
+        app:layout_constraintTop_toTopOf="@+id/iv_main_frag_4"
+        app:srcCompat="@drawable/ic_menu_slideshow" />
+
+    <ImageView
+        android:id="@+id/iv_main_frag_6"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_3"
+        app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_3"
+        app:srcCompat="@drawable/ic_breast_feed_blue_24dp" />
+
+    <ImageView
+        android:id="@+id/iv_main_frag_7"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_6"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_4"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_4"
+        app:layout_constraintTop_toTopOf="@+id/iv_main_frag_6"
+        app:srcCompat="@drawable/ic_computer_blue_24dp" />
+
+    <ImageView
+        android:id="@+id/iv_main_frag_9"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_7"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_5"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_5"
+        app:layout_constraintTop_toTopOf="@+id/iv_main_frag_7"
+        app:srcCompat="@drawable/ic_healthy_blue_24dp" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_0"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_0"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_0"
+        app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_0"
+        tools:text="Find Building" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_3"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_3"
+        app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_3"
+        tools:text="Find Computer Pod" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_6"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_6"
+        app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_6"
+        tools:text="Find Library" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_7"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_7"
+        app:layout_constraintTop_toTopOf="@+id/tv_main_frag_6"
+        tools:text="Find Metered Parking" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_9"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_9"
+        app:layout_constraintTop_toTopOf="@+id/tv_main_frag_6"
+        tools:text="Find Shuttle Stop" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_4"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_4"
+        app:layout_constraintTop_toTopOf="@+id/tv_main_frag_3"
+        tools:text="Find Healthy Vending" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_5"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_5"
+        app:layout_constraintTop_toTopOf="@+id/tv_main_frag_4"
+        tools:text="Find Dining" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Find Restroom"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_1"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_1"
+        app:layout_constraintTop_toTopOf="@+id/tv_main_frag_0" />
+
+    <TextView
+        android:id="@+id/tv_main_frag_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_2"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_2"
+        app:layout_constraintTop_toTopOf="@+id/tv_main_frag_1"
+        tools:text="Find Blue Phone" />
+</android.support.constraint.ConstraintLayout>
