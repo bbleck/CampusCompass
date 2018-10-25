@@ -38,20 +38,14 @@ public class MainMenuFragment extends Fragment {
     private void initViews(View theView) {
         for (int i = 0; i < COUNT_SEARCHES ; i++) {
             final int id = getResources().getIdentifier("iv_main_frag_" + i, "id", getContext().getPackageName());
-            String temp1 = Integer.toString(id);
-            Log.d(TAG, "initViews: id is " + temp1);
             int idTxt = getResources().getIdentifier("tv_main_frag_" + i, "id", getContext().getPackageName());
-            Log.d(TAG, "initViews: " + idTxt + " " + getString(idTxt));
             final String idTxtSetTxt = getString(getResources().getIdentifier("image_title_" + i, "string", getContext().getPackageName()));
-            Log.d(TAG, "initViews: string will be " + idTxtSetTxt);
             imageItems[i] = theView.findViewById(id);
             textItems[i] = theView.findViewById(idTxt);
             textItems[i].setText(idTxtSetTxt);
             imageItems[i].setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-//                    Toast.makeText(getActivity(), "Clicked on item: " + idTxtSetTxt, Toast.LENGTH_SHORT).show();
-                    ((MainActivity)getActivity()).setmViewPager(MainActivity.SEARCH_FRAG_PAGER_NUMBER, id);
+                public void onClick(View v) { ((MainActivity)getActivity()).setmViewPager(MainActivity.SEARCH_FRAG_PAGER_NUMBER, id);
                 }
             });
         }
