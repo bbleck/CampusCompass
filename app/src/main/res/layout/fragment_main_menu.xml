@@ -104,7 +104,7 @@
         app:srcCompat="@drawable/ic_computer_blue_24dp" />
 
     <ImageView
-        android:id="@+id/iv_main_frag_9"
+        android:id="@+id/iv_main_frag_8"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_7"
@@ -158,8 +158,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_9"
-        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_9"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_8"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_frag_8"
         app:layout_constraintTop_toTopOf="@+id/tv_main_frag_6"
         tools:text="@string/image_title_8" />
 
