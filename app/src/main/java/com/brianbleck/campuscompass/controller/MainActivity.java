@@ -46,4 +46,9 @@ public class MainActivity extends AppCompatActivity {
         callingViewId = id;
         mViewPager.setCurrentItem(fragmentNumber);
     }
+
+    public int getCallingViewId() {
+        return callingViewId;
+    }
+
 }

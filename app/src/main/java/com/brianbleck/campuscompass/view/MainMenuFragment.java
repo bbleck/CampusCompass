@@ -50,8 +50,8 @@ public class MainMenuFragment extends Fragment {
             imageItems[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "Clicked on item: " + idTxtSetTxt, Toast.LENGTH_SHORT).show();
-//                    ((MainActivity)getActivity()).setmViewPager(MainActivity.SEARCH_FRAG_PAGER_NUMBER, id);
+//                    Toast.makeText(getActivity(), "Clicked on item: " + idTxtSetTxt, Toast.LENGTH_SHORT).show();
+                    ((MainActivity)getActivity()).setmViewPager(MainActivity.SEARCH_FRAG_PAGER_NUMBER, id);
                 }
             });
         }
