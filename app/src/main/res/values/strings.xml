@@ -32,4 +32,8 @@
     <string name="image_title_1">Find Restroom</string>
     <string name="image_title_2">Find Blue Phone</string>
     <string name="no_description">No description available.</string>
+    <string name="distance_away">Distance Away:</string>
+    <string name="info">Info</string>
+    <string name="go_here">Go Here!</string>
+    <string name="item_image">Item Image</string>
 </resources>
