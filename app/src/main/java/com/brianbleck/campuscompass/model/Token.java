@@ -1,13 +1,16 @@
 package com.brianbleck.campuscompass.model;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+
+import com.brianbleck.campuscompass.R;
 
 import java.net.URL;
 
 public class Token {
 
-    private final String defaultDescription = "No description available.";
+
     private TokenType tokenType;
     private double latitude;
     private double longitude;
@@ -16,8 +19,10 @@ public class Token {
     private String title;
     private String description;
     private String lowercaseTitle;
+    private Activity parent;
 
-    public Token(@NonNull TokenType tokenType, @NonNull double latitude, @NonNull double longitude, Drawable image, URL link, @NonNull String title, String description) {
+    public Token(@NonNull TokenType tokenType, @NonNull double latitude, @NonNull double longitude, Drawable image, URL link, @NonNull String title, String description, Activity parent) {
+        this.parent = parent;
         this.tokenType = tokenType;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -36,7 +41,7 @@ public class Token {
         if(description!=null){
             this.description = description;
         }else{
-            this.description = defaultDescription;
+            this.description = parent.getString(R.string.no_description);
         }
 
 
