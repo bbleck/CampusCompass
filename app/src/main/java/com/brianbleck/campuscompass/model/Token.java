@@ -1,86 +1,59 @@
 package com.brianbleck.campuscompass.model;
 
-import android.app.Activity;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v4.content.res.ResourcesCompat;
-
-import com.brianbleck.campuscompass.R;
 
 import java.net.URL;
-import java.util.Random;
 
-public class Token {
+@Entity
+public class Token implements Cloneable{
 
 
+    @ColumnInfo(name = "token_id")
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
+    @ColumnInfo(name = "token_type", index = true)
     private TokenType tokenType;
+
     private double latitude;
+
     private double longitude;
-    private Drawable image;
-    private String link;
+
+    @Ignore
+    private Drawable drawable;//image in open data is building
+
+    private URL link;
+    private URL image;
+
+    @ColumnInfo(index = true, collate = ColumnInfo.NOCASE)
     private String title;
+
     private String description;
-    private String lowercaseTitle;
-    private Activity parent;
 
-    public Token(@NonNull TokenType tokenType, @NonNull double latitude, @NonNull double longitude, Drawable image, String link, @NonNull String title, String description, Activity parent) {
-        this.parent = parent;
-        this.tokenType = tokenType;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.title = title;
-        this.lowercaseTitle = title.toLowerCase();
-        if(image!=null){
-            this.image = image;
-        }else{
-            setDefaultImage();
-        }
-        if(link!=null){
-            this.link = link;
-        }else{
-            setDefaultLink();
-        }
-        if(description!=null){
-            this.description = description;
-        }else{
-            this.description = parent.getString(R.string.no_description);
-        }
 
+
+    public Token() {
 
     }
 
-    //constructor that should only be used to create testing objects
-    public Token (TokenType tokenType, double latitude, double longitude, String title, Activity parent){
-        this.tokenType = tokenType;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.title = title;
-        this.image = ResourcesCompat.getDrawable(parent.getResources(), R.drawable.ic_building_blue_24dp, null);
-        this.description = "This building is a building.\nIt has lots of buildingy sort of things in it.\nA man designed it.\nMen built it.\nNow people use it for stuff.\nTravel here at your own peril.\nThere have been sightings of pirates and dwarves.\nDwarves delve too deeply and, in the dark, uncover things that would be best left where they were sealed away long ago.\nTry telling that to dwarves though, I mean seriously.\n\n\n\n\n\n\n\n\n\n\nD\nw\na\nr\nv\ne\ns\n \nw\ni\nl\nl\n \nnot\nlisten.";
-        this.link = "A link will eventually go here.";
-        this.parent = parent;
-    }
 
-    public Token(Token tokenToCopy){
-        this.tokenType = tokenToCopy.getTokenType();
-        this.latitude = tokenToCopy.getLatitude();
-        this.longitude = tokenToCopy.getLongitude();
-        this.title = tokenToCopy.getTitle();
-        this.parent = tokenToCopy.getParent();
-        this.image = ResourcesCompat.getDrawable(parent.getResources(), R.drawable.ic_building_blue_24dp, null);
-        this.description = "This building is a building.\nIt has lots of buildingy sort of things in it.\nA man designed it.\nMen built it.\nNow people use it for stuff.\nTravel here at your own peril.\nThere have been sightings of pirates and dwarves.\nDwarves delve too deeply and, in the dark, uncover things that would be best left where they were sealed away long ago.\nTry telling that to dwarves though, I mean seriously.\n\n\n\n\n\n\n\n\n\n\nD\nw\na\nr\nv\ne\ns\n \nw\ni\nl\nl\n \nnot\nlisten.";
-        this.link = "A link will eventually go here.";
-    }
-
-    public static Token createTestToken(Activity parent){
-        Random rand = new Random();
-        String tempTitle = "Building #" + rand.nextInt(1000);
-        return new Token(TokenType.BUILDING, 0.0, 0.0, tempTitle, parent);
-    }
-
-
-    private void setDefaultLink() {
-        //todo: implement method
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Token theClone = new Token();
+        theClone.setDescription(getDescription());
+        theClone.setImage(getImage());
+        theClone.setLink(getLink());
+        theClone.setLatitude(getLatitude());
+        theClone.setLongitude(getLongitude());
+        theClone.setTitle(getTitle());
+        theClone.setTokenType(getTokenType());
+        theClone.setId(getId());
+        theClone.setDrawable(getDrawable());
+        return theClone;
     }
 
     private void setDefaultImage() {
@@ -111,19 +84,20 @@ public class Token {
         this.longitude = longitude;
     }
 
-    public Drawable getImage() {
+    public URL getImage() {
         return image;
     }
 
-    public void setImage(Drawable image) {
+    public void setImage(URL image) {
         this.image = image;
+        //todo:  create drawable object for URL if it is non null
     }
 
-    public String getLink() {
+    public URL getLink() {
         return link;
     }
 
-    public void setLink(String link) {
+    public void setLink(URL link) {
         this.link = link;
     }
 
@@ -143,15 +117,20 @@ public class Token {
         this.description = description;
     }
 
-    public String getLowercaseTitle() {
-        return lowercaseTitle;
+    public long getId() {
+        return id;
     }
 
-    public void setLowercaseTitle(String lowercaseTitle) {
-        this.lowercaseTitle = lowercaseTitle;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Activity getParent() {
-        return parent;
+    public Drawable getDrawable() {
+        return drawable;
     }
+
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
+    }
+
 }

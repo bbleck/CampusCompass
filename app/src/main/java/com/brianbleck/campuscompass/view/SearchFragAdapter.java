@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.brianbleck.campuscompass.model.Token;
 import java.util.List;
 
 public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Holder>{
+
+    private static final String TAG = "SearchFragAdapter";
 
     private List<Token> listForRecycler;
     private Activity mActivity;
@@ -38,7 +41,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
 
     @Override
     public void onBindViewHolder(@NonNull final Holder holder, int position) {
-        holder.itemImage.setImageDrawable(listForRecycler.get(position).getImage());
+//        holder.itemImage.setImageDrawable(listForRecycler.get(position).getImage()); //set image
         holder.itemTitle.setText(listForRecycler.get(position).getTitle());
         String tempDistance = mActivity.getResources().getString(R.string.distance_away)
                 + MainActivity.calcDistance(listForRecycler.get(position).getLongitude(),
@@ -48,7 +51,12 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
             @Override
             public void onClick(View v) {
                 Toast.makeText(mActivity.getBaseContext(), "Clicked Go", Toast.LENGTH_SHORT).show();
-                ((MainActivity)mActivity).setmViewPager(MainActivity.MAPS_FRAG_PAGER_NUMBER, listForRecycler.get(holder.getAdapterPosition()));
+                try {
+                    ((MainActivity)mActivity).setmViewPager(MainActivity.MAPS_FRAG_PAGER_NUMBER, listForRecycler.get(holder.getAdapterPosition()));
+                } catch (CloneNotSupportedException e) {
+                    Log.d(TAG, "onClick go: CloneNotSupportedException");
+                    //todo: handle this?
+                }
             }
         });
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +64,12 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
             public void onClick(View v) {
 
                 ((MainActivity)mActivity).setTargetItem(listForRecycler.get(holder.getAdapterPosition()));
-                ((MainActivity)mActivity).setmViewPager(MainActivity.INFO_POPUP_FRAG, listForRecycler.get(holder.getAdapterPosition()));
+                try {
+                    ((MainActivity)mActivity).setmViewPager(MainActivity.INFO_POPUP_FRAG, listForRecycler.get(holder.getAdapterPosition()));
+                } catch (CloneNotSupportedException e) {
+                    Log.d(TAG, "onClick info: CloneNotSupportedException");
+                    //todo: handle this?
+                }
             }
         });
     }

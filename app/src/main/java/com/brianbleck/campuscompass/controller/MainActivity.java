@@ -19,7 +19,7 @@ import com.brianbleck.campuscompass.view.MainMenuFragment;
 import com.brianbleck.campuscompass.view.MapsFragment;
 import com.brianbleck.campuscompass.view.SearchFragment;
 
-public class MainActivity extends AppCompatActivity implements InfoPopupFrag.InfoPopupFragListener {
+public class MainActivity extends AppCompatActivity implements MapsFragment.MapsFragmentListener, InfoPopupFrag.InfoPopupFragListener {
 
     public static final int MAIN_MENU_FRAG_PAGER_NUMBER = 0;
     public static final int MAPS_FRAG_PAGER_NUMBER = 1;
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements InfoPopupFrag.Inf
     private Toolbar toolbar;
     private Token targetItem;
     private InfoPopupFrag infoPopupFrag;
+    private MapsFragment mapsFragment;
 
 
     @Override
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements InfoPopupFrag.Inf
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements InfoPopupFrag.Inf
 
     private void initData() {
         fragmentManager = getSupportFragmentManager();
-        targetItem = Token.createTestToken(this);
+//        targetItem = Token.createTestToken(this);//todo: set a default value for targetItem
     }
 
     private void initFields() {
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity implements InfoPopupFrag.Inf
         mViewPager.setCurrentItem(fragmentNumber);
     }
 
-    public void setmViewPager(int fragmentNumber, Token item){
-        targetItem = new Token(item);
+    public void setmViewPager(int fragmentNumber, Token item) throws CloneNotSupportedException {
+        targetItem = (Token) item.clone();
         setmViewPager(fragmentNumber);
     }
 
@@ -133,5 +133,10 @@ public class MainActivity extends AppCompatActivity implements InfoPopupFrag.Inf
     @Override
     public void setParentRefToInfoFrag(InfoPopupFrag infoFrag) {
         this.infoPopupFrag = infoFrag;
+    }
+
+    @Override
+    public void setMainRefMapsFrag(MapsFragment mapsFrag) {this.mapsFragment = mapsFrag;
+
     }
 }

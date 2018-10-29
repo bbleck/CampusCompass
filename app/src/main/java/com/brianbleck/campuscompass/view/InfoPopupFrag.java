@@ -53,12 +53,13 @@ public class InfoPopupFrag extends Fragment {
     }
 
     public void initData() {
-        theItem = ((MainActivity)getActivity()).getTargetItem();
-        itemImage.setImageDrawable(theItem.getImage());
-        itemDescription.setText(theItem.getDescription());
-        itemDescription.setMovementMethod(new ScrollingMovementMethod());
-        itemUrl.setText(theItem.getLink());
-        itemTitle.setText(theItem.getTitle());
+//        theItem = ((MainActivity)getActivity()).getTargetItem();
+//        itemImage.setImageDrawable(theItem.getImage());//
+//        itemDescription.setText(theItem.getDescription());
+//        itemDescription.setMovementMethod(new ScrollingMovementMethod());
+//        itemUrl.setText(theItem.getLink());
+//        itemTitle.setText(theItem.getTitle());
+        //todo: set the info as needed
     }
 
     private void initViews(View theView) {

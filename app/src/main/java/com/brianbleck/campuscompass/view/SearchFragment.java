@@ -61,13 +61,8 @@ public class SearchFragment extends Fragment {
         callingViewId = ((MainActivity)getActivity()).getCallingViewId();
         setSearchTitle();
         listForRecycler = new LinkedList<>();
-        populateTestList();
-    }
+        //todo: populate listForRecycler with the filtered database results
 
-    private void populateTestList() {
-        for (int i = 0; i < 50; i++) {
-            listForRecycler.add(Token.createTestToken(getActivity()));
-        }
     }
 
     private void setSearchTitle() {
