@@ -1,10 +1,12 @@
-package com.brianbleck.campuscompass.model;
+package com.brianbleck.campuscompass.model.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.graphics.drawable.Drawable;
+
+import com.brianbleck.campuscompass.model.TokenType;
 
 import java.net.URL;
 
@@ -33,12 +35,6 @@ public class Token implements Cloneable{
     private String title;
 
     private String description;
-
-
-
-    public Token() {
-
-    }
 
 
     @Override

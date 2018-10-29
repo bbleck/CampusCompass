@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,10 +18,8 @@ import android.widget.Toast;
 
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.MainActivity;
-import com.brianbleck.campuscompass.model.Token;
-import com.brianbleck.campuscompass.model.TokenType;
+import com.brianbleck.campuscompass.model.entity.Token;
 
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 

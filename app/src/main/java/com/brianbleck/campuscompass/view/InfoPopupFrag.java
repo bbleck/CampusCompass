@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.MainActivity;
-import com.brianbleck.campuscompass.model.Token;
+import com.brianbleck.campuscompass.model.entity.Token;
 
 public class InfoPopupFrag extends Fragment {
 

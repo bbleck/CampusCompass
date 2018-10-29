@@ -1,7 +1,6 @@
 package com.brianbleck.campuscompass.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.MainActivity;
-import com.brianbleck.campuscompass.model.Token;
+import com.brianbleck.campuscompass.model.entity.Token;
 
 import java.util.List;
 

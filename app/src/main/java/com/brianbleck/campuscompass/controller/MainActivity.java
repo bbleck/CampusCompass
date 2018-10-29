@@ -1,6 +1,5 @@
 package com.brianbleck.campuscompass.controller;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +9,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.brianbleck.campuscompass.R;
-import com.brianbleck.campuscompass.model.Token;
+import com.brianbleck.campuscompass.model.entity.Token;
 import com.brianbleck.campuscompass.view.InfoPopupFrag;
 import com.brianbleck.campuscompass.view.MainMenuFragment;
 import com.brianbleck.campuscompass.view.MapsFragment;
