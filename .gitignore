@@ -8,4 +8,5 @@
 /build
 /captures
 .externalNativeBuild
-*.myvalues.xml
+*.mystrings.xml
+*.google_maps_api.xml

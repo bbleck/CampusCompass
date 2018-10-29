@@ -34,12 +34,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private void initMaps(View theView) {
         SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.gm_map_frag);
+        if(mapFragment==null){
+            mapFragment = new SupportMapFragment();
+        }
         mapFragment.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap = googleMap;
+        this.googleMap = googleMap;
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);

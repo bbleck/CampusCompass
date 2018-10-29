@@ -48,6 +48,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
             @Override
             public void onClick(View v) {
                 Toast.makeText(mActivity.getBaseContext(), "Clicked Go", Toast.LENGTH_SHORT).show();
+                ((MainActivity)mActivity).setmViewPager(MainActivity.MAPS_FRAG_PAGER_NUMBER, listForRecycler.get(holder.getAdapterPosition()));
             }
         });
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
