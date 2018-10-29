@@ -1,0 +1,90 @@
+package com.brianbleck.campuscompass.view;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.brianbleck.campuscompass.R;
+import com.brianbleck.campuscompass.controller.MainActivity;
+import com.brianbleck.campuscompass.model.Token;
+
+public class InfoPopupFrag extends Fragment {
+
+    private static final String TAG = "InfoPopupFrag";
+
+    public interface InfoPopupFragListener{
+        void setParentRefToInfoFrag(InfoPopupFrag infoFrag);
+    }
+
+    private ImageView itemImage;
+    private TextView itemTitle;
+    private TextView itemUrl;
+    private TextView itemDescription;
+    private Button itemReturn;
+    private Token theItem;
+    private InfoPopupFragListener infoPopupFragListener;
+    private Activity mActivity;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View theView = inflater.inflate(R.layout.popup_frag_item_info, container, false);
+        infoPopupFragListener.setParentRefToInfoFrag(this);
+        initViews(theView);
+//        initData();
+        return theView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    public void initData() {
+        theItem = ((MainActivity)getActivity()).getTargetItem();
+        itemImage.setImageDrawable(theItem.getImage());
+        itemDescription.setText(theItem.getDescription());
+        itemDescription.setMovementMethod(new ScrollingMovementMethod());
+        itemUrl.setText(theItem.getLink());
+        itemTitle.setText(theItem.getTitle());
+    }
+
+    private void initViews(View theView) {
+        itemImage = theView.findViewById(R.id.iv_popup_info_image);
+        itemDescription = theView.findViewById(R.id.tv_popup_info_description);
+        itemReturn = theView.findViewById(R.id.btn_popup_info_return);
+        itemUrl = theView.findViewById(R.id.tv_popup_info_url);
+        itemTitle = theView.findViewById(R.id.tv_popup_info_title);
+        itemReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)mActivity).setmViewPager(MainActivity.SEARCH_FRAG_PAGER_NUMBER, ((MainActivity)mActivity).getCallingViewId());
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            infoPopupFragListener = (InfoPopupFragListener) getActivity();
+            mActivity = getActivity();
+        } catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
+        }
+
+    }
+
+}

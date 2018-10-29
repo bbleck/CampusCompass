@@ -24,7 +24,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     initToolBar();
     // Obtain the SupportMapFragment and get notified when the map is ready to be used.
     SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-        .findFragmentById(R.id.map);
+        .findFragmentById(R.id.gm_map_frag);
     mapFragment.getMapAsync(this);
   }
 

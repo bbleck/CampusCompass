@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +19,12 @@ import android.widget.Toast;
 
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.MainActivity;
+import com.brianbleck.campuscompass.model.Token;
+import com.brianbleck.campuscompass.model.TokenType;
+
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
 
@@ -27,8 +34,9 @@ public class SearchFragment extends Fragment {
     private TextView searchTitle;
     private Button resetRefine;
     private RecyclerView recyclerView;
-//    private SearchFragAdapter adapter;
+    private SearchFragAdapter adapter;
     private LinearLayoutManager manager;
+    private List<Token> listForRecycler;
     private int callingViewId;
 
 
@@ -43,12 +51,23 @@ public class SearchFragment extends Fragment {
     }
 
     private void initRecyclerView() {
+        adapter = new SearchFragAdapter(getActivity(), listForRecycler);
+        manager = new LinearLayoutManager(getContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(manager);
     }
 
     private void initData() {
         callingViewId = ((MainActivity)getActivity()).getCallingViewId();
         setSearchTitle();
+        listForRecycler = new LinkedList<>();
+        populateTestList();
+    }
 
+    private void populateTestList() {
+        for (int i = 0; i < 50; i++) {
+            listForRecycler.add(Token.createTestToken(getActivity()));
+        }
     }
 
     private void setSearchTitle() {
