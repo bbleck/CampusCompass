@@ -28,8 +28,7 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
   public interface SearchFragListener{
-    List<Token> fillDBwithTest();
-    List<Token> fillDBwithAPI();
+    List<Token> getTokensList();
     boolean isTestData();
   }
 
@@ -68,12 +67,7 @@ public class SearchFragment extends Fragment {
   private void initData() {
     callingViewId = ((MainActivity) getActivity()).getCallingViewId();
     setSearchTitle();
-    listForRecycler = new LinkedList<>();
-    if(searchFragListener.isTestData()){
-      listForRecycler.addAll(searchFragListener.fillDBwithTest());
-    }else{
-      listForRecycler.addAll(searchFragListener.fillDBwithAPI());
-    }
+    listForRecycler = searchFragListener.getTokensList();
   }
 
   private void setSearchTitle() {

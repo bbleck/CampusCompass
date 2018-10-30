@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
   private Token targetItem;
   private InfoPopupFrag infoPopupFrag;
   private MapsFragment mapsFragment;
+  private List<Token> dbTokens;
 
 
   @Override
@@ -68,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
     fragmentManager = getSupportFragmentManager();
 //        targetItem = Token.createTestToken(this);//todo: set a default value for targetItem
     if (SHOULD_FILL_DB_W_TEST) {
-      fillDBwithTest();
+      dbTokens = fillDBwithTest();
     } else {
-      fillDBwithAPI();
+      dbTokens = fillDBwithAPI();
     }
   }
 
@@ -155,12 +156,10 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
 
   }
 
-  @Override
   public List<Token> fillDBwithAPI() {
     return new LinkedList<>();
   }
 
-  @Override
   public List<Token> fillDBwithTest() {
     rng = new Random();
     List<Token> prepopulateList = new LinkedList<>();
@@ -175,6 +174,12 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
     }
     return prepopulateList;
   }
+
+  @Override
+  public List<Token> getTokensList() {
+    return dbTokens;
+  }
+
   @Override
   public boolean isTestData(){
     return SHOULD_FILL_DB_W_TEST;
