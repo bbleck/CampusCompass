@@ -1,6 +1,7 @@
 package com.brianbleck.campuscompass.model.utility;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
@@ -11,7 +12,7 @@ public class TokenPrepper {
 
   private static final String TAG = "TokenPrepper";
 
-  public static Token prep(Activity activity, Token unprepped){
+  public static Token prep(Context activity, Token unprepped){
     Token prepped = new Token();
 
     fixDescription(activity, unprepped, prepped);
@@ -28,7 +29,7 @@ public class TokenPrepper {
     return prepped;
   }
 
-  private static void fixLinkString(Activity activity, Token unprepped, Token prepped) {
+  private static void fixLinkString(Context activity, Token unprepped, Token prepped) {
     if(unprepped.getLink()==null){
       prepped.setLink(activity.getString(R.string.default_link_string));
     }else{
@@ -36,7 +37,7 @@ public class TokenPrepper {
     }
   }
 
-  private static void fixTitle(Activity activity, Token unprepped, Token prepped) {
+  private static void fixTitle(Context activity, Token unprepped, Token prepped) {
     if(unprepped.getTitle()==null){
       prepped.setTitle(activity.getString(R.string.default_title));
     }else{
@@ -44,7 +45,7 @@ public class TokenPrepper {
     }
   }
 
-  private static void fixImageUrlString(Activity activity, Token unprepped, Token prepped) {
+  private static void fixImageUrlString(Context activity, Token unprepped, Token prepped) {
     if(unprepped.getImage()==null){
       prepped.setImage(activity.getString(R.string.default_image_url_string));
     }else{
@@ -61,7 +62,7 @@ public class TokenPrepper {
     }
   }
 
-  private static void fixDrawable(Activity activity, Token unprepped, Token prepped) {
+  private static void fixDrawable(Context activity, Token unprepped, Token prepped) {
     Drawable tempDrawable = ResourcesCompat
         .getDrawable(activity.getResources(), R.drawable.ic_magnifying_glass, null);
     if(unprepped.getDrawable()==null){
@@ -99,7 +100,7 @@ public class TokenPrepper {
     }
   }
 
-  private static void fixDescription(Activity activity, Token unprepped, Token prepped) {
+  private static void fixDescription(Context activity, Token unprepped, Token prepped) {
     if(unprepped.getDescription()==null){
       prepped.setDescription(activity.getResources().getString(R.string.default_description));
     }else{
