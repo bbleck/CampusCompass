@@ -16,4 +16,10 @@
     <item name="android:textColor">@color/colorPrimary</item>
   </style>
 
+  <style name="MainMenuFragmentText" parent="AppTheme">
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/blackText</item>
+  </style>
+
 </resources>

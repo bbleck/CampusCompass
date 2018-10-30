@@ -6,4 +6,11 @@
   <color name="grayBlue">#4f706b</color>
   <color name="darkRed">#461817</color>
   <color name="darkGray">#393939</color>
+  <color name="healthGreen">#03a910</color>
+  <color name="foodBrown">#512e1a</color>
+  <color name="restroomGray">#898989</color>
+  <color name="parkingBlue">#1f2454</color>
+  <color name="libraryOrange">#ed8c16</color>
+  <color name="blackText">#000000</color>
+  <color name="shuttlePurple">#bb4bbf</color>
 </resources>
