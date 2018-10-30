@@ -6,10 +6,8 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Transaction;
-
 import com.brianbleck.campuscompass.model.entity.Token;
-
+import com.brianbleck.campuscompass.model.utility.TokenType;
 import java.util.List;
 
 @Dao
@@ -17,11 +15,17 @@ public interface TokenDao {
     @Insert(onConflict = OnConflictStrategy.FAIL)
     long insert(Token token);
 
+    @Insert(onConflict = OnConflictStrategy.FAIL)
+    void insert(List<Token> tokens);
 
-    @Query("SELECT * FROM Token WHERE token_type ")
-    List<Token> select();
+
+    @Query("SELECT * FROM Token WHERE token_type = :type")
+    List<Token> select(TokenType type);
 
     @Delete
     int delete(Token token);
+
+  @Query("DELETE FROM Token")
+  int nuke();
 
 }
