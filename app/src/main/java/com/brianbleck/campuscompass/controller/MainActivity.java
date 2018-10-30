@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.model.entity.Token;
 import com.brianbleck.campuscompass.view.InfoPopupFrag;
