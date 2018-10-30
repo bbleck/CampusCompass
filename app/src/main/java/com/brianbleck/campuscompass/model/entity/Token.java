@@ -6,7 +6,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.graphics.drawable.Drawable;
 
-import com.brianbleck.campuscompass.model.TokenType;
+import com.brianbleck.campuscompass.model.utility.TokenType;
 
 import java.net.URL;
 
@@ -31,8 +31,8 @@ public class Token implements Cloneable{
     @Ignore
     private Drawable drawable;//image in open data is building
 
-    private URL link;
-    private URL image;
+    private String link;
+    private String image;
 
     @ColumnInfo(index = true, collate = ColumnInfo.NOCASE)
     private String title;
@@ -84,20 +84,20 @@ public class Token implements Cloneable{
         this.longitude = longitude;
     }
 
-    public URL getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(URL image) {
+    public void setImage(String image) {
         this.image = image;
         //todo:  create drawable object for URL if it is non null
     }
 
-    public URL getLink() {
+    public String getLink() {
         return link;
     }
 
-    public void setLink(URL link) {
+    public void setLink(String link) {
         this.link = link;
     }
 

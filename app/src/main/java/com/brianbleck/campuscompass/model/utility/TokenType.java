@@ -1,4 +1,4 @@
-package com.brianbleck.campuscompass.model;
+package com.brianbleck.campuscompass.model.utility;
 
 public enum TokenType {
     USER,

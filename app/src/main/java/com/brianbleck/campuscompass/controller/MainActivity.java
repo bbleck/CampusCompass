@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements MapsFragment.Maps
     public static final int MAPS_FRAG_PAGER_NUMBER = 1;
     public static final int SEARCH_FRAG_PAGER_NUMBER = 2;
     public static final int INFO_POPUP_FRAG = 3;
+
     private SectionsStatePagerAdapter mSSPagerAdapter;
     private ViewPager mViewPager;
     private int callingViewId;
