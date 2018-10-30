@@ -6,12 +6,14 @@ import android.arch.persistence.room.DatabaseConfiguration;
 import android.arch.persistence.room.InvalidationTracker;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.brianbleck.campuscompass.model.dao.TokenDao;
 import com.brianbleck.campuscompass.model.db.CampusInfoDB.Converters;
 import com.brianbleck.campuscompass.model.entity.Token;
+import com.brianbleck.campuscompass.model.utility.TokenType;
 
 @Database(
     entities = {Token.class},
@@ -40,6 +42,16 @@ public abstract class CampusInfoDB extends RoomDatabase {
   }
 
   public static class Converters{
+
+    @TypeConverter
+    public static int intFromType(TokenType type) {
+      return type.ordinal();
+    }
+
+    @TypeConverter
+    public static TokenType typeFromInt(int ordinal) {
+      return TokenType.values()[ordinal];
+    }
 
   }
 }
