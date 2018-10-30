@@ -38,4 +38,7 @@
     <string name="item_image">Item Image</string>
     <string name="home">Home</string>
   <string name="default_description">A detailed description is not available at this time.</string>
+  <string name="default_image_url_string">No image available.</string>
+    <string name="default_title">No title available.</string>
+    <string name="default_link_string">No informational link available.</string>
 </resources>
