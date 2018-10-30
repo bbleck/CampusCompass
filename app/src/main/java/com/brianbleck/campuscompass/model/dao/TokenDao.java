@@ -17,7 +17,8 @@ public interface TokenDao {
     @Insert(onConflict = OnConflictStrategy.FAIL)
     long insert(Token token);
 
-    @Query("SELECT * FROM Token")
+
+    @Query("SELECT * FROM Token WHERE token_type ")
     List<Token> select();
 
     @Delete

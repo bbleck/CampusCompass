@@ -18,6 +18,9 @@ public class Token implements Cloneable{
     @PrimaryKey(autoGenerate = true)
     private long id;
 
+    @ColumnInfo(name = "building_number")
+    private int buildingNumber;
+
     @ColumnInfo(name = "token_type", index = true)
     private TokenType tokenType;
 
@@ -49,6 +52,7 @@ public class Token implements Cloneable{
         theClone.setTokenType(getTokenType());
         theClone.setId(getId());
         theClone.setDrawable(getDrawable());
+        theClone.setBuildingNumber(getBuildingNumber());
         return theClone;
     }
 
@@ -129,4 +133,11 @@ public class Token implements Cloneable{
         this.drawable = drawable;
     }
 
+    public int getBuildingNumber() {
+        return buildingNumber;
+    }
+
+    public void setBuildingNumber(int buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
 }
