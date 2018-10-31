@@ -1,6 +1,7 @@
 package com.brianbleck.campuscompass.controller;
 
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
   }
 
   private void initData() {
+    dbTokens = new LinkedList<>();
     fragmentManager = getSupportFragmentManager();
     targetItem = TokenPrepper.prep(this, new Token());
     if (SHOULD_FILL_DB_W_TEST) {
@@ -87,16 +89,20 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
     mSSPagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
     mViewPager = findViewById(R.id.container);
     setupPager(mViewPager);
-    searchFragment = new SearchFragment();
   }
 
   private void setupPager(ViewPager pager) {
     SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
     adapter.addFragment(new MainMenuFragment(), "MainMenuFragment");
     adapter.addFragment(new MapsFragment(), "MapsFragment");
-    adapter.addFragment(searchFragment, "SearchFragment");
+    adapter.addFragment(getSearchFrag(), "SearchFragment");
     adapter.addFragment(new InfoPopupFrag(), "InfoPopupFragment");
     pager.setAdapter(adapter);
+  }
+
+  private Fragment getSearchFrag() {
+    searchFragment = new SearchFragment();
+    return searchFragment;
   }
 
   public void setmViewPager(int fragmentNumber, int id) {
@@ -218,7 +224,8 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
       }
     }
     //todo: put this into db
-    new AddTask().execute((Token[])prepopulateList.toArray());
+    Token[] tokenArr = prepopulateList.toArray(new Token[prepopulateList.size()]);
+    new AddTask().execute(tokenArr);
   }
 
   @Override
