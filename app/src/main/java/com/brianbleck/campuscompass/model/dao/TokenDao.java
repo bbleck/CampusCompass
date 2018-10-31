@@ -22,6 +22,9 @@ public interface TokenDao {
     @Query("SELECT * FROM Token WHERE token_type = :type")
     List<Token> select(TokenType type);
 
+    @Query("SELECT * FROM Token")
+    List<Token> selectAll();
+
     @Delete
     int delete(Token token);
 

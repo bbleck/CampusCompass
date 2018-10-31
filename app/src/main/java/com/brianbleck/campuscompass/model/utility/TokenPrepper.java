@@ -14,10 +14,9 @@ public class TokenPrepper {
 
   public static Token prep(Context activity, Token unprepped){
     Token prepped = new Token();
-
+    fixTokenType(unprepped, prepped);
     fixDescription(activity, unprepped, prepped);
     fixDrawable(activity, unprepped, prepped);
-    fixTokenType(unprepped, prepped);
     prepped.setBuildingNumber(unprepped.getBuildingNumber());
     fixImageUrlString(activity, unprepped, prepped);
     prepped.setId(unprepped.getId());
@@ -65,8 +64,11 @@ public class TokenPrepper {
   private static void fixDrawable(Context activity, Token unprepped, Token prepped) {
     Drawable tempDrawable = ResourcesCompat
         .getDrawable(activity.getResources(), R.drawable.ic_magnifying_glass, null);
-    if(unprepped.getDrawable()==null){
-      switch (unprepped.getTokenType()){
+    if(unprepped == null){
+      Log.d(TAG, "fixDrawable: unprepped is null");
+    }
+    if(unprepped.getDrawable() == null){
+      switch (prepped.getTokenType()){
         case BLUE_PHONE:
           tempDrawable = ResourcesCompat.getDrawable(activity.getResources(), R.drawable.blue_phone, null);
           break;
@@ -98,6 +100,7 @@ public class TokenPrepper {
     }else{
       prepped.setDrawable(unprepped.getDrawable());
     }
+    prepped.setDrawable(tempDrawable);
   }
 
   private static void fixDescription(Context activity, Token unprepped, Token prepped) {

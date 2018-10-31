@@ -17,12 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.MainActivity;
 import com.brianbleck.campuscompass.model.entity.Token;
-
-import java.util.LinkedList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
@@ -139,6 +136,10 @@ public class SearchFragment extends Fragment {
       Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
     }
 
+  }
+
+  public void updateListInAdapter(){
+    adapter.notifyDataSetChanged();
   }
 
 }
