@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
         break;
       default:
         Log.d(TAG, "setSearchTitle: unknown callingId error");
-        //todo: do a db call to grab list appropriate for callingviewid
     }
   }
 
