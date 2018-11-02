@@ -222,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
         prepopulateList.add(TokenPrepper.prep(getApplicationContext(), tempToken));
       }
     }
-    //todo: put this into db
     Token[] tokenArr = prepopulateList.toArray(new Token[prepopulateList.size()]);
     new AddTask().execute(tokenArr);
   }
@@ -240,16 +239,15 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
   private class QueryTask extends AsyncTask<TokenType, Void, List<Token>> {
 
     @Override
+    protected List<Token> doInBackground(TokenType... types) {
+      return database.getTokenDao().select(types[0]);
+    }
+    @Override
     protected void onPostExecute(List<Token> tokens) {
       dbTokens.clear();
       dbTokens.addAll(tokens);
       sortDBTokens();
       searchFragment.updateListInAdapter();
-    }
-
-    @Override
-    protected List<Token> doInBackground(TokenType... types) {
-      return database.getTokenDao().select(types[0]);
     }
 
   }

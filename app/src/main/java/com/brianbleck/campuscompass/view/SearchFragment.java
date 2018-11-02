@@ -40,7 +40,6 @@ public class SearchFragment extends Fragment {
   private List<Token> listForRecycler;
   private int callingViewId;
   private SearchFragListener searchFragListener;
-  private Activity mActivity;
 
 
   @Nullable
@@ -131,7 +130,6 @@ public class SearchFragment extends Fragment {
     super.onAttach(context);
     try{
       searchFragListener = (SearchFragListener) getActivity();
-      mActivity = getActivity();
     } catch (ClassCastException e){
       Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
     }
