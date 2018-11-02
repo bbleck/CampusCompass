@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,7 +32,11 @@ public class MainMenuFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View theView = inflater.inflate(R.layout.fragment_main_menu, container, false);
-    mainMenuFragListener = (Main2Activity) getActivity();
+    try {
+      mainMenuFragListener = (Main2Activity) getActivity();
+    }catch(ClassCastException e){
+      Log.d(TAG, "onCreateView: ClassCastException: " + e.getMessage());
+    }
     initViews(theView);
 
     return theView;

@@ -201,6 +201,11 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
   }
 
   @Override
+  public void goToSearchFrag(int iD) {
+
+  }
+
+  @Override
   public void setMainRefMapsFrag(MapsFragment mapsFrag) {
     this.mapsFragment = mapsFrag;
 

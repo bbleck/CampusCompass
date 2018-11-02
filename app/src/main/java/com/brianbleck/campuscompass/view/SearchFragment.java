@@ -1,6 +1,5 @@
 package com.brianbleck.campuscompass.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,11 +17,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.brianbleck.campuscompass.R;
-import com.brianbleck.campuscompass.controller.MainActivity;
+import com.brianbleck.campuscompass.controller.Main2Activity;
 import com.brianbleck.campuscompass.model.entity.Token;
 import java.util.List;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment{
 
   public interface SearchFragListener{
     List<Token> getTokensList();
@@ -61,7 +60,7 @@ public class SearchFragment extends Fragment {
   }
 
   private void initData() {
-    callingViewId = ((MainActivity) getActivity()).getCallingViewId();
+    callingViewId = ((Main2Activity) getActivity()).getCallingViewId();
     setSearchTitle();
     listForRecycler = searchFragListener.getTokensList();
   }
@@ -116,6 +115,7 @@ public class SearchFragment extends Fragment {
       @Override
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         Toast.makeText(getContext(), "Edit Text entered", Toast.LENGTH_SHORT).show();
+        //todo: handle filtering of recyclerview contents to match edittext
         return false;
       }
     });

@@ -2,20 +2,17 @@ package com.brianbleck.campuscompass.view;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.brianbleck.campuscompass.R;
-import com.brianbleck.campuscompass.controller.MainActivity;
+import com.brianbleck.campuscompass.controller.Main2Activity;
 import com.brianbleck.campuscompass.model.entity.Token;
-
 import java.util.List;
 
 public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Holder>{
@@ -28,6 +25,10 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     public SearchFragAdapter(Activity mActivity, List<Token> listForRecycler){
         this.mActivity = mActivity;
         this.listForRecycler = listForRecycler;
+    }
+
+    public interface SearchFragAdapterListener{
+      void goToMapFrag(Token item);
     }
 
 
@@ -43,38 +44,33 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
 //        holder.itemImage.setImageDrawable(listForRecycler.get(position).getImage()); //set image
         holder.itemTitle.setText(listForRecycler.get(position).getTitle());
         String tempDistance = mActivity.getResources().getString(R.string.distance_away)
-                + MainActivity.calcDistance(listForRecycler.get(position).getLongitude(),
+                + Main2Activity.calcDistance(listForRecycler.get(position).getLongitude(),
                 listForRecycler.get(position).getLatitude());
         holder.distance.setText(tempDistance);
         holder.goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mActivity.getBaseContext(), "Clicked Go", Toast.LENGTH_SHORT).show();
-                try {
-                    ((MainActivity)mActivity).setmViewPager(MainActivity.MAPS_FRAG_PAGER_NUMBER, listForRecycler.get(holder.getAdapterPosition()));
-                } catch (CloneNotSupportedException e) {
-                    Log.d(TAG, "onClick go: CloneNotSupportedException");
-                    //todo: handle this?
-                }
+//              Toast.makeText(mActivity.getBaseContext(), "Clicked Go", Toast.LENGTH_SHORT).show();
+              ((Main2Activity)mActivity).goToMapFrag(listForRecycler.get(holder.getAdapterPosition()));
             }
         });
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ((MainActivity)mActivity).setTargetItem(listForRecycler.get(holder.getAdapterPosition()));
-                try {
-                    ((MainActivity)mActivity).setmViewPager(MainActivity.INFO_POPUP_FRAG, listForRecycler.get(holder.getAdapterPosition()));
-                } catch (CloneNotSupportedException e) {
-                    Log.d(TAG, "onClick info: CloneNotSupportedException");
-                    //todo: handle this?
-                }
+                ((Main2Activity)mActivity).setTargetItem(listForRecycler.get(holder.getAdapterPosition()));
+                startInfoPopup();
             }
         });
     }
 
+  private void startInfoPopup() {
+      InfoPopupFrag infoPopupFrag = new InfoPopupFrag();
+    FragmentManager fm = ((Main2Activity)mActivity).getSupportFragmentManager();
+    infoPopupFrag.show(fm, "InfoPopupFrag");
+  }
 
-    @Override
+
+  @Override
     public int getItemCount() {
         return listForRecycler.size();
     }

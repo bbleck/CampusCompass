@@ -22,6 +22,7 @@ import com.brianbleck.campuscompass.view.InfoPopupFrag;
 import com.brianbleck.campuscompass.view.MainMenuFragment;
 import com.brianbleck.campuscompass.view.MainMenuFragment.MainMenuFragListener;
 import com.brianbleck.campuscompass.view.MapsFragment;
+import com.brianbleck.campuscompass.view.SearchFragAdapter.SearchFragAdapterListener;
 import com.brianbleck.campuscompass.view.SearchFragment;
 import com.brianbleck.campuscompass.view.SearchFragment.SearchFragListener;
 import java.util.LinkedList;
@@ -29,7 +30,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Main2Activity extends AppCompatActivity implements SearchFragListener, MapsFragment.MapsFragmentListener,
-    InfoPopupFrag.InfoPopupFragListener, MainMenuFragListener {
+    InfoPopupFrag.InfoPopupFragListener, MainMenuFragListener, SearchFragAdapterListener {
 
   private static final String TAG = "Main2Activity";
 
@@ -120,6 +121,17 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   protected void swapFrags(Fragment fragIn, int callingViewId){
     this.callingViewId = callingViewId;
+    if(fragIn==null){
+      Log.d(TAG, "swapFrags: null fragment");
+      return;
+    }
+    fragmentManager.beginTransaction()
+        .replace(fragContainer.getId(), fragIn)
+        .commit();
+  }
+
+  protected void swapFrags(Fragment fragIn, Token item) throws CloneNotSupportedException{
+    targetItem = (Token) item.clone();
     if(fragIn==null){
       Log.d(TAG, "swapFrags: null fragment");
       return;
@@ -253,6 +265,15 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     swapFrags(new SearchFragment(), iD);
   }
 
+  @Override
+  public void goToMapFrag(Token item) {
+    try {
+      swapFrags(new MapsFragment(), item);
+    } catch (CloneNotSupportedException e) {
+      Log.d(TAG, "goToMapFrag: CloneNotSupportedException: " + e.getMessage());
+    }
+  }
+
   private class AddTask extends AsyncTask<Token, Void, Void> {
 
     @Override
@@ -283,5 +304,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
 
   }
+
 
 }
