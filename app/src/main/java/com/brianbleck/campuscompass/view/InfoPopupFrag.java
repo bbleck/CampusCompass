@@ -73,8 +73,7 @@ public class InfoPopupFrag extends DialogFragment {
     itemReturn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        ((Main2Activity) getActivity())
-            .goToSearchFrag(((Main2Activity) getActivity()).getCallingViewId());
+        dismiss();
       }
     });
   }

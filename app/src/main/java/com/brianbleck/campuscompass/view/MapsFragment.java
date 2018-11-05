@@ -49,7 +49,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             mapFragment = new SupportMapFragment();
         }
         mapFragment.getMapAsync(this);
-      Toast.makeText(getActivity(), "getmapasync called.", Toast.LENGTH_SHORT).show();
+//      Toast.makeText(getActivity(), "getmapasync called.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
