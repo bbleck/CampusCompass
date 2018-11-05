@@ -53,21 +53,12 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_2);
+    initDB();
     initViews();
-    initFields();
     initData();
-  }
+    initFields();
 
-  private void initData() {
-    dbTokens = new LinkedList<>();
-    fragmentManager = getSupportFragmentManager();
-    callingViewId = R.id.building;
-    targetItem = TokenPrepper.prep(this, new Token());
-    if (SHOULD_FILL_DB_W_TEST) {
-      fillDBwithTest();
-    } else {
-      fillDBwithAPI();
-    }
+
   }
 
   private void initDB() {
@@ -75,9 +66,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   private void initViews() {
+    callingViewId = R.id.building;
     fragContainer = findViewById(R.id.frag_container_2);
     toolbar = findViewById(R.id.toolbar_main_2);
-    setSupportActionBar(toolbar);
     toolbar.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -85,6 +76,27 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       }
     });
   }
+
+  private void initFields() {
+
+  }
+
+  private void initData() {
+    fragmentManager = getSupportFragmentManager();
+    dbTokens = new LinkedList<>();
+    setSupportActionBar(toolbar);
+    targetItem = TokenPrepper.prep(this, new Token());
+    if (SHOULD_FILL_DB_W_TEST) {
+      fillDBwithTest();
+    } else {
+      fillDBwithAPI();
+    }
+    swapFrags(new MainMenuFragment());
+  }
+
+
+
+
   public void fillDBwithAPI() {
     //todo: pull from db, prep data, and populate db
   }
@@ -103,10 +115,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
     Token[] tokenArr = prepopulateList.toArray(new Token[prepopulateList.size()]);
     new AddTask().execute(tokenArr);
-  }
-
-  private void initFields() {
-    fragmentManager = getSupportFragmentManager();
   }
 
   protected void swapFrags(Fragment fragIn){
@@ -128,6 +136,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     fragmentManager.beginTransaction()
         .replace(fragContainer.getId(), fragIn)
         .commit();
+    swapFrags(fragIn);
   }
 
   protected void swapFrags(Fragment fragIn, Token item) throws CloneNotSupportedException{
@@ -139,6 +148,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     fragmentManager.beginTransaction()
         .replace(fragContainer.getId(), fragIn)
         .commit();
+    swapFrags(fragIn);
   }
 
   public int getCallingViewId() {
@@ -157,7 +167,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
-  private Fragment getSearchFrag() {
+  private SearchFragment getSearchFrag() {
     searchFragment = new SearchFragment();
     return searchFragment;
   }
@@ -262,7 +272,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   @Override
   public void goToSearchFrag(int iD) {
-    swapFrags(new SearchFragment(), iD);
+    searchFragment = getSearchFrag();
+    setRVList(iD);
+    swapFrags(searchFragment, iD);
   }
 
   @Override

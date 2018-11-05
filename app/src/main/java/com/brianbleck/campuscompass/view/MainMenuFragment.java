@@ -1,5 +1,6 @@
 package com.brianbleck.campuscompass.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,13 +33,7 @@ public class MainMenuFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View theView = inflater.inflate(R.layout.fragment_main_menu, container, false);
-    try {
-      mainMenuFragListener = (Main2Activity) getActivity();
-    }catch(ClassCastException e){
-      Log.d(TAG, "onCreateView: ClassCastException: " + e.getMessage());
-    }
     initViews(theView);
-
     return theView;
   }
 
@@ -67,4 +62,15 @@ public class MainMenuFragment extends Fragment {
       });
     }
   }
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    try {
+      mainMenuFragListener = (MainMenuFragListener) getActivity();
+    } catch (ClassCastException e) {
+      Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
+    }
+
+  }
+
 }

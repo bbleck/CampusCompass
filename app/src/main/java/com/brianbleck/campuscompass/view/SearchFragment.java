@@ -1,5 +1,6 @@
 package com.brianbleck.campuscompass.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.Main2Activity;
 import com.brianbleck.campuscompass.model.entity.Token;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SearchFragment extends Fragment{
@@ -137,7 +139,12 @@ public class SearchFragment extends Fragment{
   }
 
   public void updateListInAdapter(){
-    adapter.notifyDataSetChanged();
+    listForRecycler = new LinkedList<>();
+    listForRecycler = searchFragListener.getTokensList();
+    adapter = new SearchFragAdapter(getActivity(), listForRecycler);
+    manager = new LinearLayoutManager(getContext());
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(manager);
   }
 
 }

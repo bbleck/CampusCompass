@@ -27,8 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements SearchFragListener, MapsFragment.MapsFragmentListener,
-    InfoPopupFrag.InfoPopupFragListener {
+public class MainActivity extends AppCompatActivity {
 
   private static final String TAG = "MainActivity";
 
@@ -195,21 +194,21 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
     return true;
   }
 
-  @Override
-  public void setParentRefToInfoFrag(InfoPopupFrag infoFrag) {
-    this.infoPopupFrag = infoFrag;
-  }
-
-  @Override
-  public void goToSearchFrag(int iD) {
-
-  }
-
-  @Override
-  public void setMainRefMapsFrag(MapsFragment mapsFrag) {
-    this.mapsFragment = mapsFrag;
-
-  }
+//  @Override
+//  public void setParentRefToInfoFrag(InfoPopupFrag infoFrag) {
+//    this.infoPopupFrag = infoFrag;
+//  }
+//
+//  @Override
+//  public void goToSearchFrag(int iD) {
+//
+//  }
+//
+//  @Override
+//  public void setMainRefMapsFrag(MapsFragment mapsFrag) {
+//    this.mapsFragment = mapsFrag;
+//
+//  }
 
   public void fillDBwithAPI() {
     //todo: pull from db, prep data, and populate db
@@ -231,15 +230,15 @@ public class MainActivity extends AppCompatActivity implements SearchFragListene
     new AddTask().execute(tokenArr);
   }
 
-  @Override
-  public List<Token> getTokensList() {
-    return dbTokens;
-  }
-
-  @Override
-  public boolean isTestData(){
-    return SHOULD_FILL_DB_W_TEST;
-  }
+//  @Override
+//  public List<Token> getTokensList() {
+//    return dbTokens;
+//  }
+//
+//  @Override
+//  public boolean isTestData(){
+//    return SHOULD_FILL_DB_W_TEST;
+//  }
 
   private class QueryTask extends AsyncTask<TokenType, Void, List<Token>> {
 

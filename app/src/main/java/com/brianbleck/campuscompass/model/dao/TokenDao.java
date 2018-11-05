@@ -12,21 +12,22 @@ import java.util.List;
 
 @Dao
 public interface TokenDao {
-    @Insert(onConflict = OnConflictStrategy.FAIL)
-    long insert(Token token);
 
-    @Insert(onConflict = OnConflictStrategy.FAIL)
-    void insert(List<Token> tokens);
+  @Insert(onConflict = OnConflictStrategy.FAIL)
+  long insert(Token token);
+
+  @Insert(onConflict = OnConflictStrategy.FAIL)
+  void insert(List<Token> tokens);
 
 
-    @Query("SELECT * FROM Token WHERE token_type = :type")
-    List<Token> select(TokenType type);
+  @Query("SELECT * FROM Token WHERE token_type = :type")
+  List<Token> select(TokenType type);
 
-    @Query("SELECT * FROM Token")
-    List<Token> selectAll();
+  @Query("SELECT * FROM Token")
+  List<Token> selectAll();
 
-    @Delete
-    int delete(Token token);
+  @Delete
+  int delete(Token token);
 
   @Query("DELETE FROM Token")
   int nuke();

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Toast;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.MainActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,10 +49,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             mapFragment = new SupportMapFragment();
         }
         mapFragment.getMapAsync(this);
+      Toast.makeText(getActivity(), "getmapasync called.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onMapReady(GoogleMap gMap) {
+      Toast.makeText(getActivity(), "into onMapReady", Toast.LENGTH_SHORT).show();
         this.googleMap = gMap;
 
         // Add a marker in Sydney and move the camera
