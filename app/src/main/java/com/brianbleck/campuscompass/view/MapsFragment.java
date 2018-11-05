@@ -10,18 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.Toast;
 import com.brianbleck.campuscompass.R;
-import com.brianbleck.campuscompass.controller.MainActivity;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsFragment extends Fragment implements OnMapReadyCallback {
+public class MapsFragment extends Fragment {
 
     private static final String TAG = "MapsFragment";
     private MapsFragmentListener mapsfragListener;
@@ -29,6 +22,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     public interface MapsFragmentListener{
         void setMainRefMapsFrag(MapsFragment mapsFrag);
+        void callMapAsync(SupportMapFragment supportMapFragment);
     }
 
     private GoogleMap googleMap;
@@ -45,23 +39,25 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public void initMaps() {
         SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.gm_map_frag);
-        if(mapFragment==null){
-            mapFragment = new SupportMapFragment();
-        }
-        mapFragment.getMapAsync(this);
+      if (mapFragment == null) {
+        mapFragment = new SupportMapFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container_2, mapFragment)
+            .commit();
+      }
+//        mapFragment.getMapAsync(this);
+        mapsfragListener.callMapAsync(mapFragment);
 //      Toast.makeText(getActivity(), "getmapasync called.", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onMapReady(GoogleMap gMap) {
-      Toast.makeText(getActivity(), "into onMapReady", Toast.LENGTH_SHORT).show();
-        this.googleMap = gMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        this.googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
+//    @Override
+//    public void onMapReady(GoogleMap gMap) {
+//      Toast.makeText(getActivity(), "into onMapReady", Toast.LENGTH_SHORT).show();
+//        this.googleMap = gMap;
+//        // Add a marker in Sydney and move the camera
+//        LatLng sydney = new LatLng(-34, 151);
+//        this.googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -75,4 +71,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+  @Override
+  public void onDestroyView() {
+
+    super.onDestroyView();
+  }
 }

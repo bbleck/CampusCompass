@@ -1,6 +1,7 @@
 package com.brianbleck.campuscompass.controller;
 
 
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,12 +26,20 @@ import com.brianbleck.campuscompass.view.MapsFragment;
 import com.brianbleck.campuscompass.view.SearchFragAdapter.SearchFragAdapterListener;
 import com.brianbleck.campuscompass.view.SearchFragment;
 import com.brianbleck.campuscompass.view.SearchFragment.SearchFragListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 public class Main2Activity extends AppCompatActivity implements SearchFragListener, MapsFragment.MapsFragmentListener,
-    InfoPopupFrag.InfoPopupFragListener, MainMenuFragListener, SearchFragAdapterListener {
+    InfoPopupFrag.InfoPopupFragListener, MainMenuFragListener, SearchFragAdapterListener,
+    OnMapReadyCallback {
 
   private static final String TAG = "Main2Activity";
 
@@ -261,6 +270,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   @Override
+  public void callMapAsync(SupportMapFragment supportMapFragment) {
+    supportMapFragment.getMapAsync(Main2Activity.this);
+  }
+
+  @Override
   public List<Token> getTokensList() {
     return dbTokens;
   }
@@ -279,8 +293,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   @Override
   public void goToMapFrag(Token item) {
+    MapsFragment mapsFragment = new MapsFragment();
     try {
-      swapFrags(new MapsFragment(), item);
+      swapFrags(mapsFragment, item);
     } catch (CloneNotSupportedException e) {
       Log.d(TAG, "goToMapFrag: CloneNotSupportedException: " + e.getMessage());
     }
@@ -317,5 +332,14 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   }
 
+  @Override
+  public void onMapReady(GoogleMap googleMap) {
+    LatLng Albuquerque = new LatLng(35.0843, -106.6198);
+    googleMap.addMarker(new MarkerOptions()
+        .position(Albuquerque)
+        .title("UNM Campus Compass"));
+    googleMap.moveCamera(CameraUpdateFactory.newLatLng(Albuquerque));
+    googleMap.animateCamera( CameraUpdateFactory.zoomTo( 18.0f ) );
+  }
 
 }
