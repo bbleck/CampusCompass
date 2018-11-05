@@ -1,6 +1,5 @@
 package com.brianbleck.campuscompass.model.utility;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
@@ -17,7 +16,7 @@ public class TokenPrepper {
     fixTokenType(unprepped, prepped);
     fixDescription(activity, unprepped, prepped);
     fixDrawable(activity, unprepped, prepped);
-    prepped.setBuildingNumber(unprepped.getBuildingNumber());
+    prepped.setBuildingNum(unprepped.getBuildingNum());
     fixImageUrlString(activity, unprepped, prepped);
     prepped.setId(unprepped.getId());
     prepped.setLatitude(unprepped.getLatitude());
