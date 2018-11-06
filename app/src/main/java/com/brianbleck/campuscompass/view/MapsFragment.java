@@ -41,7 +41,7 @@ public class MapsFragment extends Fragment {
       }
         mapsFragmentListener.callMapAsync(mapFragment);
     }
-    
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

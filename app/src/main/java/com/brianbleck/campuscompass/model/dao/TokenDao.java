@@ -13,10 +13,10 @@ import java.util.List;
 @Dao
 public interface TokenDao {
 
-  @Insert(onConflict = OnConflictStrategy.FAIL)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   long insert(Token token);
 
-  @Insert(onConflict = OnConflictStrategy.FAIL)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insert(List<Token> tokens);
 
 

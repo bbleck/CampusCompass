@@ -7,31 +7,43 @@ import android.arch.persistence.room.PrimaryKey;
 import android.graphics.drawable.Drawable;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.brianbleck.campuscompass.model.utility.TokenType;
+import com.google.gson.annotations.SerializedName;
 
 @Entity
 public class Token implements Cloneable {
 
   //************ FIELDS THAT MATCH UNM OPEN DATA *************************//
 
+  @Nullable
   @ColumnInfo(index = true, collate = ColumnInfo.NOCASE)
   private String title;
 
+  @SerializedName("buildingnum")
   @ColumnInfo(name = "building_num")
-  private int buildingNum;
+  @Nullable
+  private String buildingNum;
 
+  @Nullable
   private String abbr;
 
+  @Nullable
   private String campus;
 
+  @Nullable
   private String keywords;
 
+  @Nullable
   private double longitude;
 
+  @Nullable
   private double latitude;
 
+  @Nullable
   private String image;
 
+  @Nullable
   private String link;
 
   @ColumnInfo(name = "token_id")
@@ -39,6 +51,7 @@ public class Token implements Cloneable {
   @NonNull
   private String id;
 
+  @Nullable
   private String description;
 
   //************************* FIELDS THAT DO NOT MATCH UNM OPEN DATA *********************//
@@ -145,11 +158,11 @@ public class Token implements Cloneable {
     this.drawable = drawable;
   }
 
-  public int getBuildingNum() {
+  public String getBuildingNum() {
     return buildingNum;
   }
 
-  public void setBuildingNum(int buildingNum) {
+  public void setBuildingNum(String buildingNum) {
     this.buildingNum = buildingNum;
   }
 
