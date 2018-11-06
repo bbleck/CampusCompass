@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 
 public interface BluePhoneApi{
 
-  @GET("bluephonessouth.json")
+  @GET("bluephonesnorth.json")
   Call<List<Token>> getBluePhonesJson();
 
 }

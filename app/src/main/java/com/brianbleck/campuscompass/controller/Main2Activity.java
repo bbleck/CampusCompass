@@ -3,6 +3,7 @@ package com.brianbleck.campuscompass.controller;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -361,7 +362,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     Call<List<Token>> call = shuttlesApi.getShuttlesJson();
     call.enqueue(new Callback<List<Token>>() {
       @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+      public void onResponse(@NonNull Call<List<Token>> call, @NonNull Response<List<Token>> response) {
         if (!response.isSuccessful()) {
           Log.d(TAG, "onResponse: code " + response.code());
           return;
