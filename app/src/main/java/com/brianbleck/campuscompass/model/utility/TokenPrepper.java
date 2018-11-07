@@ -19,8 +19,8 @@ public class TokenPrepper {
     prepped.setBuildingNum(unprepped.getBuildingNum());
     fixImageUrlString(activity, unprepped, prepped);
     prepped.setId(unprepped.getId());
-    prepped.setLatitude(unprepped.getLatitude());
-    prepped.setLongitude(unprepped.getLongitude());
+    prepped.setMLatitude(unprepped.getMLatitude());
+    prepped.setMLongitude(unprepped.getMLongitude());
     fixTitle(activity, unprepped, prepped);
     fixLinkString(activity, unprepped, prepped);
 

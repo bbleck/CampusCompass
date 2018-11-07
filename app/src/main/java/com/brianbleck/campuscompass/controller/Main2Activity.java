@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.model.api.BluePhoneApi;
+import com.brianbleck.campuscompass.model.api.BluePhoneSouthApi;
 import com.brianbleck.campuscompass.model.api.BuildingApi;
 import com.brianbleck.campuscompass.model.api.ComputerPodApi;
 import com.brianbleck.campuscompass.model.api.DiningApi;
@@ -142,7 +143,35 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
       @Override
       public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: bluephone " + t.getMessage());
+        Log.d(TAG, "onFailure: bluephone north: " + t.getMessage());
+      }
+    });
+  }
+
+  private void fillBluephoneSouthData() {
+
+    BluePhoneSouthApi bluePhoneSouthApi = retrofit.create(BluePhoneSouthApi.class);
+    Call<List<Token>> call = bluePhoneSouthApi.getBluePhonesSouthJson();
+    call.enqueue(new Callback<List<Token>>() {
+      @Override
+      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+        if (!response.isSuccessful()) {
+          Log.d(TAG, "onResponse: code " + response.code());
+          return;
+        }
+        List<Token> tokensFromApi = response.body();
+        for (Token token :
+            tokensFromApi) {
+          token.setTokenType(TokenType.BLUE_PHONE);
+          token = TokenPrepper.prep(Main2Activity.this, token);
+        }
+        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+        new AddTask().execute(tokenArr);
+      }
+
+      @Override
+      public void onFailure(Call<List<Token>> call, Throwable t) {
+        Log.d(TAG, "onFailure: bluephone south: " + t.getMessage(), t);
       }
     });
   }
@@ -392,6 +421,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         .addConverterFactory(GsonConverterFactory.create())
         .build();
     fillBluephoneData();
+    fillBluephoneSouthData();
     fillBuildingData();
     fillComputerPodData();
     fillDiningData();

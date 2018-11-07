@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.brianbleck.campuscompass.model.utility.TokenType;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
@@ -16,41 +17,54 @@ public class Token implements Cloneable {
 
   //************ FIELDS THAT MATCH UNM OPEN DATA *************************//
 
+  @Expose
   @Nullable
   @ColumnInfo(index = true, collate = ColumnInfo.NOCASE)
   private String title;
 
+  @Expose
   @SerializedName("buildingnum")
   @ColumnInfo(name = "building_num")
   @Nullable
   private String buildingNum;
 
+  @Expose
   @Nullable
   private String abbr;
 
+  @Expose
   @Nullable
   private String campus;
 
+  @Expose
   @Nullable
   private String keywords;
 
-  @Nullable
-  private double longitude;
+  @Expose
+  @Ignore
+  @SerializedName("longitude")
+  private String rawLongitude;
 
-  @Nullable
-  private double latitude;
+  @Expose
+  @Ignore
+  @SerializedName("latitude")
+  private String rawLatitude;
 
+  @Expose
   @Nullable
   private String image;
 
+  @Expose
   @Nullable
   private String link;
 
+  @Expose
   @ColumnInfo(name = "token_id")
   @PrimaryKey
   @NonNull
   private String id;
 
+  @Expose
   @Nullable
   private String description;
 
@@ -62,7 +76,9 @@ public class Token implements Cloneable {
   @Ignore
   private Drawable drawable;
 
+  private Double mLongitude;
 
+  private Double mLatitude;
 
 
   @Override
@@ -71,8 +87,8 @@ public class Token implements Cloneable {
     theClone.setDescription(getDescription());
     theClone.setImage(getImage());
     theClone.setLink(getLink());
-    theClone.setLatitude(getLatitude());
-    theClone.setLongitude(getLongitude());
+    theClone.setMLatitude(getMLatitude());
+    theClone.setMLongitude(getMLongitude());
     theClone.setTitle(getTitle());
     theClone.setTokenType(getTokenType());
     theClone.setId(getId());
@@ -91,22 +107,6 @@ public class Token implements Cloneable {
 
   public void setTokenType(TokenType tokenType) {
     this.tokenType = tokenType;
-  }
-
-  public double getLatitude() {
-    return latitude;
-  }
-
-  public void setLatitude(double latitude) {
-    this.latitude = latitude;
-  }
-
-  public double getLongitude() {
-    return longitude;
-  }
-
-  public void setLongitude(double longitude) {
-    this.longitude = longitude;
   }
 
   public String getImage() {
@@ -188,5 +188,61 @@ public class Token implements Cloneable {
 
   public void setKeywords(String keywords) {
     this.keywords = keywords;
+  }
+
+  public String getRawLongitude() {
+    return rawLongitude;
+  }
+
+  public void setRawLongitude(String rawLongitude) {
+    this.rawLongitude = rawLongitude;
+  }
+
+  public String getRawLatitude() {
+    return rawLatitude;
+  }
+
+  public void setRawLatitude(String rawLatitude) {
+    this.rawLatitude = rawLatitude;
+  }
+
+
+  public Double getMLongitude() {
+    if(mLongitude ==null){
+      if(getRawLongitude()!=null) {
+        try {
+          setMLongitude(Double.parseDouble(getRawLongitude()));
+          return mLongitude;
+        } catch (NumberFormatException e) {
+          //intentionally blank
+        }
+      }
+      mLongitude = 0.0;
+    }
+    return mLongitude;
+  }
+
+  public void setMLongitude(Double mLongitude) {
+    this.mLongitude = mLongitude;
+  }
+
+
+  public Double getMLatitude() {
+    if(mLatitude ==null){
+      if(getRawLatitude()!=null) {
+        try {
+          setMLatitude(Double.parseDouble(getRawLatitude()));
+          return mLatitude;
+        } catch (NumberFormatException e) {
+          //intentionally blank
+        }
+      }
+      mLatitude = 0.0;
+    }
+    return mLatitude;
+  }
+
+  public void setMLatitude(Double mLatitude) {
+    this.mLatitude = mLatitude;
   }
 }
