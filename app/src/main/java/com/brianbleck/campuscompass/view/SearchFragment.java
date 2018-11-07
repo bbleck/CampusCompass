@@ -141,7 +141,17 @@ public class SearchFragment extends Fragment{
   public void updateListInAdapter(){
     listForRecycler = new LinkedList<>();
     listForRecycler = searchFragListener.getTokensList();
-    adapter = new SearchFragAdapter(getActivity(), listForRecycler);
+    List<Token> cleanedList = new LinkedList<>();
+    for (int i = 0; i < listForRecycler.size(); i++) {
+      if (listForRecycler.get(i).getMLatitude()==0.0
+          ||listForRecycler.get(i).getMLongitude()==0.0){
+        Log.d(TAG, "updateListInAdapter: cleaned a 0.0 long/lat");
+        continue;
+      }else{
+        cleanedList.add(listForRecycler.get(i));
+      }
+    }
+    adapter = new SearchFragAdapter(getActivity(), cleanedList);
     manager = new LinearLayoutManager(getContext());
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(manager);
