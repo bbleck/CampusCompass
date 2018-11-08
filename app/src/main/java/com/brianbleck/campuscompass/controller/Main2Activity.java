@@ -520,6 +520,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     return callingViewId;
   }
 
+  @Override
   public Token getTargetItem() {
     return targetItem;
   }

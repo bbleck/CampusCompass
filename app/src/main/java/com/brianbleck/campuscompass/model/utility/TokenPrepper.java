@@ -28,7 +28,7 @@ public class TokenPrepper {
   }
 
   private static void fixLinkString(Context activity, Token unprepped, Token prepped) {
-    if(unprepped.getLink()==null){
+    if(unprepped.getLink()==null || unprepped.getLink().isEmpty() ){
       prepped.setLink(activity.getString(R.string.default_link_string));
     }else{
       prepped.setLink(unprepped.getLink());
@@ -36,7 +36,7 @@ public class TokenPrepper {
   }
 
   private static void fixTitle(Context activity, Token unprepped, Token prepped) {
-    if(unprepped.getTitle()==null){
+    if(unprepped.getTitle()==null || unprepped.getTitle().isEmpty()){
       prepped.setTitle(activity.getString(R.string.default_title));
     }else{
       prepped.setTitle(unprepped.getTitle());
@@ -44,7 +44,7 @@ public class TokenPrepper {
   }
 
   private static void fixImageUrlString(Context activity, Token unprepped, Token prepped) {
-    if(unprepped.getImage()==null){
+    if(unprepped.getImage()==null || unprepped.getImage().isEmpty()){
       prepped.setImage(activity.getString(R.string.default_image_url_string));
     }else{
       prepped.setImage(unprepped.getImage());
@@ -103,7 +103,7 @@ public class TokenPrepper {
   }
 
   private static void fixDescription(Context activity, Token unprepped, Token prepped) {
-    if(unprepped.getDescription()==null){
+    if(unprepped.getDescription()==null || unprepped.getDescription().isEmpty()){
       prepped.setDescription(activity.getResources().getString(R.string.default_description));
     }else{
       prepped.setDescription(unprepped.getDescription());

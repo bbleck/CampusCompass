@@ -3,6 +3,7 @@ package com.brianbleck.campuscompass.view;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.Main2Activity;
 import com.brianbleck.campuscompass.model.entity.Token;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Holder> {
@@ -43,7 +45,14 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
 
   @Override
   public void onBindViewHolder(@NonNull final Holder holder, int position) {
-    holder.itemImage.setImageDrawable(listForRecycler.get(position).getDrawable()); //set image
+//    if(listForRecycler.get(holder.getAdapterPosition()).getDrawable() == null){
+//      Picasso.get().load(listForRecycler.get(holder.getAdapterPosition()).getImage()).resize(90, 90)
+//          .centerCrop().into(holder.itemImage);
+//    }else{
+//      holder.itemImage.setImageDrawable(listForRecycler.get(position).getDrawable()); //set image
+//    }
+
+    holder.itemImage.setImageDrawable(listForRecycler.get(position).getDrawable());
     holder.itemTitle.setText(listForRecycler.get(position).getTitle());
     String tempDistance = mActivity.getResources().getString(R.string.distance_away)
         + Main2Activity.calcDistance(listForRecycler.get(position).getMLongitude(),
