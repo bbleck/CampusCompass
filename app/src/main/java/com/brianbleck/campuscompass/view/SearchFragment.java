@@ -2,10 +2,12 @@ package com.brianbleck.campuscompass.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -148,6 +150,7 @@ public class SearchFragment extends Fragment{
         Log.d(TAG, "updateListInAdapter: cleaned a 0.0 long/lat");
         continue;
       }else{
+        listForRecycler.get(i).setDrawable(grabDrawable(listForRecycler.get(i)));
         cleanedList.add(listForRecycler.get(i));
       }
     }
@@ -155,6 +158,46 @@ public class SearchFragment extends Fragment{
     manager = new LinearLayoutManager(getContext());
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(manager);
+  }
+
+  private Drawable grabDrawable(Token token) {
+    Drawable tempDrawable = ResourcesCompat
+        .getDrawable(getActivity().getResources(), R.drawable.ic_magnifying_glass, null);
+    if(token.getImage().equals(getActivity().getString(R.string.default_image_url_string))){
+      switch(token.getTokenType()){
+        case BLUE_PHONE:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.blue_phone, null);
+          break;
+        case DINING:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.food, null);
+          break;
+        case LIBRARY:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.library, null);
+          break;
+        case RESTROOM:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.restroom, null);
+          break;
+        case COMPUTER_POD:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.computer_pod, null);
+          break;
+        case SHUTTLE_STOP:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.shuttle_stop, null);
+          break;
+        case HEALTHY_VENDING:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.vending, null);
+          break;
+        case METERED_PARKING:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.parking, null);
+          break;
+        case BUILDING:
+          tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.building, null);
+          break;
+      }
+      return tempDrawable;
+    }else{
+      return tempDrawable;
+    }
+
   }
 
 }

@@ -682,6 +682,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     protected void onPostExecute(List<Token> tokens) {
       dbTokens.clear();
       dbTokens.addAll(tokens);
+//      for (Token token :
+//          dbTokens) {
+//        token = TokenPrepper.prep(Main2Activity.this, token);
+//      }
       sortDBTokens();
       searchFragment.updateListInAdapter();
     }

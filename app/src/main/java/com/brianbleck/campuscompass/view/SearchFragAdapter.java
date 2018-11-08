@@ -43,7 +43,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
 
   @Override
   public void onBindViewHolder(@NonNull final Holder holder, int position) {
-//        holder.itemImage.setImageDrawable(listForRecycler.get(position).getImage()); //set image
+    holder.itemImage.setImageDrawable(listForRecycler.get(position).getDrawable()); //set image
     holder.itemTitle.setText(listForRecycler.get(position).getTitle());
     String tempDistance = mActivity.getResources().getString(R.string.distance_away)
         + Main2Activity.calcDistance(listForRecycler.get(position).getMLongitude(),
