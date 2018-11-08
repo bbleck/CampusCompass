@@ -163,34 +163,42 @@ public class SearchFragment extends Fragment{
   private Drawable grabDrawable(Token token) {
     Drawable tempDrawable = ResourcesCompat
         .getDrawable(getActivity().getResources(), R.drawable.ic_magnifying_glass, null);
-    if(token.getImage().equals(getActivity().getString(R.string.default_image_url_string))){
+    if(token.getImage().isEmpty() || token.getImage()==null){
       switch(token.getTokenType()){
         case BLUE_PHONE:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.blue_phone, null);
+          tempDrawable.setTint(getResources().getColor(R.color.darkGray, null));
           break;
         case DINING:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.food, null);
+          tempDrawable.setTint(getResources().getColor(R.color.foodBrown, null));
           break;
         case LIBRARY:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.library, null);
+          tempDrawable.setTint(getResources().getColor(R.color.libraryOrange, null));
           break;
         case RESTROOM:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.restroom, null);
+          tempDrawable.setTint(getResources().getColor(R.color.restroomGray, null));
           break;
         case COMPUTER_POD:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.computer_pod, null);
           break;
         case SHUTTLE_STOP:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.shuttle_stop, null);
+          tempDrawable.setTint(getResources().getColor(R.color.shuttlePurple, null));
           break;
         case HEALTHY_VENDING:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.vending, null);
+          tempDrawable.setTint(getResources().getColor(R.color.healthGreen, null));
           break;
         case METERED_PARKING:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.parking, null);
+          tempDrawable.setTint(getResources().getColor(R.color.parkingBlue, null));
           break;
         case BUILDING:
           tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.building, null);
+          tempDrawable.setTint(getResources().getColor(R.color.darkGray, null));
           break;
       }
       return tempDrawable;
