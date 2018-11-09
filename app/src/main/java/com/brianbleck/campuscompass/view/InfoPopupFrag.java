@@ -50,7 +50,7 @@ public class InfoPopupFrag extends DialogFragment {
     View theView = inflater.inflate(R.layout.popup_frag_item_info, container, false);
     infoPopupFragListener.setParentRefToInfoFrag(this);
     initViews(theView);
-        initData();
+    initData();
     return theView;
   }
 
