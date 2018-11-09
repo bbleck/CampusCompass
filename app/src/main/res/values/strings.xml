@@ -14,7 +14,7 @@
   <string name="computer_pod">Computer Pod</string>
   <string name="breast_feeding_station">Breast Feeding Station</string>
   <string name="title_activity_maps">Map</string>
-  <string name="find_a_blue_phone">Find A Blue Phone</string>
+  <string name="find_a_blue_phone">Emergency Find A Blue Phone</string>
   <string name="find_a_building">Find A Building</string>
   <string name="find_a_restroom">Find A Restroom</string>
   <string name="find_healthy_vending">Find Healthy Vending</string>
@@ -30,7 +30,7 @@
   <string name="image_title_4">Find Healthy Vending</string>
   <string name="image_title_5">Find Dining</string>
   <string name="image_title_1">Find Gender Neutral Restroom</string>
-  <string name="image_title_2">Find Blue Phone</string>
+  <string name="image_title_2">Emergency Find Blue Phone</string>
   <string name="no_description">No description available.</string>
   <string name="distance_away">Distance Away:</string>
   <string name="info">Info</string>
