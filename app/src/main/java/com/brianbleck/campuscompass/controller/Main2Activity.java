@@ -170,7 +170,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
           return;
         }
         mCurrentLocation = locationResult.getLastLocation();
-        Toast.makeText(getBaseContext(), "onlocationresult updated", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getBaseContext(), "onlocationresult updated", Toast.LENGTH_SHORT).show();
       }
 
       ;
@@ -242,7 +242,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
           public void onSuccess(Location location) {
             if(location!=null){
               mCurrentLocation = location;
-              Toast.makeText(getBaseContext(), "GLKL: your location is: lat: "+mCurrentLocation.getLatitude()+" long: "+mCurrentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+//              Toast.makeText(getBaseContext(), "GLKL: your location is: lat: "+mCurrentLocation.getLatitude()+" long: "+mCurrentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
             }
           }
         });
