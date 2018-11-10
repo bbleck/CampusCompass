@@ -55,8 +55,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     holder.itemImage.setImageDrawable(listForRecycler.get(position).getDrawable());
     holder.itemTitle.setText(listForRecycler.get(position).getTitle());
     String tempDistance = mActivity.getResources().getString(R.string.distance_away)
-        + Main2Activity.calcDistance(listForRecycler.get(position).getMLongitude(),
-        listForRecycler.get(position).getMLatitude());
+        + " " + listForRecycler.get(position).getDistance();
     holder.distance.setText(tempDistance);
     holder.goButton.setOnClickListener(new View.OnClickListener() {
       @Override

@@ -70,6 +70,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.maps.android.SphericalUtil;
 import com.google.android.gms.tasks.Task;
 import java.util.LinkedList;
 import java.util.List;
@@ -168,10 +169,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         if (locationResult == null) {
           return;
         }
-        for (Location location : locationResult.getLocations()) {
-          // Update UI with location data
-          // ...
-        }
+        mCurrentLocation = locationResult.getLastLocation();
+        Toast.makeText(getBaseContext(), "onlocationresult updated", Toast.LENGTH_SHORT).show();
       }
 
       ;
@@ -220,7 +219,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
         .addLocationRequest(mLocationRequest);
     SettingsClient client = LocationServices.getSettingsClient(this);
-    Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+//    Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
   }
 
   private void getLastKnownLocation() {
@@ -919,10 +918,13 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     protected void onPostExecute(List<Token> tokens) {
       dbTokens.clear();
       dbTokens.addAll(tokens);
-//      for (Token token :
-//          dbTokens) {
-//        token = TokenPrepper.prep(Main2Activity.this, token);
-//      }
+      for (Token token :
+          dbTokens) {
+        Location tempLoc = mCurrentLocation;
+        LatLng myLoc = new LatLng(tempLoc.getLatitude(), tempLoc.getLongitude());
+        LatLng unmToken = new LatLng(token.getMLatitude(),token.getMLongitude());
+        token.setDistance((int) SphericalUtil.computeDistanceBetween(unmToken, myLoc));
+      }
       sortDBTokens();
       searchFragment.updateListInAdapter();
     }

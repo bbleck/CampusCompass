@@ -6,6 +6,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.graphics.drawable.Drawable;
 
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.brianbleck.campuscompass.model.utility.TokenType;
@@ -76,6 +77,9 @@ public class Token implements Cloneable {
   @Ignore
   private Drawable drawable;
 
+  @Ignore
+  private int distance;
+
   private Double mLongitude;
 
   private Double mLatitude;
@@ -116,6 +120,14 @@ public class Token implements Cloneable {
   public void setImage(String image) {
     this.image = image;
     //todo:  create drawable object for URL if it is non null
+  }
+
+  public int getDistance() {
+    return distance;
+  }
+
+  public void setDistance(int distance){
+    this.distance = distance;
   }
 
   public String getLink() {
