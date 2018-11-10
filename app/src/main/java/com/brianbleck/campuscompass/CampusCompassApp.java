@@ -31,8 +31,6 @@ public class CampusCompassApp extends Application {
     Stetho.initializeWithDefaults(this);
     database = CampusInfoDB.getInstance(this);
     database.getTokenDao();
-
-
   }
 
 
