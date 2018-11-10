@@ -72,6 +72,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.maps.android.SphericalUtil;
 import com.google.android.gms.tasks.Task;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -847,7 +849,18 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   protected void sortDBTokens() {
-    //todo: implement this method to sort the list based on distance from user
+    Collections.sort(dbTokens, new Comparator<Token>() {
+      @Override
+      public int compare(Token o1, Token o2) {
+        if(o1.getDistance()==o2.getDistance()){
+          return 0;
+        }
+        if(o1.getDistance()>o2.getDistance()){
+          return 1;
+        }
+        return -1;
+      }
+    });
   }
 
   @Override
