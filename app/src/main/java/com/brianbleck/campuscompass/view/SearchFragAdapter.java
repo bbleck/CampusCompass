@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,5 +102,13 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
       infoButton = itemView.findViewById(R.id.btn_search_item_info);
       goButton = itemView.findViewById(R.id.btn_search_item_go);
     }
+  }
+
+  public void updateTokenListItems(List<Token> updatedTokens){
+    final TokenDiffCallback tokenDiffCallback = new TokenDiffCallback(listForRecycler, updatedTokens);
+    final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(tokenDiffCallback);
+    this.listForRecycler.clear();
+    this.listForRecycler.addAll(updatedTokens);
+    diffResult.dispatchUpdatesTo(this);
   }
 }

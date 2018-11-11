@@ -72,6 +72,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.maps.android.SphericalUtil;
 import com.google.android.gms.tasks.Task;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -172,7 +173,16 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
           return;
         }
         mCurrentLocation = locationResult.getLastLocation();
-//        Toast.makeText(getBaseContext(), "onlocationresult updated", Toast.LENGTH_SHORT).show();
+        setTokenDistances();
+        sortDBTokens();
+        if (searchFragment != null) {
+          if (searchFragment.getAdapter() != null) {
+//            searchFragment.getAdapter().updateTokenListItems(dbTokens);
+            searchFragment.updateListInAdapter();
+//            Toast.makeText(getBaseContext(), "onlocationresult updated", Toast.LENGTH_SHORT).show();
+          }
+        }
+//
       }
 
       ;
@@ -218,9 +228,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     mLocationRequest.setInterval(10000);
     mLocationRequest.setFastestInterval(5000);
     mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-        .addLocationRequest(mLocationRequest);
-    SettingsClient client = LocationServices.getSettingsClient(this);
+//    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+//        .addLocationRequest(mLocationRequest);
+//    SettingsClient client = LocationServices.getSettingsClient(this);
 //    Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
   }
 
@@ -242,7 +252,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         new OnSuccessListener<Location>() {
           @Override
           public void onSuccess(Location location) {
-            if(location!=null){
+            if (location != null) {
               mCurrentLocation = location;
 //              Toast.makeText(getBaseContext(), "GLKL: your location is: lat: "+mCurrentLocation.getLatitude()+" long: "+mCurrentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
             }
@@ -639,7 +649,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
           token.setTokenType(TokenType.SHUTTLE_STOP);
           token = TokenPrepper.prep(Main2Activity.this, token);
         }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+        Token[] tokenArr = tokensFromApi.toArray(new Token[0]);
         new AddTask().execute(tokenArr);
       }
 
@@ -715,7 +725,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         prepopulateList.add(TokenPrepper.prep(getApplicationContext(), tempToken));
       }
     }
-    Token[] tokenArr = prepopulateList.toArray(new Token[prepopulateList.size()]);
+    Token[] tokenArr = prepopulateList.toArray(new Token[0]);
     new AddTask().execute(tokenArr);
   }
 
@@ -852,13 +862,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     Collections.sort(dbTokens, new Comparator<Token>() {
       @Override
       public int compare(Token o1, Token o2) {
-        if(o1.getDistance()==o2.getDistance()){
-          return 0;
-        }
-        if(o1.getDistance()>o2.getDistance()){
-          return 1;
-        }
-        return -1;
+        return o1.getDistance()-o2.getDistance();
       }
     });
   }
@@ -911,9 +915,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     @Override
     protected Void doInBackground(Token... tokens) {
       List<Token> tokensList = new LinkedList<>();
-      for (int i = 0; i < tokens.length; i++) {
-        tokensList.add(tokens[i]);
-      }
+      tokensList.addAll(Arrays.asList(tokens));
       database.getTokenDao().insert(tokensList);
       return null;
     }
@@ -931,17 +933,21 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     protected void onPostExecute(List<Token> tokens) {
       dbTokens.clear();
       dbTokens.addAll(tokens);
-      for (Token token :
-          dbTokens) {
-        Location tempLoc = mCurrentLocation;
-        LatLng myLoc = new LatLng(tempLoc.getLatitude(), tempLoc.getLongitude());
-        LatLng unmToken = new LatLng(token.getMLatitude(),token.getMLongitude());
-        token.setDistance((int) SphericalUtil.computeDistanceBetween(unmToken, myLoc));
-      }
+      setTokenDistances();
       sortDBTokens();
       searchFragment.updateListInAdapter();
     }
 
+  }
+
+  public void setTokenDistances() {
+    for (Token token :
+        dbTokens) {
+      Location tempLoc = mCurrentLocation;
+      LatLng myLoc = new LatLng(tempLoc.getLatitude(), tempLoc.getLongitude());
+      LatLng unmToken = new LatLng(token.getMLatitude(), token.getMLongitude());
+      token.setDistance((int) SphericalUtil.computeDistanceBetween(unmToken, myLoc));
+    }
   }
 
   @Override
