@@ -141,6 +141,7 @@ public class SearchFragment extends Fragment {
       searchFragListener = (SearchFragListener) getActivity();
     } catch (ClassCastException e) {
       Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
+      //do nothing except logging it for debugging
     }
 
   }

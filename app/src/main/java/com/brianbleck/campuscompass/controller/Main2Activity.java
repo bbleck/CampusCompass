@@ -67,6 +67,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -112,6 +113,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private LocationRequest mLocationRequest;
   private LocationCallback mLocationCallback;
   private Location mCurrentLocation;
+  private LatLng mGoToLocation;
+  private String mGoToLocationTitle;
+  private GoogleMap myMap;
+  private LatLngBounds myMapBounds;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -903,6 +908,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   @Override
   public void goToMapFrag(Token item) {
     MapsFragment mapsFragment = new MapsFragment();
+    mGoToLocation = new LatLng(item.getMLatitude(), item.getMLongitude());
+    mGoToLocationTitle = item.getTitle();
     try {
       swapFrags(mapsFragment, item);
     } catch (CloneNotSupportedException e) {
@@ -952,10 +959,14 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   @Override
   public void onMapReady(GoogleMap googleMap) {
-    LatLng Albuquerque = new LatLng(35.0843, -106.6198);
-    googleMap.addMarker(new MarkerOptions()
-        .position(Albuquerque)
-        .title("UNM Campus Compass"));
+    myMap = googleMap;
+    LatLng userLoc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+    myMap.addMarker(new MarkerOptions()
+        .position(userLoc)
+        .title("Your Start Location"));
+    myMap.addMarker(new MarkerOptions()
+    .position(mGoToLocation)
+    .title(mGoToLocationTitle));
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
@@ -969,9 +980,13 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       // for ActivityCompat#requestPermissions for more details.
       return;
     }
-    googleMap.setMyLocationEnabled(true);
-    googleMap.moveCamera(CameraUpdateFactory.newLatLng(Albuquerque));
-    googleMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
+    myMap.setMyLocationEnabled(true);
+    myMap.moveCamera(CameraUpdateFactory.newLatLng(userLoc));
+    myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
+  }
+
+  private void setCameraView(){
+
   }
 
 }

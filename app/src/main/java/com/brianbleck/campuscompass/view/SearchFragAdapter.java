@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
 
   private List<Token> listForRecycler;
   private Activity mActivity;
+  private SearchFragAdapterListener searchFragAdapterListener;
 
   public SearchFragAdapter(Activity mActivity, List<Token> listForRecycler) {
     this.mActivity = mActivity;
@@ -41,6 +43,12 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
   public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.rv_item_search_frag, parent, false);
+    try {
+      searchFragAdapterListener = (SearchFragAdapterListener) mActivity;
+    } catch (ClassCastException e) {
+      Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
+      //do nothing else except log it for debugging purposes
+    }
     return new Holder(view);
   }
 
@@ -62,7 +70,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
       @Override
       public void onClick(View v) {
 //              Toast.makeText(mActivity.getBaseContext(), "Clicked Go", Toast.LENGTH_SHORT).show();
-        ((Main2Activity) mActivity).goToMapFrag(listForRecycler.get(holder.getAdapterPosition()));
+        searchFragAdapterListener.goToMapFrag(listForRecycler.get(holder.getAdapterPosition()));
       }
     });
     holder.infoButton.setOnClickListener(new View.OnClickListener() {
