@@ -16,8 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.brianbleck.campuscompass.R;
-import com.brianbleck.campuscompass.controller.Main2Activity;
-import com.brianbleck.campuscompass.controller.MainActivity;
 import com.brianbleck.campuscompass.model.entity.Token;
 
 public class InfoPopupFrag extends DialogFragment {

@@ -44,15 +44,6 @@
       android:name="org.apache.http.legacy"
       android:required="false"/>
 
-    <activity
-      android:name=".MapsActivity"
-      android:screenOrientation="portrait">
-    </activity>
-    <activity
-      android:name=".controller.MainActivity"
-      android:screenOrientation="portrait">
-
-    </activity>
     <activity android:name=".controller.Main2Activity"
       android:screenOrientation="portrait">
       <intent-filter>

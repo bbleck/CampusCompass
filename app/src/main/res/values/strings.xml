@@ -41,4 +41,12 @@
   <string name="default_image_url_string">No image available.</string>
   <string name="default_title">No title available.</string>
   <string name="default_link_string">No informational link available.</string>
+  <string name="unm_base_url">https://datastore.unm.edu/locations/</string>
+  <string name="check_google_svc_version">isServicesOK: checking google services version</string>
+  <string name="google_play_svcs_is_working">isServicesOK: Google Play Services is working</string>
+  <string name="google_play_svcs_error_can_fix">isServicesOK: an error occured but we can fix it</string>
+  <string name="cannot_make_map_requests">You can\'t make map requests</string>
+  <string name="could_not_load_resource">Could not load resources at</string>
+  <string name="start_loc">Your Start Location</string>
+  <string name="google_directions_error">Error connecting to Google for directions.</string>
 </resources>
