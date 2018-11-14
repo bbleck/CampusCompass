@@ -15,6 +15,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -40,6 +42,7 @@ import com.brianbleck.campuscompass.model.api.HealthyVendingApi;
 import com.brianbleck.campuscompass.model.api.LibrariesApi;
 import com.brianbleck.campuscompass.model.api.MeteredParkingApi;
 import com.brianbleck.campuscompass.model.api.RestroomsApi;
+import com.brianbleck.campuscompass.model.api.Service;
 import com.brianbleck.campuscompass.model.api.ShuttlesApi;
 import com.brianbleck.campuscompass.model.db.CampusInfoDB;
 import com.brianbleck.campuscompass.model.entity.Token;
@@ -68,11 +71,22 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.maps.DirectionsApiRequest;
+import com.google.maps.GeoApiContext;
+import com.google.maps.PendingResult;
 import com.google.maps.android.SphericalUtil;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.internal.PolylineEncoding;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.TravelMode;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -98,7 +112,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private static boolean SHOULD_FILL_DB_W_TEST = false;
   private static int NON_SEARCH_TYPES = 2;
   private static int TOTAL_TYPES = TokenType.values().length - NON_SEARCH_TYPES;
-  private Random rng;
   private int callingViewId;
   private Token targetItem;
   private InfoPopupFrag infoPopupFrag;
@@ -117,6 +130,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private String mGoToLocationTitle;
   private GoogleMap myMap;
   private LatLngBounds myMapBounds;
+  private GeoApiContext mGeoApiContext;
+  private List<Service> services;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +148,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   @Override
   protected void onResume() {
     super.onResume();
-    //todo: update data starting here rather than oncreate?
     if (checkMapServices()) {
       if (mLocationPermissionGranted) {
         startLocationUpdates();
@@ -189,22 +203,41 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         }
 //
       }
-
-      ;
     };
   }
 
+  private void initServices(){
+    retrofit = new Retrofit.Builder()
+        .baseUrl("https://datastore.unm.edu/locations/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
+    services.add(retrofit.create(BluePhoneApi.class));
+    services.add(retrofit.create(BluePhoneSouthApi.class));
+    services.add(retrofit.create(BuildingApi.class));
+    services.add(retrofit.create(ComputerPodApi.class));
+    services.add(retrofit.create(DiningApi.class));
+    services.add(retrofit.create(HealthyVendingApi.class));
+    services.add(retrofit.create(LibrariesApi.class));
+    services.add(retrofit.create(MeteredParkingApi.class));
+    services.add(retrofit.create(RestroomsApi.class));
+    services.add(retrofit.create(ShuttlesApi.class));
+  }
+
   private void initData() {
+    dbTokens = new LinkedList<>();
+    targetItem = TokenPrepper.prep(this, new Token());
     fragmentManager = getSupportFragmentManager();
     fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     getLastKnownLocation();
-    dbTokens = new LinkedList<>();
     setSupportActionBar(toolbar);
-    targetItem = TokenPrepper.prep(this, new Token());
+    initServices();
     if (SHOULD_FILL_DB_W_TEST) {
       fillDBwithTest();
     } else {
-      fillDBwithAPI();
+      for (Service service :
+          services) {
+        fillDBwithAPI(service);
+      }
     }
     swapFrags(new MainMenuFragment());
   }
@@ -371,318 +404,345 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   }
 
-  private void fillBluephoneData() {
+//  private void fillBluephoneData() {
+//
+//    BluePhoneApi bluePhoneApi = retrofit.create(BluePhoneApi.class);
+//    Call<List<Token>> call = bluePhoneApi.getBluePhonesJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.BLUE_PHONE);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: bluephone north: " + t.getMessage());
+//      }
+//    });
+//  }
+//
+//  private void fillBluephoneSouthData() {
+//
+//    BluePhoneSouthApi bluePhoneSouthApi = retrofit.create(BluePhoneSouthApi.class);
+//    Call<List<Token>> call = bluePhoneSouthApi.getBluePhonesSouthJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.BLUE_PHONE);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: bluephone south: " + t.getMessage(), t);
+//      }
+//    });
+//  }
+//
+//  private void fillBuildingData() {
+//
+//    BuildingApi buildingApi = retrofit.create(BuildingApi.class);
+//    Call<List<Token>> call = buildingApi.getBuildingsJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.BUILDING);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: building " + t.getMessage());
+//        fillBuildingData();
+//      }
+//    });
+//  }
+//
+//  private void fillComputerPodData() {
+//
+//    ComputerPodApi computerPodApi = retrofit.create(ComputerPodApi.class);
+//    Call<List<Token>> call = computerPodApi.getComputerPodsJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.COMPUTER_POD);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: computer pod" + t.getMessage());
+//        fillComputerPodData();
+//      }
+//    });
+//  }
+//
+//  private void fillDiningData() {
+//
+//    DiningApi diningApi = retrofit.create(DiningApi.class);
+//    Call<List<Token>> call = diningApi.getDiningJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.DINING);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: dining" + t.getMessage());
+//        fillDiningData();
+//      }
+//    });
+//  }
+//
+//  private void fillHealthyVendData() {
+//
+//    HealthyVendingApi healthyVendingApi = retrofit.create(HealthyVendingApi.class);
+//    Call<List<Token>> call = healthyVendingApi.getHealthyVendingJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.HEALTHY_VENDING);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: healthy vending" + t.getMessage());
+//        fillHealthyVendData();
+//      }
+//    });
+//  }
+//
+//  private void fillLibrariesData() {
+//
+//    LibrariesApi librariesApi = retrofit.create(LibrariesApi.class);
+//    Call<List<Token>> call = librariesApi.getLibrariesJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.LIBRARY);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: libraries " + t.getMessage());
+//        fillLibrariesData();
+//      }
+//    });
+//  }
+//
+//  private void fillMeterParkingData() {
+//
+//    MeteredParkingApi meteredParkingApi = retrofit.create(MeteredParkingApi.class);
+//    Call<List<Token>> call = meteredParkingApi.getMeteredParkingJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.METERED_PARKING);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: parking " + t.getMessage());
+//        fillMeterParkingData();
+//      }
+//    });
+//  }
+//
+//  private void fillRestroomsData() {
+//    Retrofit retrofit3 = new Retrofit.Builder()
+//        .baseUrl("https://datastore.unm.edu/locations/")
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .build();
+//    RestroomsApi restroomsApi = retrofit3.create(RestroomsApi.class);
+//    Call<List<Token>> call = restroomsApi.getRestroomsJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.RESTROOM);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: restrooms " + t.getMessage());
+//        fillRestroomsData();
+//      }
+//    });
+//  }
+//
+//  private void fillShuttleData() {
+//    Retrofit retrofitShuttle = new Retrofit.Builder()
+//        .baseUrl("https://datastore.unm.edu/locations/")
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .build();
+//    ShuttlesApi shuttlesApi = retrofitShuttle.create(ShuttlesApi.class);
+//    Call<List<Token>> call = shuttlesApi.getShuttlesJson();
+//    call.enqueue(new Callback<List<Token>>() {
+//      @Override
+//      public void onResponse(@NonNull Call<List<Token>> call,
+//          @NonNull Response<List<Token>> response) {
+//        if (!response.isSuccessful()) {
+//          Log.d(TAG, "onResponse: code " + response.code());
+//          return;
+//        }
+//        List<Token> tokensFromApi = response.body();
+//        for (Token token :
+//            tokensFromApi) {
+//          token.setTokenType(TokenType.SHUTTLE_STOP);
+//          token = TokenPrepper.prep(Main2Activity.this, token);
+//        }
+//        Token[] tokenArr = tokensFromApi.toArray(new Token[0]);
+//        new AddTask().execute(tokenArr);
+//      }
+//
+//      @Override
+//      public void onFailure(Call<List<Token>> call, Throwable t) {
+//        Log.d(TAG, "onFailure: shuttle" + t.getMessage());
+//        fillShuttleData();
+//      }
+//    });
+//  }
 
-    BluePhoneApi bluePhoneApi = retrofit.create(BluePhoneApi.class);
-    Call<List<Token>> call = bluePhoneApi.getBluePhonesJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
+
+  public void fillDBwithAPI(final Service service) {
+
+
+      Call<List<Token>> call = service.get();
+      call.enqueue(new Callback<List<Token>>() {
+        @Override
+        public void onResponse(@NonNull Call<List<Token>> call,
+            @NonNull Response<List<Token>> response) {
+          if (!response.isSuccessful()) {
+            Log.d(TAG, "onResponse: code " + response.code());
+            return;
+          }
+          List<Token> tokensFromApi = response.body();
+          if(tokensFromApi!=null){
+            for (Token token :
+                tokensFromApi) {
+              token.setTokenType(getServiceTokenType(service));
+              token = TokenPrepper.prep(Main2Activity.this, token);
+            }
+            Token[] tokenArr = tokensFromApi.toArray(new Token[0]);
+            new AddTask().execute(tokenArr);
+          }
         }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.BLUE_PHONE);
-          token = TokenPrepper.prep(Main2Activity.this, token);
+
+        @Override
+        public void onFailure(Call<List<Token>> call, Throwable t) {
+          Log.d(TAG, "onFailure: shuttle" + t.getMessage());
+          fillDBwithAPI(service);
         }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: bluephone north: " + t.getMessage());
-      }
-    });
-  }
-
-  private void fillBluephoneSouthData() {
-
-    BluePhoneSouthApi bluePhoneSouthApi = retrofit.create(BluePhoneSouthApi.class);
-    Call<List<Token>> call = bluePhoneSouthApi.getBluePhonesSouthJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.BLUE_PHONE);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: bluephone south: " + t.getMessage(), t);
-      }
-    });
-  }
-
-  private void fillBuildingData() {
-
-    BuildingApi buildingApi = retrofit.create(BuildingApi.class);
-    Call<List<Token>> call = buildingApi.getBuildingsJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.BUILDING);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: building " + t.getMessage());
-        fillBuildingData();
-      }
-    });
-  }
-
-  private void fillComputerPodData() {
-
-    ComputerPodApi computerPodApi = retrofit.create(ComputerPodApi.class);
-    Call<List<Token>> call = computerPodApi.getComputerPodsJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.COMPUTER_POD);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: computer pod" + t.getMessage());
-        fillComputerPodData();
-      }
-    });
-  }
-
-  private void fillDiningData() {
-
-    DiningApi diningApi = retrofit.create(DiningApi.class);
-    Call<List<Token>> call = diningApi.getDiningJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.DINING);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: dining" + t.getMessage());
-        fillDiningData();
-      }
-    });
-  }
-
-  private void fillHealthyVendData() {
-
-    HealthyVendingApi healthyVendingApi = retrofit.create(HealthyVendingApi.class);
-    Call<List<Token>> call = healthyVendingApi.getHealthyVendingJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.HEALTHY_VENDING);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: healthy vending" + t.getMessage());
-        fillHealthyVendData();
-      }
-    });
-  }
-
-  private void fillLibrariesData() {
-
-    LibrariesApi librariesApi = retrofit.create(LibrariesApi.class);
-    Call<List<Token>> call = librariesApi.getLibrariesJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.LIBRARY);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: libraries " + t.getMessage());
-        fillLibrariesData();
-      }
-    });
-  }
-
-  private void fillMeterParkingData() {
-
-    MeteredParkingApi meteredParkingApi = retrofit.create(MeteredParkingApi.class);
-    Call<List<Token>> call = meteredParkingApi.getMeteredParkingJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.METERED_PARKING);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: parking " + t.getMessage());
-        fillMeterParkingData();
-      }
-    });
-  }
-
-  private void fillRestroomsData() {
-    Retrofit retrofit3 = new Retrofit.Builder()
-        .baseUrl("https://datastore.unm.edu/locations/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build();
-    RestroomsApi restroomsApi = retrofit3.create(RestroomsApi.class);
-    Call<List<Token>> call = restroomsApi.getRestroomsJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(Call<List<Token>> call, Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.RESTROOM);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[tokensFromApi.size()]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: restrooms " + t.getMessage());
-        fillRestroomsData();
-      }
-    });
-  }
-
-  private void fillShuttleData() {
-    Retrofit retrofitShuttle = new Retrofit.Builder()
-        .baseUrl("https://datastore.unm.edu/locations/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build();
-    ShuttlesApi shuttlesApi = retrofitShuttle.create(ShuttlesApi.class);
-    Call<List<Token>> call = shuttlesApi.getShuttlesJson();
-    call.enqueue(new Callback<List<Token>>() {
-      @Override
-      public void onResponse(@NonNull Call<List<Token>> call,
-          @NonNull Response<List<Token>> response) {
-        if (!response.isSuccessful()) {
-          Log.d(TAG, "onResponse: code " + response.code());
-          return;
-        }
-        List<Token> tokensFromApi = response.body();
-        for (Token token :
-            tokensFromApi) {
-          token.setTokenType(TokenType.SHUTTLE_STOP);
-          token = TokenPrepper.prep(Main2Activity.this, token);
-        }
-        Token[] tokenArr = tokensFromApi.toArray(new Token[0]);
-        new AddTask().execute(tokenArr);
-      }
-
-      @Override
-      public void onFailure(Call<List<Token>> call, Throwable t) {
-        Log.d(TAG, "onFailure: shuttle" + t.getMessage());
-        fillShuttleData();
-      }
-    });
-  }
+      });
 
 
-  public void fillDBwithAPI() {
-    retrofit = new Retrofit.Builder()
-        .baseUrl("https://datastore.unm.edu/locations/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build();
-    fillBluephoneData();
-    fillBluephoneSouthData();
-    fillBuildingData();
-    fillComputerPodData();
-    fillDiningData();
-    fillHealthyVendData();
-    fillLibrariesData();
-    fillMeterParkingData();
-    fillRestroomsData();
-    fillShuttleData();
-    //todo:  create a single method to fill the DB for a particular call, and call it multiple times with new params rather than a bunch of methods and calling them all
+
+//    fillBluephoneData();
+//    fillBluephoneSouthData();
+//    fillBuildingData();
+//    fillComputerPodData();
+//    fillDiningData();
+//    fillHealthyVendData();
+//    fillLibrariesData();
+//    fillMeterParkingData();
+//    fillRestroomsData();
+//    fillShuttleData();
 //    apiCall = 0;
 //    retrofit = new Retrofit.Builder()
 //        .baseUrl("https://datastore.unm.edu/locations/")
@@ -718,8 +778,30 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 //    });
   }
 
+  private TokenType getServiceTokenType(Service service) {
+    if(service instanceof BluePhoneApi || service instanceof BluePhoneSouthApi){
+      return TokenType.BLUE_PHONE;
+    }else if(service instanceof BuildingApi){
+      return TokenType.BUILDING;
+    }else if(service instanceof ComputerPodApi){
+      return TokenType.COMPUTER_POD;
+    }else if(service instanceof DiningApi){
+      return TokenType.DINING;
+    }else if(service instanceof  HealthyVendingApi){
+      return TokenType.HEALTHY_VENDING;
+    }else if(service instanceof LibrariesApi){
+      return TokenType.LIBRARY;
+    }else if(service instanceof MeteredParkingApi){
+      return TokenType.METERED_PARKING;
+    }else if(service instanceof  RestroomsApi){
+      return TokenType.RESTROOM;
+    }else{
+      return TokenType.SHUTTLE_STOP;
+    }
+  }
+
   public void fillDBwithTest() {
-    rng = new Random();
+    Random rng = new Random();
     List<Token> prepopulateList = new LinkedList<>();
     TokenType tempType = TokenType.BUILDING;
     for (int i = 0; i < TOTAL_TYPES; i++) {
@@ -886,6 +968,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   @Override
   public void callMapAsync(SupportMapFragment supportMapFragment) {
     supportMapFragment.getMapAsync(Main2Activity.this);
+
   }
 
   @Override
@@ -910,6 +993,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     MapsFragment mapsFragment = new MapsFragment();
     mGoToLocation = new LatLng(item.getMLatitude(), item.getMLongitude());
     mGoToLocationTitle = item.getTitle();
+
     try {
       swapFrags(mapsFragment, item);
     } catch (CloneNotSupportedException e) {
@@ -959,6 +1043,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   @Override
   public void onMapReady(GoogleMap googleMap) {
+    if(mGeoApiContext == null){
+      mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_maps_key)).build();
+    }
     myMap = googleMap;
     LatLng userLoc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
     myMap.addMarker(new MarkerOptions()
@@ -967,6 +1054,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     myMap.addMarker(new MarkerOptions()
     .position(mGoToLocation)
     .title(mGoToLocationTitle));
+    calculateDirections();
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
@@ -983,6 +1071,75 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     myMap.setMyLocationEnabled(true);
     myMap.moveCamera(CameraUpdateFactory.newLatLng(userLoc));
     myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
+  }
+
+  //mostly from coding with mitch
+  private void calculateDirections(){
+    Log.d(TAG, "calculateDirections: calculating directions.");
+
+    com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(
+        mGoToLocation.latitude,
+        mGoToLocation.longitude
+    );
+    DirectionsApiRequest directions = new DirectionsApiRequest(mGeoApiContext);
+    directions.mode(TravelMode.WALKING);
+    directions.alternatives(true);
+    directions.origin(
+        new com.google.maps.model.LatLng(
+            mCurrentLocation.getLatitude(),
+            mCurrentLocation.getLongitude()
+        )
+    );
+    Log.d(TAG, "calculateDirections: destination: " + destination.toString());
+    directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
+      @Override
+      public void onResult(DirectionsResult result) {
+        Log.d(TAG, "calculateDirections: routes: " + result.routes[0].toString());
+        Log.d(TAG, "calculateDirections: duration: " + result.routes[0].legs[0].duration);
+        Log.d(TAG, "calculateDirections: distance: " + result.routes[0].legs[0].distance);
+        Log.d(TAG, "calculateDirections: geocodedWayPoints: " + result.geocodedWaypoints[0].toString());
+        addPolylinesToMap(result);
+      }
+
+      @Override
+      public void onFailure(Throwable e) {
+        Log.e(TAG, "calculateDirections: Failed to get directions: " + e.getMessage() );
+
+      }
+    });
+  }
+
+  //from coding with mitch
+  private void addPolylinesToMap(final DirectionsResult result){
+    //must use Handler and Looper.getMainLooper to use main thread to make changes to google map
+    new Handler(Looper.getMainLooper()).post(new Runnable() {
+      @Override
+      public void run() {
+        Log.d(TAG, "run: result routes: " + result.routes.length);
+
+        for(DirectionsRoute route: result.routes){
+          Log.d(TAG, "run: leg: " + route.legs[0].toString());
+          List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
+
+          List<LatLng> newDecodedPath = new ArrayList<>();
+
+          // This loops through all the LatLng coordinates of ONE polyline.
+          for(com.google.maps.model.LatLng latLng: decodedPath){
+
+//                        Log.d(TAG, "run: latlng: " + latLng.toString());
+
+            newDecodedPath.add(new LatLng(
+                latLng.lat,
+                latLng.lng
+            ));
+          }
+          Polyline polyline = myMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
+          polyline.setColor(ContextCompat.getColor(Main2Activity.this, R.color.darkGray));
+          polyline.setClickable(true);
+
+        }
+      }
+    });
   }
 
   private void setCameraView(){
