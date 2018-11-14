@@ -29,8 +29,6 @@ public class SearchFragment extends Fragment {
   public interface SearchFragListener {
 
     List<Token> getTokensList();
-
-    boolean isTestData();
   }
 
   private static final String TAG = "SearchFragment";

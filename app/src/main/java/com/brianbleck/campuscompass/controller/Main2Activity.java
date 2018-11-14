@@ -133,6 +133,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private HashMap<String, TokenType> serviceTypeMap;
   private int retries;
 
+  /**
+   * Initializes Database, Initializes Views, Initializes Data, and Initializes Location callback.
+   *
+   * @param savedInstanceState
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -140,9 +145,14 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     initDB();
     initViews();
     initData();
-    initFields();
+    initLoc();
   }
 
+  /**
+   * Checks to make sure permission is granted for location information and gps information.
+   * If permissions are needed, begins the process to acquire permissions.
+   * If permissions are granted, starts Location updates.
+   */
   @Override
   protected void onResume() {
     super.onResume();
@@ -155,6 +165,58 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Inflates custom toolbar menu.
+   * @param menu
+   * @return boolean
+   */
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.toolbar_menu, menu);
+    return true;
+  }
+
+  /**
+   * Switches on toolbar menu item pressed.
+   * @param item
+   * @return boolean
+   */
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.menu_home:
+        swapFrags(new MainMenuFragment());
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+    return true;
+  }
+
+  /**
+   * Initializes the database.
+   */
+  @Override
+  protected void onStart() {
+    super.onStart();
+    initDB();
+  }
+
+  /**
+   * Removes reference to the database.
+   */
+  @Override
+  protected void onStop() {
+    database = null;
+    CampusInfoDB.forgetInstance();
+    super.onStop();
+
+  }
+
+  /**
+   * Stops Location updates.
+   */
   @Override
   protected void onPause() {
     super.onPause();
@@ -181,7 +243,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     });
   }
 
-  private void initFields() {
+  private void initLoc() {
     createLocationRequest();
     mLocationCallback = new LocationCallback() {
       @Override
@@ -274,6 +336,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         null /* Looper */);
   }
 
+  /**
+   * Defines a LocationRequest object that is stored in a field variable.
+   */
   protected void createLocationRequest() {
     mLocationRequest = new LocationRequest();
     mLocationRequest.setInterval(UPDATE_INTERVAL_MS);
@@ -322,6 +387,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     alert.show();
   }
 
+  /**
+   * Determines whether gps is enabled on the device.
+   * @return boolean
+   */
   public boolean isMapsEnabled() {//determines whether gps is enabled on the device
     final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -350,6 +419,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Determines whether google play services can be used on the device.
+   * @return boolean
+   */
   public boolean isServicesOK() {//this process determines whether google play services can be used on device
     Log.d(TAG, getString(R.string.check_google_svc_version));
 
@@ -372,6 +445,12 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     return false;
   }
 
+  /**
+   * Handles the result from a location permission request.
+   * @param requestCode If requestCode is for requesting fine location access, handle it.
+   * @param permissions An array of String containing the permissions.
+   * @param grantResults An array of int containing the grant results.
+   */
   @Override
   public void onRequestPermissionsResult(int requestCode,
       @NonNull String permissions[],
@@ -388,6 +467,12 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   *
+   * @param requestCode
+   * @param resultCode
+   * @param data
+   */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -401,10 +486,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         }
       }
     }
-
   }
 
-  public void fillDBwithAPI(final String endPoint) {
+  private void fillDBwithAPI(final String endPoint) {
       Service service = retrofit.create(Service.class);
       Call<List<Token>> call = service.get(endPoint);
       call.enqueue(new Callback<List<Token>>() {
@@ -462,7 +546,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     return TokenType.BUILDING;
   }
 
-  public void fillDBwithTest() {
+  private void fillDBwithTest() {
     Random rng = new Random();
     List<Token> prepopulateList = new LinkedList<>();
     TokenType tempType = TokenType.BUILDING;
@@ -478,6 +562,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     new AddTask().execute(tokenArr);
   }
 
+  /**
+   * Swaps the passed Fragment into the fragment container, to bring it into view.
+   * @param fragIn
+   */
   protected void swapFrags(Fragment fragIn) {
     if (fragIn == null) {
       return;
@@ -487,6 +575,13 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         .commit();
   }
 
+  /**
+   * Swaps the Fragment parameter into the fragment container, to bring it into view.
+   * Uses the int parameter to set a new value for callingViewId, to keep track of which view
+   * the user chose to use.
+   * @param fragIn Fragment
+   * @param callingViewId int
+   */
   protected void swapFrags(Fragment fragIn, int callingViewId) {
     this.callingViewId = callingViewId;
     if (fragIn == null) {
@@ -498,6 +593,13 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     swapFrags(fragIn);
   }
 
+  /**
+   * Swaps the Fragment parameter into the fragment container, to bring it into view.
+   * Uses the Token parameter to keep track of which Token the user wants more info on.
+   * @param fragIn Fragment
+   * @param item Token
+   * @throws CloneNotSupportedException
+   */
   protected void swapFrags(Fragment fragIn, Token item) throws CloneNotSupportedException {
     targetItem = (Token) item.clone();
     if (fragIn == null) {
@@ -509,15 +611,27 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     swapFrags(fragIn);
   }
 
+  /**
+   * Getter for callingViewId, which is the view representation of which TokenType the user wants.
+   * @return int
+   */
   public int getCallingViewId() {
     return callingViewId;
   }
 
+  /**
+   * Getter for targetItem, which is the Token the user has requested more information for.
+   * @return Token
+   */
   @Override
   public Token getTargetItem() {
     return targetItem;
   }
 
+  /**
+   * Setter for targetItem, which is the Token the user has requested more information for.
+   * @param theNewTarget
+   */
   public void setTargetItem(Token theNewTarget) {
     this.targetItem = null;
     this.targetItem = theNewTarget;
@@ -565,75 +679,61 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.toolbar_menu, menu);
-    return true;
-  }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.menu_home:
-        swapFrags(new MainMenuFragment());
-        break;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-    return true;
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-    initDB();
-  }
-
-  @Override
-  protected void onStop() {
-    database = null;
-    CampusInfoDB.forgetInstance();
-    super.onStop();
-
-  }
-
+  /**
+   * Method to sort the private field dbTokens using Collections.sort().
+   */
   protected void sortDBTokens() {
     Collections.sort(dbTokens, new Comparator<Token>() {
       @Override
       public int compare(Token o1, Token o2) {
-        return o1.getDistance()-o2.getDistance();
+        return (Double.compare(o1.getDistance(), o2.getDistance()));
       }
     });
   }
 
+  /**
+   * Sets a reference to the most recently called InfoPopupFrag object.
+   * @param infoFrag InfoPopupFrag
+   */
   @Override
   public void setParentRefToInfoFrag(InfoPopupFrag infoFrag) {
     this.infoPopupFrag = infoFrag;
   }
 
+  /**
+   * Sets a reference to the most recently called MapsFragment.
+   * @param mapsFrag MapsFragment
+   */
   @Override
   public void setMainRefMapsFrag(MapsFragment mapsFrag) {
     this.mapsFragment = mapsFrag;
 
   }
 
+  /**
+   * Calls getMapAsync on the SupportMapFragment parameter
+   * @param supportMapFragment SupportMapFragment
+   */
   @Override
   public void callMapAsync(SupportMapFragment supportMapFragment) {
     supportMapFragment.getMapAsync(Main2Activity.this);
-
   }
 
+  /**
+   * Getter for dbTokens.
+   * @return List of Token
+   */
   @Override
   public List<Token> getTokensList() {
     return dbTokens;
   }
 
-  @Override
-  public boolean isTestData() {
-    return SHOULD_FILL_DB_W_TEST;
-  }
-
+  /**
+   * Method to swap fragments to a SearchFragment.  Uses the int parameter to query the database for
+   * the correct list of Tokens that will be passed to a recyclerview in SearchFragment.
+   * @param iD int
+   */
   @Override
   public void goToSearchFrag(int iD) {
     searchFragment = getSearchFrag();
@@ -641,12 +741,16 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     swapFrags(searchFragment, iD);
   }
 
+  /**
+   * Method to swap fragments to a MapsFragment. Uses the Token parameter to add a marker to the map
+   * that user wants directions to.
+   * @param item Token
+   */
   @Override
   public void goToMapFrag(Token item) {
     MapsFragment mapsFragment = new MapsFragment();
     mGoToLocation = new LatLng(item.getMLatitude(), item.getMLongitude());
     mGoToLocationTitle = item.getTitle();
-
     try {
       swapFrags(mapsFragment, item);
     } catch (CloneNotSupportedException e) {
@@ -684,7 +788,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   }
 
-  public void setTokenDistances() {
+  private void setTokenDistances() {
     for (Token token :
         dbTokens) {
       Location tempLoc = mCurrentLocation;
@@ -694,6 +798,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Method used by Google Maps API to supply a GoogleMap object.  Markers and user location is set
+   * onto the map.
+   * @param googleMap GoogleMap
+   */
   @Override
   public void onMapReady(GoogleMap googleMap) {
     if(mGeoApiContext == null){
@@ -719,7 +828,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
   }
 
-  //mostly from coding with mitch
+  //thanks to Coding with Mitch YouTube for this framework for calculateDirections
   private void calculateDirections(){
     Log.d(TAG, "calculateDirections: calculating directions.");
 
@@ -749,7 +858,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     });
   }
 
-  //from coding with mitch
+  //Thanks to Coding with Mitch on YouTube for this framework
   private void addPolylinesToMap(final DirectionsResult result){
     //must use Handler and Looper.getMainLooper to use main thread to make changes to google map
     new Handler(Looper.getMainLooper()).post(new Runnable() {
