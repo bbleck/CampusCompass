@@ -33,17 +33,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.brianbleck.campuscompass.R;
-import com.brianbleck.campuscompass.model.api.BluePhoneApi;
-import com.brianbleck.campuscompass.model.api.BluePhoneSouthApi;
-import com.brianbleck.campuscompass.model.api.BuildingApi;
-import com.brianbleck.campuscompass.model.api.ComputerPodApi;
-import com.brianbleck.campuscompass.model.api.DiningApi;
-import com.brianbleck.campuscompass.model.api.HealthyVendingApi;
-import com.brianbleck.campuscompass.model.api.LibrariesApi;
-import com.brianbleck.campuscompass.model.api.MeteredParkingApi;
-import com.brianbleck.campuscompass.model.api.RestroomsApi;
 import com.brianbleck.campuscompass.model.api.Service;
-import com.brianbleck.campuscompass.model.api.ShuttlesApi;
 import com.brianbleck.campuscompass.model.db.CampusInfoDB;
 import com.brianbleck.campuscompass.model.entity.Token;
 import com.brianbleck.campuscompass.model.utility.TokenPrepper;
@@ -62,26 +52,20 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
 import com.google.maps.android.SphericalUtil;
-import com.google.android.gms.tasks.Task;
 import com.google.maps.internal.PolylineEncoding;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
@@ -90,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -105,6 +90,17 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     OnMapReadyCallback {
 
   private static final String TAG = "Main2Activity";
+
+  private static final String BLUE_PHONE_API = "bluephonesnorth.json";
+  private static final String BLUE_PHONE_SOUTH_API = "bluephonessouth.json";
+  private static final String BUILDING_API = "abqbuildings.json";
+  private static final String COMPUTER_POD_API = "computerpods.json";
+  private static final String DINING_API = "dining.json";
+  private static final String HEALTHY_VENDING_API = "healthyvending.json";
+  private static final String LIBRARIES_API = "libraries.json";
+  private static final String PARKING_API = "meteredparking.json";
+  private static final String RESTROOMS_API = "restrooms.json";
+  private static final String SHUTTLES_API = "nmshuttles.json";
 
   private FragmentManager fragmentManager;
   private FrameLayout fragContainer;
@@ -132,6 +128,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private LatLngBounds myMapBounds;
   private GeoApiContext mGeoApiContext;
   private List<Service> services;
+  private List<String> serviceEndPoints;
+  private HashMap<String, TokenType> serviceTypeMap;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -207,24 +205,61 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   private void initServices(){
+    serviceEndPoints.add(BLUE_PHONE_API);
+    serviceTypeMap.put(BLUE_PHONE_API, TokenType.BLUE_PHONE);
+
+    serviceEndPoints.add(BLUE_PHONE_SOUTH_API);
+    serviceTypeMap.put(BLUE_PHONE_SOUTH_API, TokenType.BLUE_PHONE);
+
+    serviceEndPoints.add(BUILDING_API);
+    serviceTypeMap.put(BUILDING_API, TokenType.BUILDING);
+
+    serviceEndPoints.add(COMPUTER_POD_API);
+    serviceTypeMap.put(COMPUTER_POD_API, TokenType.COMPUTER_POD);
+
+    serviceEndPoints.add(DINING_API);
+    serviceTypeMap.put(DINING_API, TokenType.DINING);
+
+    serviceEndPoints.add(HEALTHY_VENDING_API);
+    serviceTypeMap.put(HEALTHY_VENDING_API, TokenType.HEALTHY_VENDING);
+
+    serviceEndPoints.add(LIBRARIES_API);
+    serviceTypeMap.put(LIBRARIES_API, TokenType.LIBRARY);
+
+    serviceEndPoints.add(PARKING_API);
+    serviceTypeMap.put(PARKING_API, TokenType.METERED_PARKING);
+
+    serviceEndPoints.add(RESTROOMS_API);
+    serviceTypeMap.put(RESTROOMS_API, TokenType.RESTROOM);
+
+    serviceEndPoints.add(SHUTTLES_API);
+    serviceTypeMap.put(SHUTTLES_API, TokenType.SHUTTLE_STOP);
+
+
     retrofit = new Retrofit.Builder()
         .baseUrl("https://datastore.unm.edu/locations/")
         .addConverterFactory(GsonConverterFactory.create())
         .build();
-    services.add(retrofit.create(BluePhoneApi.class));
-    services.add(retrofit.create(BluePhoneSouthApi.class));
-    services.add(retrofit.create(BuildingApi.class));
-    services.add(retrofit.create(ComputerPodApi.class));
-    services.add(retrofit.create(DiningApi.class));
-    services.add(retrofit.create(HealthyVendingApi.class));
-    services.add(retrofit.create(LibrariesApi.class));
-    services.add(retrofit.create(MeteredParkingApi.class));
-    services.add(retrofit.create(RestroomsApi.class));
-    services.add(retrofit.create(ShuttlesApi.class));
+
+
+
+
+//    services.add(retrofit.create(BluePhoneApi.class));
+//    services.add(retrofit.create(BluePhoneSouthApi.class));
+//    services.add(retrofit.create(BuildingApi.class));
+//    services.add(retrofit.create(ComputerPodApi.class));
+//    services.add(retrofit.create(DiningApi.class));
+//    services.add(retrofit.create(HealthyVendingApi.class));
+//    services.add(retrofit.create(LibrariesApi.class));
+//    services.add(retrofit.create(MeteredParkingApi.class));
+//    services.add(retrofit.create(RestroomsApi.class));
+//    services.add(retrofit.create(ShuttlesApi.class));
   }
 
   private void initData() {
     dbTokens = new LinkedList<>();
+    serviceEndPoints = new LinkedList<>();
+    serviceTypeMap = new HashMap<>();
     targetItem = TokenPrepper.prep(this, new Token());
     fragmentManager = getSupportFragmentManager();
     fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -234,9 +269,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     if (SHOULD_FILL_DB_W_TEST) {
       fillDBwithTest();
     } else {
-      for (Service service :
-          services) {
-        fillDBwithAPI(service);
+      for (String endPoint :
+          serviceEndPoints) {
+        fillDBwithAPI(endPoint);
       }
     }
     swapFrags(new MainMenuFragment());
@@ -700,10 +735,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 //  }
 
 
-  public void fillDBwithAPI(final Service service) {
+  public void fillDBwithAPI(final String endPoint) {
 
-
-      Call<List<Token>> call = service.get();
+      Service service = retrofit.create(Service.class);
+      Call<List<Token>> call = service.get(endPoint);
       call.enqueue(new Callback<List<Token>>() {
         @Override
         public void onResponse(@NonNull Call<List<Token>> call,
@@ -716,7 +751,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
           if(tokensFromApi!=null){
             for (Token token :
                 tokensFromApi) {
-              token.setTokenType(getServiceTokenType(service));
+              token.setTokenType(getServiceTokenType(endPoint));
               token = TokenPrepper.prep(Main2Activity.this, token);
             }
             Token[] tokenArr = tokensFromApi.toArray(new Token[0]);
@@ -727,7 +762,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         @Override
         public void onFailure(Call<List<Token>> call, Throwable t) {
           Log.d(TAG, "onFailure: shuttle" + t.getMessage());
-          fillDBwithAPI(service);
+          fillDBwithAPI(endPoint);
         }
       });
 
@@ -778,26 +813,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 //    });
   }
 
-  private TokenType getServiceTokenType(Service service) {
-    if(service instanceof BluePhoneApi || service instanceof BluePhoneSouthApi){
-      return TokenType.BLUE_PHONE;
-    }else if(service instanceof BuildingApi){
-      return TokenType.BUILDING;
-    }else if(service instanceof ComputerPodApi){
-      return TokenType.COMPUTER_POD;
-    }else if(service instanceof DiningApi){
-      return TokenType.DINING;
-    }else if(service instanceof  HealthyVendingApi){
-      return TokenType.HEALTHY_VENDING;
-    }else if(service instanceof LibrariesApi){
-      return TokenType.LIBRARY;
-    }else if(service instanceof MeteredParkingApi){
-      return TokenType.METERED_PARKING;
-    }else if(service instanceof  RestroomsApi){
-      return TokenType.RESTROOM;
-    }else{
-      return TokenType.SHUTTLE_STOP;
+  private TokenType getServiceTokenType(String endPoint) {
+    if(serviceTypeMap.containsKey(endPoint)){
+      return serviceTypeMap.get(endPoint);
     }
+    return TokenType.BUILDING;
   }
 
   public void fillDBwithTest() {
