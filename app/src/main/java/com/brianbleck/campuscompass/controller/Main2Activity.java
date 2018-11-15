@@ -447,9 +447,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Handles the result from a location permission request.
-   * @param requestCode If requestCode is for requesting fine location access, handle it.
-   * @param permissions An array of String containing the permissions.
-   * @param grantResults An array of int containing the grant results.
+   * @param requestCode int
+   * @param permissions String[]
+   * @param grantResults int[]
    */
   @Override
   public void onRequestPermissionsResult(int requestCode,
@@ -468,10 +468,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   *
-   * @param requestCode
-   * @param resultCode
-   * @param data
+   *  Callback from activity asking for user to enable GPS permission.  If permission is granted,
+   *  then starts user Location updates.
+   * @param requestCode int
+   * @param resultCode int
+   * @param data Intent
    */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
