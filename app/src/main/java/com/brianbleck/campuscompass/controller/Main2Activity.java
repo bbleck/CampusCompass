@@ -54,6 +54,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnPolylineClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -88,7 +89,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Main2Activity extends AppCompatActivity implements SearchFragListener,
     MapsFragment.MapsFragmentListener,
     InfoPopupFrag.InfoPopupFragListener, MainMenuFragListener, SearchFragAdapterListener,
-    OnMapReadyCallback {
+    OnMapReadyCallback, OnPolylineClickListener {
 
   private static final String TAG = "Main2Activity";
 
@@ -759,6 +760,13 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  @Override
+  public void onPolylineClick(Polyline polyline) {
+    polyline.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
+    polyline.setZIndex(1);
+
+  }
+
   private class AddTask extends AsyncTask<Token, Void, Void> {
 
     @Override
@@ -827,6 +835,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     myMap.setMyLocationEnabled(true);
     myMap.moveCamera(CameraUpdateFactory.newLatLng(userLoc));
     myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
+    myMap.setOnPolylineClickListener(this);
   }
 
   //thanks to Coding with Mitch YouTube for this framework for calculateDirections
