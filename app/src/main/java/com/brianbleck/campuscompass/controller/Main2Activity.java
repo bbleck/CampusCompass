@@ -103,7 +103,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private static final String LIBRARIES_API = "libraries.json";
   private static final String PARKING_API = "meteredparking.json";
   private static final String RESTROOMS_API = "restrooms.json";
-  private static final String SHUTTLES_API = "nmshuttles.json";
+  private static final String SHUTTLES_API = "unmshuttles.json";
   private static final int UPDATE_INTERVAL_MS = 10000;
   private static final int FASTEST_INTERVAL_MS = 5000;
   private static boolean SHOULD_FILL_DB_W_TEST = false;
@@ -135,7 +135,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private List<String> serviceEndPoints;
   private HashMap<String, TokenType> serviceTypeMap;
   private int retries;
-  private List<Marker> mapMarkers;
+  private List<Marker> mapMarkers = new LinkedList<>();
 
   /**
    * Initializes Database, Initializes Views, Initializes Data, and Initializes Location callback.
@@ -196,6 +196,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     switch (item.getItemId()) {
       case R.id.menu_home:
         swapFrags(new MainMenuFragment());
+        if(searchFragment!=null){
+          searchFragment.onDestroy();
+        }
         break;
       default:
         return super.onOptionsItemSelected(item);
@@ -257,6 +260,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       @Override
       public void onClick(View v) {
         swapFrags(new MainMenuFragment());
+        if(searchFragment!=null){
+          searchFragment.onDestroy();
+        }
       }
     });
   }
@@ -274,7 +280,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         sortDBTokens();
         if (searchFragment != null) {
           if (searchFragment.getAdapter() != null) {
-            searchFragment.updateListInAdapter();
+//            searchFragment.updateListInAdapter();
           }
         }
       }
@@ -776,6 +782,24 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   @Override
+  public void beginMarkerUpdate(int position){
+    int first = 0;
+    if(position>3){
+      first = position - 3;
+    }
+    List<Token> visibles = new LinkedList<>();
+    List<Token> fullList = searchFragment.getListForRecycler();
+    int last = fullList.size() - 1;
+    if(position < last - 3){
+      last = position + 3;
+    }
+    for (int i = first; i < last; i++) {
+      visibles.add(fullList.get(i));
+    }
+    updateMapMarkers(visibles);
+  }
+
+  @Override
   public void onPolylineClick(Polyline polyline) {
     polyline.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
     polyline.setZIndex(1);
@@ -808,6 +832,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       setTokenDistances();
       sortDBTokens();
       searchFragment.updateListInAdapter();
+      searchFragment.redrawListInAdapter();
     }
 
   }

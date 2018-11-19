@@ -55,6 +55,14 @@ public class SearchFragment extends Fragment {
     return theView;
   }
 
+  @Override
+  public void onResume() {
+    super.onResume();
+    resetEditText();
+    updateListInAdapter();
+    redrawListInAdapter();
+  }
+
   private void initRecyclerView() {
     adapter = new SearchFragAdapter(getActivity(), listForRecycler);
     manager = new LinearLayoutManager(getContext());
@@ -116,6 +124,8 @@ public class SearchFragment extends Fragment {
       @Override
       public void onClick(View v) {
         resetEditText();
+        updateListInAdapter();
+        redrawListInAdapter();
       }
     });
     refineSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -147,18 +157,22 @@ public class SearchFragment extends Fragment {
   public void updateListInAdapter() {
     listForRecycler = new LinkedList<>();
     listForRecycler = searchFragListener.getTokensList();
-    List<Token> cleanedList = new LinkedList<>();
+    List<Token> cleanedTokensList = new LinkedList<>();
     for (int i = 0; i < listForRecycler.size(); i++) {
       if (listForRecycler.get(i).getMLatitude() == 0.0
           || listForRecycler.get(i).getMLongitude() == 0.0) {
         Log.d(TAG, "updateListInAdapter: cleaned a 0.0 long/lat");
       } else {
           listForRecycler.get(i).setDrawable(grabDrawable(listForRecycler.get(i)));
-        cleanedList.add(listForRecycler.get(i));
+        cleanedTokensList.add(listForRecycler.get(i));
       }
     }
-    adapter = new SearchFragAdapter(getActivity(), cleanedList);
+  }
+
+  public void redrawListInAdapter(){
+    adapter = new SearchFragAdapter(getActivity(), listForRecycler);
     manager = new LinearLayoutManager(getContext());
+    adapter.notifyDataSetChanged();
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(manager);
   }
@@ -222,5 +236,13 @@ public class SearchFragment extends Fragment {
 
   public SearchFragAdapter getAdapter() {
     return adapter;
+  }
+
+  public LinearLayoutManager getManager() {
+    return manager;
+  }
+
+  public List<Token> getListForRecycler() {
+    return listForRecycler;
   }
 }

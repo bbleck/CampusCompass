@@ -33,7 +33,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
   }
 
   public interface SearchFragAdapterListener {
-
+    void beginMarkerUpdate(int position);
     void goToMapFrag();
   }
 
@@ -81,6 +81,8 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
         startInfoPopup();
       }
     });
+    searchFragAdapterListener.beginMarkerUpdate(position);
+
   }
 
   private void startInfoPopup() {
