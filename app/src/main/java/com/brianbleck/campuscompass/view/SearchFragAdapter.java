@@ -34,7 +34,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
 
   public interface SearchFragAdapterListener {
 
-    void goToMapFrag(Token item);
+    void goToMapFrag();
   }
 
 
@@ -70,7 +70,8 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
       @Override
       public void onClick(View v) {
 //              Toast.makeText(mActivity.getBaseContext(), "Clicked Go", Toast.LENGTH_SHORT).show();
-        searchFragAdapterListener.goToMapFrag(listForRecycler.get(holder.getAdapterPosition()));
+//        searchFragAdapterListener.goToMapFrag(listForRecycler.get(holder.getAdapterPosition()));
+        //todo: send the user into google maps app for directions
       }
     });
     holder.infoButton.setOnClickListener(new View.OnClickListener() {

@@ -36,7 +36,7 @@ public class MapsFragment extends Fragment {
                 .findFragmentById(R.id.gm_map_frag);
       if (mapFragment == null) {
         mapFragment = new SupportMapFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container_2, mapFragment)
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container_2b, mapFragment)
             .commit();
       }
         mapsFragmentListener.callMapAsync(mapFragment);

@@ -59,6 +59,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -111,6 +112,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   private FragmentManager fragmentManager;
   private FrameLayout fragContainer;
+  private FrameLayout mapFragContainer;
   private Toolbar toolbar;
   private int callingViewId;
   private Token targetItem;
@@ -133,6 +135,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private List<String> serviceEndPoints;
   private HashMap<String, TokenType> serviceTypeMap;
   private int retries;
+  private List<Marker> mapMarkers;
 
   /**
    * Initializes Database, Initializes Views, Initializes Data, and Initializes Location callback.
@@ -147,6 +150,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     initViews();
     initData();
     initLoc();
+    initMapFrag();
+  }
+
+  private void initMapFrag() {
+    goToMapFrag();
   }
 
   /**
@@ -224,6 +232,14 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     stopLocationUpdates();
   }
 
+  private void toggleMapContainer(){
+    if(mapFragContainer.getVisibility()==View.VISIBLE){
+      mapFragContainer.setVisibility(View.GONE);
+    }else{
+      mapFragContainer.setVisibility(View.VISIBLE);
+    }
+  }
+
   private void stopLocationUpdates() {
     fusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
   }
@@ -235,6 +251,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private void initViews() {
     callingViewId = R.id.building;
     fragContainer = findViewById(R.id.frag_container_2);
+    mapFragContainer = findViewById(R.id.frag_container_2b);
     toolbar = findViewById(R.id.toolbar_main_2);
     toolbar.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -323,6 +340,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       }
     }
     swapFrags(new MainMenuFragment());
+
   }
 
   private void startLocationUpdates() {
@@ -572,9 +590,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     if (fragIn == null) {
       return;
     }
-    fragmentManager.beginTransaction()
-        .replace(fragContainer.getId(), fragIn)
-        .commit();
+      fragmentManager.beginTransaction()
+          .replace(fragContainer.getId(), fragIn)
+          .commit();
+    toggleMapContainer();
   }
 
   /**
@@ -589,9 +608,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     if (fragIn == null) {
       return;
     }
-    fragmentManager.beginTransaction()
-        .replace(fragContainer.getId(), fragIn)
-        .commit();
+//    fragmentManager.beginTransaction()
+//        .replace(fragContainer.getId(), fragIn)
+//        .commit();
     swapFrags(fragIn);
   }
 
@@ -607,9 +626,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     if (fragIn == null) {
       return;
     }
-    fragmentManager.beginTransaction()
-        .replace(fragContainer.getId(), fragIn)
-        .commit();
+//    fragmentManager.beginTransaction()
+//        .replace(fragContainer.getId(), fragIn)
+//        .commit();
     swapFrags(fragIn);
   }
 
@@ -746,18 +765,14 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   /**
    * Method to swap fragments to a MapsFragment. Uses the Token parameter to add a marker to the map
    * that user wants directions to.
-   * @param item Token
+   * @param
    */
   @Override
-  public void goToMapFrag(Token item) {
+  public void goToMapFrag() {
     MapsFragment mapsFragment = new MapsFragment();
-    mGoToLocation = new LatLng(item.getMLatitude(), item.getMLongitude());
-    mGoToLocationTitle = item.getTitle();
-    try {
-      swapFrags(mapsFragment, item);
-    } catch (CloneNotSupportedException e) {
-      //by design, do nothing.
-    }
+    fragmentManager.beginTransaction()
+        .replace(mapFragContainer.getId(), mapsFragment)
+        .commit();
   }
 
   @Override
@@ -818,14 +833,14 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_maps_key)).build();
     }
     myMap = googleMap;
-    LatLng userLoc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-    myMap.addMarker(new MarkerOptions()
-        .position(userLoc)
-        .title(getString(R.string.start_loc)));
-    myMap.addMarker(new MarkerOptions()
-    .position(mGoToLocation)
-    .title(mGoToLocationTitle));
-    calculateDirections();
+//    LatLng userLoc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+//    myMap.addMarker(new MarkerOptions()
+//        .position(userLoc)
+//        .title(getString(R.string.start_loc)));
+//    myMap.addMarker(new MarkerOptions()
+//    .position(mGoToLocation)
+//    .title(mGoToLocationTitle));
+//    calculateDirections();
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
@@ -833,10 +848,30 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       return;
     }
     myMap.setMyLocationEnabled(true);
-    myMap.moveCamera(CameraUpdateFactory.newLatLng(userLoc));
-    myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
-    myMap.setOnPolylineClickListener(this);
+
+//    myMap.setOnPolylineClickListener(this);
   }
+
+private void updateMapMarkers(List<Token> visible){
+  for (Marker marker :
+      mapMarkers) {
+    marker.remove();
+  }
+  mapMarkers.clear();
+  for (Token token :
+      visible) {
+    LatLng tempLatLng = new LatLng(token.getMLatitude(), token.getMLongitude());
+    mapMarkers.add(myMap.addMarker(new MarkerOptions()
+        .position(tempLatLng)
+        .title(token.getTitle())));
+  }
+  myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(visible.get(0).getMLatitude(), visible.get(0).getMLongitude())));
+  myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
+}
+
+private void rezoomMap(){
+
+}
 
   //thanks to Coding with Mitch YouTube for this framework for calculateDirections
   private void calculateDirections(){
