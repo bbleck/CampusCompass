@@ -87,6 +87,9 @@ import retrofit2.Retrofit;
 import retrofit2.Retrofit.Builder;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The main controller for the application.
+ */
 public class Main2Activity extends AppCompatActivity implements SearchFragListener,
     MapsFragment.MapsFragmentListener,
     InfoPopupFrag.InfoPopupFragListener, MainMenuFragListener, SearchFragAdapterListener,
@@ -138,9 +141,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private boolean isMainFrag = true;
 
   /**
-   * Initializes Database, initializes Views, initializes Data, and initializes location callback.
+   * Initializes {@link android.arch.persistence.room.Database}, initializes {@link View}, initializes data, and initializes location callback.
    *
-   * @param savedInstanceState contains information from a previous invokation of the class.
+   * @param savedInstanceState contains information from a previous invocation of the class.
    */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +161,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Checks to make sure permission is granted for location information and gps information.
+   * Checks to make sure permission is granted for location information and GPS information.
    * If permissions are needed, begins the process to acquire permissions.
    * If permissions are granted, starts location updates.
    */
@@ -182,7 +185,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Switches on toolbar menu item pressed.  A single potential selection that sends the user to the Main Menu.
+   * Switches on {@link Toolbar} {@link MenuItem} that has been pressed.  There is just a single potential selection, which sends the user to the Main Menu.
    * @param item the item that the user selected.
    * @return boolean true if this method handled the item selected event.
    */
@@ -200,7 +203,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Initializes the database.
+   * Initializes the {@link android.arch.persistence.room.Database}.
    */
   @Override
   protected void onStart() {
@@ -209,7 +212,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Removes reference to the database.
+   * Removes reference to the {@link android.arch.persistence.room.Database}.
    */
   @Override
   protected void onStop() {
@@ -228,13 +231,13 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     stopLocationUpdates();
   }
 
-  private void toggleMapContainer(){
-    if(mapFragContainer.getVisibility()==View.VISIBLE){
-      mapFragContainer.setVisibility(View.GONE);
-    }else{
-      mapFragContainer.setVisibility(View.VISIBLE);
-    }
-  }
+//  private void toggleMapContainer(){
+//    if(mapFragContainer.getVisibility()==View.VISIBLE){
+//      mapFragContainer.setVisibility(View.GONE);
+//    }else{
+//      mapFragContainer.setVisibility(View.VISIBLE);
+//    }
+//  }
 
   private void stopLocationUpdates() {
     fusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
@@ -353,7 +356,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Creates a LocationRequest object that is stored in a field variable.
+   * Creates a {@link LocationRequest} object that is stored in a field variable.
    */
   protected void createLocationRequest() {
     mLocationRequest = new LocationRequest();
@@ -404,7 +407,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Determines whether gps is enabled on the device.
+   * Determines whether GPS is enabled on the device.
    * @return boolean true if GPS is enabled on the device.
    */
   public boolean isMapsEnabled() {//determines whether gps is enabled on the device
@@ -436,7 +439,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Determines whether google play services can be used on the device.
+   * Determines whether Google Play Services can be used on the device.
    * @return boolean true if the user is clear to make map requests.
    */
   public boolean isServicesOK() {//this process determines whether google play services can be used on device
@@ -462,9 +465,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Handles the result from a location permission request.
+   * Handles the result from a permission request for user location.
    * @param requestCode used to ensure it was a request that can be handled by this method.
-   * @param permissions representation of permissions.
+   * @param permissions used by super.
    * @param grantResults representation of user grants of permission.
    */
   @Override
@@ -485,7 +488,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    *  Callback from activity asking for user to enable GPS permission.  If permission is granted,
-   *  then starts user Location updates.
+   *  then starts user location updates.
    * @param requestCode Used to ensure that this method can process the data.
    * @param resultCode Used by the call to super.
    * @param data Used by the call to super.
@@ -580,8 +583,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Swaps the passed Fragment into the fragment container, to bring it into view.
-   * @param fragIn The fragment that will be put into the fragment container.
+   * Swaps the passed {@link Fragment} into the fragment container, to bring it into view.
+   * @param fragIn the {@link Fragment} that will be put into the fragment container.
    */
   protected void swapFrags(Fragment fragIn) {
     if (fragIn == null) {
@@ -598,11 +601,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Swaps the Fragment parameter into the fragment container, to bring it into view.
-   * Uses the int parameter to set a new value for callingViewId, to keep track of which view
+   * Swaps the {@link Fragment} parameter into the fragment container, to bring it into view.
+   * Uses the int parameter to set a new value for callingViewId, to keep track of which {@link View}
    * the user chose to use.
-   * @param fragIn the fragment that will be put into the fragment container.
-   * @param callingViewId a reference to the icon the user clicked on.
+   * @param fragIn the {@link Fragment} that will be put into the fragment container.
+   * @param callingViewId a reference to the {@link View} the user clicked on.
    */
   protected void swapFrags(Fragment fragIn, int callingViewId) {
     this.callingViewId = callingViewId;
@@ -634,16 +637,16 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 //  }
 
   /**
-   * Getter for callingViewId, which is the view representation of which TokenType the user wants.
-   * @return the view that the user clicked on.
+   * Getter for callingViewId, which is the {@link View} representation of which {@link TokenType} the user wants.
+   * @return the {@link View} that the user clicked on.
    */
   public int getCallingViewId() {
     return callingViewId;
   }
 
   /**
-   * Getter for targetItem, which is the Token the user has requested more information for.
-   * @return Token the user has most recently selected.
+   * Getter for targetItem, which is the {@link Token} the user has requested more information for.
+   * @return {@link Token} the user has most recently selected.
    */
   @Override
   public Token getTargetItem() {
@@ -651,8 +654,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Setter for targetItem, which is the Token the user has requested more information for.
-   * @param theNewTarget Token the user has most recently selected.
+   * Setter for targetItem, which is the {@link Token} the user has requested more information for.
+   * @param theNewTarget {@link Token} the user has most recently selected.
    */
   public void setTargetItem(Token theNewTarget) {
     this.targetItem = null;
@@ -703,7 +706,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
 
   /**
-   * Method to sort the private field dbTokens using Collections.sort().
+   * Method to sort the private field dbTokens using {@link Collections} method to sort.
    */
   protected void sortDBTokens() {
     Collections.sort(dbTokens, new Comparator<Token>() {
@@ -715,8 +718,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Sets a reference to the most recently called InfoPopupFrag object.
-   * @param infoFrag a reference to the information popup fragment.
+   * Sets a reference to the most recently called {@link InfoPopupFrag} object.
+   * @param infoFrag a reference to a {@link InfoPopupFrag} object.
    */
   @Override
   public void setParentRefToInfoFrag(InfoPopupFrag infoFrag) {
@@ -724,8 +727,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Sets a reference to the most recently called MapsFragment.
-   * @param mapsFrag a reference to the maps fragment.
+   * Sets a reference to the most recently called {@link MapsFragment}.
+   * @param mapsFrag a reference to a {@link MapsFragment}.
    */
   @Override
   public void setMainRefMapsFrag(MapsFragment mapsFrag) {
@@ -734,7 +737,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Calls getMapAsync on the SupportMapFragment parameter
+   * Calls getMapAsync() on the {@link SupportMapFragment} parameter
    * @param supportMapFragment the object that getMapAsync() will be called on.
    */
   @Override
@@ -744,7 +747,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Getter for dbTokens.
-   * @return List of Token objects
+   * @return {@link List} of {@link Token} objects.
    */
   @Override
   public List<Token> getTokensList() {
@@ -752,11 +755,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Method to swap fragments to a SearchFragment.  Uses the int parameter to query the database for
-   * the correct list of Tokens that will be passed to a recyclerview in SearchFragment.
-   * @param iD a reference to the view the user clicked on.
+   * Method to swap to a {@link SearchFragment}.  Uses the integer parameter to query the {@link android.arch.persistence.room.Database} for
+   * the correct {@link List} of {@link Token} that will be passed to a {@link android.support.v7.widget.RecyclerView} in {@link SearchFragment}.
+   * @param iD a reference to the {@link View} the user clicked on.
    */
-  @Override
   public void goToSearchFrag(int iD) {
     searchFragment = getSearchFrag();
     setRVList(iD);
@@ -765,8 +767,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Method to swap fragments to a MapsFragment. Uses the Token parameter to add a marker to the map
-   * that user wants directions to.
+   * Method to swap to a {@link MapsFragment}. Uses the {@link Token} parameter to add a {@link Marker} to the {@link GoogleMap}.
    *
    */
   @Override
@@ -778,9 +779,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Populates a List of Token objects that represent the items that are visible to the user in the recyclerview list.
+   * Populates a {@link List} of {@link Token} objects that represent the items that are visible to the user in the {@link android.support.v7.widget.RecyclerView}.
    *
-   * @param position the position of the most recently bound item in the recyclerview.
+   * @param position the position of the most recently bound item in the {@link android.support.v7.widget.RecyclerView}.
    */
   @Override
   public void beginMarkerUpdate(int position){
@@ -842,9 +843,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Method used by Google Maps API to supply a GoogleMap object.  Markers and user location is set
+   * Method used by {@link GoogleMap} to supply a map object.  {@link Marker} and user location is set
    * onto the map.
-   * @param googleMap GoogleMap
+   * @param googleMap a map object.
    */
   @Override
   public void onMapReady(GoogleMap googleMap) {

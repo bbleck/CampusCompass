@@ -18,16 +18,19 @@ import android.widget.TextView;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.model.entity.Token;
 
+/**
+ * A class representing a dialog displaying information related to a Token object.
+ */
 public class InfoPopupFrag extends DialogFragment {
 
   private static final String TAG = "InfoPopupFrag";
 
+  /**
+   * An interface to communicate to parent instantiating activities.
+   */
   public interface InfoPopupFragListener {
 
     void setParentRefToInfoFrag(InfoPopupFrag infoFrag);
-
-    void goToSearchFrag(int iD);
-
     Token getTargetItem();
   }
 
@@ -58,6 +61,9 @@ public class InfoPopupFrag extends DialogFragment {
     initData();
   }
 
+  /**
+   * Gets a reference to a {@link Token} object, which is then used to populate {@link View} with data.
+   */
   public void initData() {
         theItem = null;
         theItem = infoPopupFragListener.getTargetItem();
@@ -70,13 +76,11 @@ public class InfoPopupFrag extends DialogFragment {
         itemAbbr.setText(theItem.getAbbr());
         String tempDesc = theItem.getDescription();
         if(tempDesc.contains("<br")){
-          Spanned htmlAsSpanned = Html.fromHtml(tempDesc);
+          Spanned htmlAsSpanned = Html.fromHtml(tempDesc, 32);
           itemDescription.setText(htmlAsSpanned);
         }else{
           itemDescription.setText(theItem.getDescription());
         }
-
-    //todo: set the info as needed
   }
 
   private void initViews(View theView) {
@@ -95,6 +99,10 @@ public class InfoPopupFrag extends DialogFragment {
     });
   }
 
+  /**
+   * Sets a reference to the instantiating class to call listener methods on.
+   * @param context the instantiating activity context.
+   */
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);

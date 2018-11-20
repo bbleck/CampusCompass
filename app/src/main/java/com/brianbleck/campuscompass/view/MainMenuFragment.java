@@ -15,6 +15,9 @@ import android.widget.TextView;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.Main2Activity;
 
+/**
+ * A fragment that displays the main menu of the activity.
+ */
 public class MainMenuFragment extends Fragment {
 
   private static final String TAG = "MainMenuFragment";
@@ -23,6 +26,9 @@ public class MainMenuFragment extends Fragment {
   private TextView[] textItems = new TextView[COUNT_SEARCHES];
   private MainMenuFragListener mainMenuFragListener;
 
+  /**
+   * An interface to communicate to parent instantiating activities.
+   */
   public interface MainMenuFragListener {
 
     void goToSearchFrag(int iD);
@@ -62,6 +68,11 @@ public class MainMenuFragment extends Fragment {
       });
     }
   }
+
+  /**
+   * Sets a reference to the instantiating class to call listener methods on.
+   * @param context the instantiating activity context.
+   */
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);

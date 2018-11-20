@@ -21,6 +21,9 @@ import com.brianbleck.campuscompass.model.entity.Token;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
+/**
+ * Describes an adapter for a {@link RecyclerView}.
+ */
 public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Holder> {
 
   private static final String TAG = "SearchFragAdapter";
@@ -29,16 +32,23 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
   private Activity mActivity;
   private SearchFragAdapterListener searchFragAdapterListener;
 
+  /**
+   * Constructor for {@link SearchFragAdapter}.
+   * @param mActivity the instantiating {@link Activity}.
+   * @param listForRecycler a {@link List} of {@Token} objects that will be used to populate a {@link RecyclerView}.
+   */
   public SearchFragAdapter(Activity mActivity, List<Token> listForRecycler) {
     this.mActivity = mActivity;
     this.listForRecycler = listForRecycler;
   }
 
+  /**
+   * An interface to communicate to parent instantiating activities.
+   */
   public interface SearchFragAdapterListener {
     void beginMarkerUpdate(int position);
     void goToMapFrag();
   }
-
 
   @NonNull
   @Override
@@ -54,25 +64,25 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     return new Holder(view);
   }
 
+  /**
+   * Binds data to a {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+   * @param holder object that holds all of the {@link View}.
+   * @param position the index in the {@link List} that is the source of data.
+   */
   @Override
   public void onBindViewHolder(@NonNull final Holder holder, int position) {
-//    if(listForRecycler.get(holder.getAdapterPosition()).getDrawable() == null){
-//      Picasso.get().load(listForRecycler.get(holder.getAdapterPosition()).getImage()).resize(90, 90)
-//          .centerCrop().into(holder.itemImage);
-//    }else{
-//      holder.itemImage.setImageDrawable(listForRecycler.get(position).getDrawable()); //set image
-//    }
-
     holder.itemImage.setImageDrawable(listForRecycler.get(position).getDrawable());
     holder.itemTitle.setText(listForRecycler.get(position).getTitle());
     String tempDistance = mActivity.getResources().getString(R.string.distance_away)
         + " " + listForRecycler.get(position).getDistance();
     holder.distance.setText(tempDistance);
     holder.goButton.setOnClickListener(new View.OnClickListener() {
+      /**
+       * Sends the user into the {@link com.google.android.gms.maps.GoogleMap} app for directions to the {@link android.location.Location} associated with the parameter.
+       * @param v a {@link View} that represents one location item in the {@link RecyclerView}.
+       */
       @Override
       public void onClick(View v) {
-//              Toast.makeText(mActivity.getBaseContext(), "Clicked Go", Toast.LENGTH_SHORT).show();
-//        searchFragAdapterListener.goToMapFrag(listForRecycler.get(holder.getAdapterPosition()));
         String directionsQuery = "google.navigation:q=" + listForRecycler.get(holder.getAdapterPosition()).getMLatitude().toString()
             + "," + listForRecycler.get(holder.getAdapterPosition()).getMLongitude().toString()
             + "&mode=w";
@@ -84,6 +94,10 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
       }
     });
     holder.infoButton.setOnClickListener(new View.OnClickListener() {
+      /**
+       * Opens a dialog with additional information related to the location associated with the parameter.
+       * @param v a {@link View} that represents one location item in the {@link RecyclerView}.
+       */
       @Override
       public void onClick(View v) {
         ((Main2Activity) mActivity).setTargetItem(listForRecycler.get(holder.getAdapterPosition()));
@@ -106,6 +120,9 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     return listForRecycler.size();
   }
 
+  /**
+   * Stores references to {@link View}.
+   */
   class Holder extends RecyclerView.ViewHolder {
 
     private ImageView itemImage;
@@ -124,11 +141,11 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     }
   }
 
-  public void updateTokenListItems(List<Token> updatedTokens){
-    final TokenDiffCallback tokenDiffCallback = new TokenDiffCallback(listForRecycler, updatedTokens);
-    final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(tokenDiffCallback);
-    this.listForRecycler.clear();
-    this.listForRecycler.addAll(updatedTokens);
-    diffResult.dispatchUpdatesTo(this);
-  }
+//  public void updateTokenListItems(List<Token> updatedTokens){
+//    final TokenDiffCallback tokenDiffCallback = new TokenDiffCallback(listForRecycler, updatedTokens);
+//    final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(tokenDiffCallback);
+//    this.listForRecycler.clear();
+//    this.listForRecycler.addAll(updatedTokens);
+//    diffResult.dispatchUpdatesTo(this);
+//  }
 }
