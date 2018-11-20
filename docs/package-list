@@ -1,0 +1,8 @@
+com.brianbleck.campuscompass
+com.brianbleck.campuscompass.controller
+com.brianbleck.campuscompass.model.api
+com.brianbleck.campuscompass.model.dao
+com.brianbleck.campuscompass.model.db
+com.brianbleck.campuscompass.model.entity
+com.brianbleck.campuscompass.model.utility
+com.brianbleck.campuscompass.view

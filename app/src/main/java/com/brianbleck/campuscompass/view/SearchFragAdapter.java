@@ -36,7 +36,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
    * Constructor for {@link SearchFragAdapter}.
    *
    * @param mActivity the instantiating {@link Activity}.
-   * @param listForRecycler a {@link List} of {@Token} objects that will be used to populate a
+   * @param listForRecycler a {@link List} of {@link Token} objects that will be used to populate a
    * {@link RecyclerView}.
    */
   public SearchFragAdapter(Activity mActivity, List<Token> listForRecycler) {
