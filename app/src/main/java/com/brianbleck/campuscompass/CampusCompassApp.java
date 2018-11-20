@@ -11,10 +11,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * {@link Application} class.
+ */
 public class CampusCompassApp extends Application {
 
 
-
+  /**
+   * The {@link android.arch.persistence.room.Database}.
+   */
   CampusInfoDB database;
 
 

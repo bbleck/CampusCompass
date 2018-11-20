@@ -13,6 +13,10 @@ import com.brianbleck.campuscompass.model.utility.TokenType;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Entity class for use by {@link android.arch.persistence.room.Room} and by {@link
+ * retrofit2.Retrofit}.
+ */
 @Entity
 public class Token implements Cloneable {
 
@@ -105,120 +109,265 @@ public class Token implements Cloneable {
     //todo: implement method
   }
 
+  /**
+   * Gets token type.
+   *
+   * @return the token type
+   */
   public TokenType getTokenType() {
     return tokenType;
   }
 
+  /**
+   * Sets token type.
+   *
+   * @param tokenType the token type
+   */
   public void setTokenType(TokenType tokenType) {
     this.tokenType = tokenType;
   }
 
+  /**
+   * Gets image.
+   *
+   * @return the image
+   */
   public String getImage() {
     return image;
   }
 
+  /**
+   * Sets image.
+   *
+   * @param image the image
+   */
   public void setImage(String image) {
     this.image = image;
     //todo:  create drawable object for URL if it is non null
   }
 
+  /**
+   * Gets distance.
+   *
+   * @return the distance
+   */
   public int getDistance() {
     return distance;
   }
 
+  /**
+   * Set distance.
+   *
+   * @param distance the distance
+   */
   public void setDistance(int distance){
     this.distance = distance;
   }
 
+  /**
+   * Gets link.
+   *
+   * @return the link
+   */
   public String getLink() {
     return link;
   }
 
+  /**
+   * Sets link.
+   *
+   * @param link the link
+   */
   public void setLink(String link) {
     this.link = link;
   }
 
+  /**
+   * Gets title.
+   *
+   * @return the title
+   */
   public String getTitle() {
     return title;
   }
 
+  /**
+   * Sets title.
+   *
+   * @param title the title
+   */
   public void setTitle(String title) {
     this.title = title;
   }
 
+  /**
+   * Gets description.
+   *
+   * @return the description
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * Sets description.
+   *
+   * @param description the description
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
+  /**
+   * Gets id.
+   *
+   * @return the id
+   */
   public String getId() {
     return id;
   }
 
+  /**
+   * Sets id.
+   *
+   * @param id the id
+   */
   public void setId(String id) {
     this.id = id;
   }
 
+  /**
+   * Gets drawable.
+   *
+   * @return the drawable
+   */
   public Drawable getDrawable() {
     return drawable;
   }
 
+  /**
+   * Sets drawable.
+   *
+   * @param drawable the drawable
+   */
   public void setDrawable(Drawable drawable) {
     this.drawable = drawable;
   }
 
+  /**
+   * Gets building num.
+   *
+   * @return the building num
+   */
   public String getBuildingNum() {
     return buildingNum;
   }
 
+  /**
+   * Sets building num.
+   *
+   * @param buildingNum the building num
+   */
   public void setBuildingNum(String buildingNum) {
     this.buildingNum = buildingNum;
   }
 
+  /**
+   * Gets abbr.
+   *
+   * @return the abbr
+   */
   public String getAbbr() {
     return abbr;
   }
 
+  /**
+   * Sets abbr.
+   *
+   * @param abbr the abbr
+   */
   public void setAbbr(String abbr) {
     this.abbr = abbr;
   }
 
+  /**
+   * Gets campus.
+   *
+   * @return the campus
+   */
   public String getCampus() {
     return campus;
   }
 
+  /**
+   * Sets campus.
+   *
+   * @param campus the campus
+   */
   public void setCampus(String campus) {
     this.campus = campus;
   }
 
+  /**
+   * Gets keywords.
+   *
+   * @return the keywords
+   */
   public String getKeywords() {
     return keywords;
   }
 
+  /**
+   * Sets keywords.
+   *
+   * @param keywords the keywords
+   */
   public void setKeywords(String keywords) {
     this.keywords = keywords;
   }
 
+  /**
+   * Gets raw longitude.
+   *
+   * @return the raw longitude
+   */
   public String getRawLongitude() {
     return rawLongitude;
   }
 
+  /**
+   * Sets raw longitude.
+   *
+   * @param rawLongitude the raw longitude
+   */
   public void setRawLongitude(String rawLongitude) {
     this.rawLongitude = rawLongitude;
   }
 
+  /**
+   * Gets raw latitude.
+   *
+   * @return the raw latitude
+   */
   public String getRawLatitude() {
     return rawLatitude;
   }
 
+  /**
+   * Sets raw latitude.
+   *
+   * @param rawLatitude the raw latitude
+   */
   public void setRawLatitude(String rawLatitude) {
     this.rawLatitude = rawLatitude;
   }
 
 
+  /**
+   * Gets m longitude.
+   *
+   * @return the m longitude
+   */
   public Double getMLongitude() {
     if(mLongitude ==null){
       if(getRawLongitude()!=null) {
@@ -234,11 +383,21 @@ public class Token implements Cloneable {
     return mLongitude;
   }
 
+  /**
+   * Sets m longitude.
+   *
+   * @param mLongitude the m longitude
+   */
   public void setMLongitude(Double mLongitude) {
     this.mLongitude = mLongitude;
   }
 
 
+  /**
+   * Gets m latitude.
+   *
+   * @return the m latitude
+   */
   public Double getMLatitude() {
     if(mLatitude ==null){
       if(getRawLatitude()!=null) {
@@ -254,6 +413,11 @@ public class Token implements Cloneable {
     return mLatitude;
   }
 
+  /**
+   * Sets m latitude.
+   *
+   * @param mLatitude the m latitude
+   */
   public void setMLatitude(Double mLatitude) {
     this.mLatitude = mLatitude;
   }

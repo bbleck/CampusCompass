@@ -30,7 +30,18 @@ public class InfoPopupFrag extends DialogFragment {
    */
   public interface InfoPopupFragListener {
 
+    /**
+     * Sets parent ref to info frag.
+     *
+     * @param infoFrag the info frag
+     */
     void setParentRefToInfoFrag(InfoPopupFrag infoFrag);
+
+    /**
+     * Gets target item.
+     *
+     * @return the target item
+     */
     Token getTargetItem();
   }
 
@@ -62,7 +73,8 @@ public class InfoPopupFrag extends DialogFragment {
   }
 
   /**
-   * Gets a reference to a {@link Token} object, which is then used to populate {@link View} with data.
+   * Gets a reference to a {@link Token} object, which is then used to populate {@link View} with
+   * data.
    */
   public void initData() {
         theItem = null;

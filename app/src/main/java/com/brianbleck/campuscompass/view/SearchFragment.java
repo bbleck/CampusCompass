@@ -24,10 +24,21 @@ import com.brianbleck.campuscompass.model.entity.Token;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * A {@link Fragment} that contains a {@link RecyclerView} representing a list of locations of interest.
+ */
 public class SearchFragment extends Fragment {
 
+  /**
+   * An interface to communicate to parent instantiating activities..
+   */
   public interface SearchFragListener {
 
+    /**
+     * Gets {@link List} of {@link Token}.
+     *
+     * @return the {@link List} of {@link Token}.
+     */
     List<Token> getTokensList();
   }
 
@@ -154,6 +165,9 @@ public class SearchFragment extends Fragment {
 
   }
 
+  /**
+   * Update list in adapter.
+   */
   public void updateListInAdapter() {
     listForRecycler = new LinkedList<>();
     listForRecycler = searchFragListener.getTokensList();
@@ -169,6 +183,9 @@ public class SearchFragment extends Fragment {
     }
   }
 
+  /**
+   * Redraw list in adapter.
+   */
   public void redrawListInAdapter(){
     adapter = new SearchFragAdapter(getActivity(), listForRecycler);
     manager = new LinearLayoutManager(getContext());
@@ -234,14 +251,29 @@ public class SearchFragment extends Fragment {
     return tempDrawable;
   }
 
+  /**
+   * Gets {@link SearchFragAdapter}.
+   *
+   * @return the {@link SearchFragAdapter}.
+   */
   public SearchFragAdapter getAdapter() {
     return adapter;
   }
 
+  /**
+   * Gets {@link LinearLayoutManager}
+   *
+   * @return the {@link LinearLayoutManager}
+   */
   public LinearLayoutManager getManager() {
     return manager;
   }
 
+  /**
+   * Gets {@link List} of {@link Token} for the {@link RecyclerView}.
+   *
+   * @return the {@link List} of {@link Token}.
+   */
   public List<Token> getListForRecycler() {
     return listForRecycler;
   }

@@ -11,6 +11,9 @@ import com.brianbleck.campuscompass.model.db.CampusInfoDB.Converters;
 import com.brianbleck.campuscompass.model.entity.Token;
 import com.brianbleck.campuscompass.model.utility.TokenType;
 
+/**
+ * Class that defines the {@link Database}.
+ */
 @Database(
     entities = {Token.class},
     version = 1,
@@ -25,6 +28,11 @@ public abstract class CampusInfoDB extends RoomDatabase {
 
   public abstract TokenDao getTokenDao();
 
+  /**
+   * Ensures that the class behaves as a singleton.
+   * @param context
+   * @return the singleton instance of the class.
+   */
   public synchronized static CampusInfoDB getInstance(Context context) {
     if (instance == null) {
       instance = Room.databaseBuilder(context.getApplicationContext(), CampusInfoDB.class, DB_NAME)
@@ -33,10 +41,16 @@ public abstract class CampusInfoDB extends RoomDatabase {
     return instance;
   }
 
+  /**
+   * Removes the reference to the singleton instance of the class.
+   */
   public synchronized static void forgetInstance() {
     instance = null;
   }
 
+  /**
+   * Contains converters for use by {@link Room}.
+   */
   public static class Converters{
 
     @TypeConverter

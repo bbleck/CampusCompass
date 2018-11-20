@@ -34,8 +34,10 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
 
   /**
    * Constructor for {@link SearchFragAdapter}.
+   *
    * @param mActivity the instantiating {@link Activity}.
-   * @param listForRecycler a {@link List} of {@Token} objects that will be used to populate a {@link RecyclerView}.
+   * @param listForRecycler a {@link List} of {@Token} objects that will be used to populate a
+   * {@link RecyclerView}.
    */
   public SearchFragAdapter(Activity mActivity, List<Token> listForRecycler) {
     this.mActivity = mActivity;
@@ -46,7 +48,17 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
    * An interface to communicate to parent instantiating activities.
    */
   public interface SearchFragAdapterListener {
+
+    /**
+     * Begin marker update.
+     *
+     * @param position the position
+     */
     void beginMarkerUpdate(int position);
+
+    /**
+     * Switch to the {@link MapsFragment}.
+     */
     void goToMapFrag();
   }
 
@@ -131,6 +143,11 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     private Button infoButton;
     private Button goButton;
 
+    /**
+     * Instantiates a new Holder.
+     *
+     * @param itemView the item view
+     */
     public Holder(@NonNull View itemView) {
       super(itemView);
       itemImage = itemView.findViewById(R.id.iv_search_item_image);
@@ -140,12 +157,4 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
       goButton = itemView.findViewById(R.id.btn_search_item_go);
     }
   }
-
-//  public void updateTokenListItems(List<Token> updatedTokens){
-//    final TokenDiffCallback tokenDiffCallback = new TokenDiffCallback(listForRecycler, updatedTokens);
-//    final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(tokenDiffCallback);
-//    this.listForRecycler.clear();
-//    this.listForRecycler.addAll(updatedTokens);
-//    diffResult.dispatchUpdatesTo(this);
-//  }
 }

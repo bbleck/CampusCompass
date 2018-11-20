@@ -7,10 +7,20 @@ import android.util.Log;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.model.entity.Token;
 
+/**
+ * Preps a {@link Token} prior to entry into the {@link android.arch.persistence.room.Database}.
+ */
 public class TokenPrepper {
 
   private static final String TAG = "TokenPrepper";
 
+  /**
+   * Constructor.
+   *
+   * @param activity the activity
+   * @param unprepped the {@link Token} to be prepped
+   * @return the prepped {@link Token}
+   */
   public static Token prep(Context activity, Token unprepped){
     Token prepped = new Token();
     fixTokenType(unprepped, prepped);

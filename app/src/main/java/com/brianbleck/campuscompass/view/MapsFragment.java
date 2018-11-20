@@ -13,7 +13,7 @@ import com.brianbleck.campuscompass.R;
 import com.google.android.gms.maps.SupportMapFragment;
 
 /**
- * A fragment that will display the map and related map information.
+ * A {@link Fragment} that will display the map and related map information.
  */
 public class MapsFragment extends Fragment {
 
@@ -25,8 +25,18 @@ public class MapsFragment extends Fragment {
    */
   public interface MapsFragmentListener {
 
+    /**
+     * Sets main reference to the {@link MapsFragment}.
+     *
+     * @param mapsFrag the {@link MapsFragment}.
+     */
     void setMainRefMapsFrag(MapsFragment mapsFrag);
 
+    /**
+     * Call mapAsync() on a {@link SupportMapFragment}.
+     *
+     * @param supportMapFragment the {@link SupportMapFragment}.
+     */
     void callMapAsync(SupportMapFragment supportMapFragment);
   }
 

@@ -21,6 +21,9 @@ import com.brianbleck.campuscompass.controller.Main2Activity;
 public class MainMenuFragment extends Fragment {
 
   private static final String TAG = "MainMenuFragment";
+  /**
+   * The constant COUNT_SEARCHES.
+   */
   public static final int COUNT_SEARCHES = 9;
   private ImageView[] imageItems = new ImageView[COUNT_SEARCHES];
   private TextView[] textItems = new TextView[COUNT_SEARCHES];
@@ -31,6 +34,11 @@ public class MainMenuFragment extends Fragment {
    */
   public interface MainMenuFragListener {
 
+    /**
+     * Go to search frag.
+     *
+     * @param iD the identifier for the {@link View} the user clicked on
+     */
     void goToSearchFrag(int iD);
   }
 
