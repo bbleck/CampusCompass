@@ -69,7 +69,7 @@ The app could be extended in the following ways:
 
 
 ## DDL
-''' SQL
+'''
 CREATE TABLE IF NOT EXISTS `Token`(
   `title` TEXT COLLATE NOCASE,
   `building_num` TEXT,
