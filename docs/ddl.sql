@@ -13,3 +13,7 @@
 --  `mLatitude` REAL,
 --  PRIMARY KEY(`token_id`)
 --);
+--
+--CREATE  INDEX `index_Token_title` ON `Token` (`title`);
+--
+--CREATE  INDEX `index_Token_token_type` ON `Token` (`token_type`);
