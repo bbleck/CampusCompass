@@ -583,7 +583,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Swaps the passed {@link Fragment} into the fragment container, to bring it into view.
+   * Swaps the passed {@link Fragment} into the fragment container, to bring it into view. Handles changing the visibility of the container for the map.  Handles changing the title according to the state of the app.
    * @param fragIn the {@link Fragment} that will be put into the fragment container.
    */
   protected void swapFrags(Fragment fragIn) {
@@ -595,8 +595,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
           .commit();
     if(!isMainFrag){
       mapFragContainer.setVisibility(View.VISIBLE);
+      setTitle(R.string.return_to_main_menu);
     }else{
       mapFragContainer.setVisibility(View.GONE);
+      setTitle(R.string.app_name);
     }
   }
 
