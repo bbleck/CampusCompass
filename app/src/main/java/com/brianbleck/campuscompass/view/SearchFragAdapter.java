@@ -1,6 +1,8 @@
 package com.brianbleck.campuscompass.view;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
@@ -71,7 +73,14 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
       public void onClick(View v) {
 //              Toast.makeText(mActivity.getBaseContext(), "Clicked Go", Toast.LENGTH_SHORT).show();
 //        searchFragAdapterListener.goToMapFrag(listForRecycler.get(holder.getAdapterPosition()));
-        //todo: send the user into google maps app for directions
+        String directionsQuery = "google.navigation:q=" + listForRecycler.get(holder.getAdapterPosition()).getMLatitude().toString()
+            + "," + listForRecycler.get(holder.getAdapterPosition()).getMLongitude().toString()
+            + "&mode=w";
+        Uri gmmIntentUri = Uri.parse(directionsQuery);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        mActivity.startActivity(mapIntent);
+
       }
     });
     holder.infoButton.setOnClickListener(new View.OnClickListener() {
