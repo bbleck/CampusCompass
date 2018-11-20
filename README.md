@@ -76,17 +76,22 @@ The app could be extended in the following ways:
 CREATE TABLE IF NOT EXISTS `Token`(
   `title` TEXT COLLATE NOCASE,
   `building_num` TEXT,
-  `abbr` TEXT,  
-  `campus` TEXT,  
-  `keywords` TEXT,  
-  `image` TEXT,  
-  `link` TEXT,  
-  `token_id` TEXT NOT NULL,  
-  `description` TEXT,  
+  `abbr` TEXT,
+  `campus` TEXT,
+  `keywords` TEXT,
+  `image` TEXT,
+  `link` TEXT,
+  `token_id` TEXT NOT NULL,
+  `description` TEXT,
   `token_type` INTEGER,
-  `mLongitude` REAL, 
+  `mLongitude` REAL,
   `mLatitude` REAL,
-  PRIMARY KEY(`token_id`) 
+  PRIMARY KEY(`token_id`)
+);
+
+CREATE  INDEX `index_Token_title` ON `Token` (`title`);
+
+CREATE  INDEX `index_Token_token_type` ON `Token` (`token_type`);
 );
 ```
 
