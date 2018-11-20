@@ -136,6 +136,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private HashMap<String, TokenType> serviceTypeMap;
   private int retries;
   private List<Marker> mapMarkers = new LinkedList<>();
+  private boolean isMainFrag = true;
 
   /**
    * Initializes Database, Initializes Views, Initializes Data, and Initializes Location callback.
@@ -195,10 +196,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.menu_home:
+        isMainFrag = true;
         swapFrags(new MainMenuFragment());
-        if(searchFragment!=null){
-          searchFragment.onDestroy();
-        }
         break;
       default:
         return super.onOptionsItemSelected(item);
@@ -259,10 +258,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     toolbar.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        isMainFrag = true;
         swapFrags(new MainMenuFragment());
-        if(searchFragment!=null){
-          searchFragment.onDestroy();
-        }
       }
     });
   }
@@ -599,7 +596,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       fragmentManager.beginTransaction()
           .replace(fragContainer.getId(), fragIn)
           .commit();
-    toggleMapContainer();
+    if(!isMainFrag){
+      mapFragContainer.setVisibility(View.VISIBLE);
+    }else{
+      mapFragContainer.setVisibility(View.GONE);
+    }
   }
 
   /**
@@ -765,6 +766,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   public void goToSearchFrag(int iD) {
     searchFragment = getSearchFrag();
     setRVList(iD);
+    isMainFrag = false;
     swapFrags(searchFragment, iD);
   }
 
@@ -784,14 +786,14 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   @Override
   public void beginMarkerUpdate(int position){
     int first = 0;
-    if(position>3){
-      first = position - 3;
+    if(position>2){
+      first = position - 2;
     }
     List<Token> visibles = new LinkedList<>();
     List<Token> fullList = searchFragment.getListForRecycler();
     int last = fullList.size() - 1;
-    if(position < last - 3){
-      last = position + 3;
+    if(position < last - 2){
+      last = position + 2;
     }
     for (int i = first; i < last; i++) {
       visibles.add(fullList.get(i));
