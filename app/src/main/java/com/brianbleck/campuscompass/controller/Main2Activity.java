@@ -90,10 +90,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Main2Activity extends AppCompatActivity implements SearchFragListener,
     MapsFragment.MapsFragmentListener,
     InfoPopupFrag.InfoPopupFragListener, MainMenuFragListener, SearchFragAdapterListener,
-    OnMapReadyCallback, OnPolylineClickListener {
+    OnMapReadyCallback{
 
   private static final String TAG = "Main2Activity";
-
   private static final String BLUE_PHONE_API = "bluephonesnorth.json";
   private static final String BLUE_PHONE_SOUTH_API = "bluephonessouth.json";
   private static final String BUILDING_API = "abqbuildings.json";
@@ -139,9 +138,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private boolean isMainFrag = true;
 
   /**
-   * Initializes Database, Initializes Views, Initializes Data, and Initializes Location callback.
+   * Initializes Database, initializes Views, initializes Data, and initializes location callback.
    *
-   * @param savedInstanceState
+   * @param savedInstanceState contains information from a previous invokation of the class.
    */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +160,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   /**
    * Checks to make sure permission is granted for location information and gps information.
    * If permissions are needed, begins the process to acquire permissions.
-   * If permissions are granted, starts Location updates.
+   * If permissions are granted, starts location updates.
    */
   @Override
   protected void onResume() {
@@ -175,11 +174,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
-  /**
-   * Inflates custom toolbar menu.
-   * @param menu
-   * @return boolean
-   */
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
@@ -188,9 +182,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Switches on toolbar menu item pressed.
-   * @param item
-   * @return boolean
+   * Switches on toolbar menu item pressed.  A single potential selection that sends the user to the Main Menu.
+   * @param item the item that the user selected.
+   * @return boolean true if this method handled the item selected event.
    */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -226,7 +220,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Stops Location updates.
+   * Stops location updates.
    */
   @Override
   protected void onPause() {
@@ -359,7 +353,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Defines a LocationRequest object that is stored in a field variable.
+   * Creates a LocationRequest object that is stored in a field variable.
    */
   protected void createLocationRequest() {
     mLocationRequest = new LocationRequest();
@@ -411,7 +405,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Determines whether gps is enabled on the device.
-   * @return boolean
+   * @return boolean true if GPS is enabled on the device.
    */
   public boolean isMapsEnabled() {//determines whether gps is enabled on the device
     final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -443,7 +437,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Determines whether google play services can be used on the device.
-   * @return boolean
+   * @return boolean true if the user is clear to make map requests.
    */
   public boolean isServicesOK() {//this process determines whether google play services can be used on device
     Log.d(TAG, getString(R.string.check_google_svc_version));
@@ -469,9 +463,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Handles the result from a location permission request.
-   * @param requestCode int
-   * @param permissions String[]
-   * @param grantResults int[]
+   * @param requestCode used to ensure it was a request that can be handled by this method.
+   * @param permissions representation of permissions.
+   * @param grantResults representation of user grants of permission.
    */
   @Override
   public void onRequestPermissionsResult(int requestCode,
@@ -492,9 +486,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   /**
    *  Callback from activity asking for user to enable GPS permission.  If permission is granted,
    *  then starts user Location updates.
-   * @param requestCode int
-   * @param resultCode int
-   * @param data Intent
+   * @param requestCode Used to ensure that this method can process the data.
+   * @param resultCode Used by the call to super.
+   * @param data Used by the call to super.
    */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -587,7 +581,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Swaps the passed Fragment into the fragment container, to bring it into view.
-   * @param fragIn
+   * @param fragIn The fragment that will be put into the fragment container.
    */
   protected void swapFrags(Fragment fragIn) {
     if (fragIn == null) {
@@ -607,8 +601,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
    * Swaps the Fragment parameter into the fragment container, to bring it into view.
    * Uses the int parameter to set a new value for callingViewId, to keep track of which view
    * the user chose to use.
-   * @param fragIn Fragment
-   * @param callingViewId int
+   * @param fragIn the fragment that will be put into the fragment container.
+   * @param callingViewId a reference to the icon the user clicked on.
    */
   protected void swapFrags(Fragment fragIn, int callingViewId) {
     this.callingViewId = callingViewId;
@@ -621,27 +615,27 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     swapFrags(fragIn);
   }
 
-  /**
-   * Swaps the Fragment parameter into the fragment container, to bring it into view.
-   * Uses the Token parameter to keep track of which Token the user wants more info on.
-   * @param fragIn Fragment
-   * @param item Token
-   * @throws CloneNotSupportedException
-   */
-  protected void swapFrags(Fragment fragIn, Token item) throws CloneNotSupportedException {
-    targetItem = (Token) item.clone();
-    if (fragIn == null) {
-      return;
-    }
-//    fragmentManager.beginTransaction()
-//        .replace(fragContainer.getId(), fragIn)
-//        .commit();
-    swapFrags(fragIn);
-  }
+//  /**
+//   * Swaps the Fragment parameter into the fragment container, to bring it into view.
+//   * Uses the Token parameter to keep track of which Token the user wants more info on.
+//   * @param fragIn
+//   * @param item Token
+//   * @throws CloneNotSupportedException
+//   */
+//  protected void swapFrags(Fragment fragIn, Token item) throws CloneNotSupportedException {
+//    targetItem = (Token) item.clone();
+//    if (fragIn == null) {
+//      return;
+//    }
+////    fragmentManager.beginTransaction()
+////        .replace(fragContainer.getId(), fragIn)
+////        .commit();
+//    swapFrags(fragIn);
+//  }
 
   /**
    * Getter for callingViewId, which is the view representation of which TokenType the user wants.
-   * @return int
+   * @return the view that the user clicked on.
    */
   public int getCallingViewId() {
     return callingViewId;
@@ -649,7 +643,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Getter for targetItem, which is the Token the user has requested more information for.
-   * @return Token
+   * @return Token the user has most recently selected.
    */
   @Override
   public Token getTargetItem() {
@@ -658,7 +652,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Setter for targetItem, which is the Token the user has requested more information for.
-   * @param theNewTarget
+   * @param theNewTarget Token the user has most recently selected.
    */
   public void setTargetItem(Token theNewTarget) {
     this.targetItem = null;
@@ -722,7 +716,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Sets a reference to the most recently called InfoPopupFrag object.
-   * @param infoFrag InfoPopupFrag
+   * @param infoFrag a reference to the information popup fragment.
    */
   @Override
   public void setParentRefToInfoFrag(InfoPopupFrag infoFrag) {
@@ -731,7 +725,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Sets a reference to the most recently called MapsFragment.
-   * @param mapsFrag MapsFragment
+   * @param mapsFrag a reference to the maps fragment.
    */
   @Override
   public void setMainRefMapsFrag(MapsFragment mapsFrag) {
@@ -741,7 +735,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Calls getMapAsync on the SupportMapFragment parameter
-   * @param supportMapFragment SupportMapFragment
+   * @param supportMapFragment the object that getMapAsync() will be called on.
    */
   @Override
   public void callMapAsync(SupportMapFragment supportMapFragment) {
@@ -750,7 +744,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Getter for dbTokens.
-   * @return List of Token
+   * @return List of Token objects
    */
   @Override
   public List<Token> getTokensList() {
@@ -760,7 +754,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   /**
    * Method to swap fragments to a SearchFragment.  Uses the int parameter to query the database for
    * the correct list of Tokens that will be passed to a recyclerview in SearchFragment.
-   * @param iD int
+   * @param iD a reference to the view the user clicked on.
    */
   @Override
   public void goToSearchFrag(int iD) {
@@ -773,7 +767,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   /**
    * Method to swap fragments to a MapsFragment. Uses the Token parameter to add a marker to the map
    * that user wants directions to.
-   * @param
+   *
    */
   @Override
   public void goToMapFrag() {
@@ -783,6 +777,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         .commit();
   }
 
+  /**
+   * Populates a List of Token objects that represent the items that are visible to the user in the recyclerview list.
+   *
+   * @param position the position of the most recently bound item in the recyclerview.
+   */
   @Override
   public void beginMarkerUpdate(int position){
     int first = 0;
@@ -799,13 +798,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       visibles.add(fullList.get(i));
     }
     updateMapMarkers(visibles);
-  }
-
-  @Override
-  public void onPolylineClick(Polyline polyline) {
-    polyline.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
-    polyline.setZIndex(1);
-
   }
 
   private class AddTask extends AsyncTask<Token, Void, Void> {
@@ -860,14 +852,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_maps_key)).build();
     }
     myMap = googleMap;
-//    LatLng userLoc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-//    myMap.addMarker(new MarkerOptions()
-//        .position(userLoc)
-//        .title(getString(R.string.start_loc)));
-//    myMap.addMarker(new MarkerOptions()
-//    .position(mGoToLocation)
-//    .title(mGoToLocationTitle));
-//    calculateDirections();
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
@@ -875,8 +859,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       return;
     }
     myMap.setMyLocationEnabled(true);
-
-//    myMap.setOnPolylineClickListener(this);
   }
 
 private void updateMapMarkers(List<Token> visible){
@@ -896,70 +878,63 @@ private void updateMapMarkers(List<Token> visible){
   myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
 }
 
-private void rezoomMap(){
 
-}
+//  //thanks to Coding with Mitch YouTube for this framework for calculateDirections
+//  private void calculateDirections(){
+//    Log.d(TAG, "calculateDirections: calculating directions.");
+//
+//    com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(
+//        mGoToLocation.latitude,
+//        mGoToLocation.longitude
+//    );
+//    DirectionsApiRequest directions = new DirectionsApiRequest(mGeoApiContext);
+//    directions.mode(TravelMode.WALKING);
+//    directions.alternatives(true);
+//    directions.origin(
+//        new com.google.maps.model.LatLng(
+//            mCurrentLocation.getLatitude(),
+//            mCurrentLocation.getLongitude()
+//        )
+//    );
+//    directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
+//      @Override
+//      public void onResult(DirectionsResult result) {
+//        addPolylinesToMap(result);
+//      }
+//
+//      @Override
+//      public void onFailure(Throwable e) {
+//        Toast.makeText(getBaseContext(), getString(R.string.google_directions_error), Toast.LENGTH_SHORT).show();
+//      }
+//    });
+//  }
 
-  //thanks to Coding with Mitch YouTube for this framework for calculateDirections
-  private void calculateDirections(){
-    Log.d(TAG, "calculateDirections: calculating directions.");
-
-    com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(
-        mGoToLocation.latitude,
-        mGoToLocation.longitude
-    );
-    DirectionsApiRequest directions = new DirectionsApiRequest(mGeoApiContext);
-    directions.mode(TravelMode.WALKING);
-    directions.alternatives(true);
-    directions.origin(
-        new com.google.maps.model.LatLng(
-            mCurrentLocation.getLatitude(),
-            mCurrentLocation.getLongitude()
-        )
-    );
-    directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
-      @Override
-      public void onResult(DirectionsResult result) {
-        addPolylinesToMap(result);
-      }
-
-      @Override
-      public void onFailure(Throwable e) {
-        Toast.makeText(getBaseContext(), getString(R.string.google_directions_error), Toast.LENGTH_SHORT).show();
-      }
-    });
-  }
-
-  //Thanks to Coding with Mitch on YouTube for this framework
-  private void addPolylinesToMap(final DirectionsResult result){
-    //must use Handler and Looper.getMainLooper to use main thread to make changes to google map
-    new Handler(Looper.getMainLooper()).post(new Runnable() {
-      @Override
-      public void run() {
-        Log.d(TAG, "run: result routes: " + result.routes.length);
-
-        for(DirectionsRoute route: result.routes){
-          Log.d(TAG, "run: leg: " + route.legs[0].toString());
-          List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
-          List<LatLng> newDecodedPath = new ArrayList<>();
-          // This loops through all the LatLng coordinates of ONE polyline.
-          for(com.google.maps.model.LatLng latLng: decodedPath){
-            newDecodedPath.add(new LatLng(
-                latLng.lat,
-                latLng.lng
-            ));
-          }
-          Polyline polyline = myMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
-          polyline.setColor(ContextCompat.getColor(Main2Activity.this, R.color.darkGray));
-          polyline.setClickable(true);
-
-        }
-      }
-    });
-  }
-
-  private void setCameraView(){
-
-  }
+//  //Thanks to Coding with Mitch on YouTube for this framework
+//  private void addPolylinesToMap(final DirectionsResult result){
+//    //must use Handler and Looper.getMainLooper to use main thread to make changes to google map
+//    new Handler(Looper.getMainLooper()).post(new Runnable() {
+//      @Override
+//      public void run() {
+//        Log.d(TAG, "run: result routes: " + result.routes.length);
+//
+//        for(DirectionsRoute route: result.routes){
+//          Log.d(TAG, "run: leg: " + route.legs[0].toString());
+//          List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
+//          List<LatLng> newDecodedPath = new ArrayList<>();
+//          // This loops through all the LatLng coordinates of ONE polyline.
+//          for(com.google.maps.model.LatLng latLng: decodedPath){
+//            newDecodedPath.add(new LatLng(
+//                latLng.lat,
+//                latLng.lng
+//            ));
+//          }
+//          Polyline polyline = myMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
+//          polyline.setColor(ContextCompat.getColor(Main2Activity.this, R.color.darkGray));
+//          polyline.setClickable(true);
+//
+//        }
+//      }
+//    });
+//  }
 
 }
