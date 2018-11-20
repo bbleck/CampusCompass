@@ -69,7 +69,7 @@ The app could be extended in the following ways:
 
 
 ## DDL
-'''
+```
 CREATE TABLE IF NOT EXISTS `Token`(
   `title` TEXT COLLATE NOCASE,
   `building_num` TEXT,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `Token`(
   `mLatitude` REAL,
   PRIMARY KEY(`token_id`) 
 );
-'''
+```
 
 ## Project Javadocs
 
