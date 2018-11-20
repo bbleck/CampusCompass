@@ -59,10 +59,13 @@ The following cosmetic improvements could be made to the app:
 ## Stretch Goals
 The app could be extended in the following ways:
 - As previousy mentioned, adding restroom locations for every restroom on campus would be ideal.
-- Working with UNM to add more useful information to their API and supporting that information within CampusCompass. For example, if UNM allowed nearby restaurants to advertise then CampusCompass could support such advertisements using the current framework. Advertising dollars could make CampusCompass self-sustaining and allow for it to be expanded to include more UNM APIs (and help UNM create/improve APIs).
+- Working with UNM to add more useful information to their API and supporting that information within CampusCompass. For example, if UNM allowed nearby restaurants to advertise then CampusCompass could support such advertisements using the current framework. Advertising dollars could make CampusCompass self-sustaining and allow for it to be expanded (and help UNM create more APIs or to improve current APIs).
 
 
 ## Wireframes
+
+
+## User Stories
 
 
 ## ERD
@@ -90,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `Token`(
 ## Project Javadocs
 
 
-## Licenses
+## Copyrights and Licenses
 
 
 ## Instructions for Building CampusCompass
