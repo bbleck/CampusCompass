@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -28,7 +30,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A {@link Fragment} that contains a {@link RecyclerView} representing a list of locations of interest.
+ * A {@link Fragment} that contains a {@link RecyclerView} representing a list of locations of
+ * interest.
  */
 public class SearchFragment extends Fragment {
 
@@ -43,6 +46,18 @@ public class SearchFragment extends Fragment {
      * @return the {@link List} of {@link Token}.
      */
     List<Token> getTokensList();
+
+    /**
+     * Method to communicate to controller that the search list has been filtered.
+     */
+    void onSearchFiltered();
+
+    /**
+     * Update filtered list.
+     *
+     * @param filteredList the {@link List} of {@link Token} representing the filtered list.
+     */
+    void updateFilteredList(List<Token> filteredList);
   }
 
   private static final String TAG = "SearchFragment";
@@ -144,24 +159,37 @@ public class SearchFragment extends Fragment {
         redrawListInAdapter();
       }
     });
-//    refineSearch.setOnKeyListener(new OnKeyListener() {
-//      @Override
-//      public boolean onKey(View v, int keyCode, KeyEvent event) {
-//        Toast.makeText(getContext(), "key pressed", Toast.LENGTH_SHORT).show();
 //
-//        return false;
-//      }
-//
-//    });
-    refineSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+    refineSearch.addTextChangedListener(new TextWatcher() {
       @Override
-      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//        Toast.makeText(getContext(), "Edit Text entered", Toast.LENGTH_SHORT).show();
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+      }
+
+      @Override
+      public void afterTextChanged(Editable s) {
         searchInput = refineSearch.getText().toString().toLowerCase();
         filterList(searchInput);
-        return false;
+        searchFragListener.onSearchFiltered();
       }
+
     });
+
+
+//    refineSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//      @Override
+//      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+////        Toast.makeText(getContext(), "Edit Text entered", Toast.LENGTH_SHORT).show();
+//        searchInput = refineSearch.getText().toString().toLowerCase();
+//        filterList(searchInput);
+//        return false;
+//      }
+//    });
   }
 
   private void resetEditText() {
@@ -195,6 +223,7 @@ public class SearchFragment extends Fragment {
         listForRecycler.add(tempTokensList.get(i));
       }
     }
+    searchFragListener.updateFilteredList(listForRecycler);
   }
 
   private void filterList(String searchTerm){
@@ -207,6 +236,7 @@ public class SearchFragment extends Fragment {
         filteredList.add(token);
       }
     }
+    searchFragListener.updateFilteredList(filteredList);
     drawFilteredList(filteredList);
   }
 

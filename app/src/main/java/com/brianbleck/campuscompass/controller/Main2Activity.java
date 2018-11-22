@@ -15,8 +15,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -54,25 +52,15 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnPolylineClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
-import com.google.maps.PendingResult;
 import com.google.maps.android.SphericalUtil;
-import com.google.maps.internal.PolylineEncoding;
-import com.google.maps.model.DirectionsResult;
-import com.google.maps.model.DirectionsRoute;
-import com.google.maps.model.TravelMode;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -139,6 +127,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private int retries;
   private List<Marker> mapMarkers = new LinkedList<>();
   private boolean isMainFrag = true;
+  private List<Token> filteredList;
 
   /**
    * Initializes {@link android.arch.persistence.room.Database}, initializes {@link View}, initializes data, and initializes location callback.
@@ -408,6 +397,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Determines whether GPS is enabled on the device.
+   *
    * @return boolean true if GPS is enabled on the device.
    */
   public boolean isMapsEnabled() {//determines whether gps is enabled on the device
@@ -440,6 +430,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Determines whether Google Play Services can be used on the device.
+   *
    * @return boolean true if the user is clear to make map requests.
    */
   public boolean isServicesOK() {//this process determines whether google play services can be used on device
@@ -583,7 +574,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Swaps the passed {@link Fragment} into the fragment container, to bring it into view. Handles changing the visibility of the container for the map.  Handles changing the title according to the state of the app.
+   * Swaps the passed {@link Fragment} into the fragment container, to bring it into view. Handles
+   * changing the visibility of the container for the map.  Handles changing the title according to
+   * the state of the app.
+   *
    * @param fragIn the {@link Fragment} that will be put into the fragment container.
    */
   protected void swapFrags(Fragment fragIn) {
@@ -603,9 +597,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Swaps the {@link Fragment} parameter into the fragment container, to bring it into view.
-   * Uses the int parameter to set a new value for callingViewId, to keep track of which {@link View}
-   * the user chose to use.
+   * Swaps the {@link Fragment} parameter into the fragment container, to bring it into view. Uses
+   * the int parameter to set a new value for callingViewId, to keep track of which {@link View} the
+   * user chose to use.
+   *
    * @param fragIn the {@link Fragment} that will be put into the fragment container.
    * @param callingViewId a reference to the {@link View} the user clicked on.
    */
@@ -639,7 +634,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 //  }
 
   /**
-   * Getter for callingViewId, which is the {@link View} representation of which {@link TokenType} the user wants.
+   * Getter for callingViewId, which is the {@link View} representation of which {@link TokenType}
+   * the user wants.
+   *
    * @return the {@link View} that the user clicked on.
    */
   public int getCallingViewId() {
@@ -657,6 +654,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   /**
    * Setter for targetItem, which is the {@link Token} the user has requested more information for.
+   *
    * @param theNewTarget {@link Token} the user has most recently selected.
    */
   public void setTargetItem(Token theNewTarget) {
@@ -756,6 +754,16 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     return dbTokens;
   }
 
+  @Override
+  public void onSearchFiltered() {
+    beginFilteredMarkerUpdate();
+  }
+
+  @Override
+  public void updateFilteredList(List<Token> filteredList) {
+    this.filteredList = filteredList;
+  }
+
   /**
    * Method to swap to a {@link SearchFragment}.  Uses the integer parameter to query the {@link android.arch.persistence.room.Database} for
    * the correct {@link List} of {@link Token} that will be passed to a {@link android.support.v7.widget.RecyclerView} in {@link SearchFragment}.
@@ -792,7 +800,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       first = position - 2;
     }
     List<Token> visibles = new LinkedList<>();
-    List<Token> fullList = searchFragment.getListForRecycler();
+    List<Token> fullList = filteredList;
     int last = fullList.size() - 1;
     if(position < last - 2){
       last = position + 2;
@@ -800,7 +808,19 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     for (int i = first; i < last; i++) {
       visibles.add(fullList.get(i));
     }
-    updateMapMarkers(visibles);
+
+    if (visibles.size()>0) {
+      updateMapMarkers(visibles);
+    }
+  }
+
+  private void beginFilteredMarkerUpdate(){
+    List<Token> visibles = new LinkedList<>();
+    if (filteredList.size()>0) {
+      visibles.add(filteredList.get(0));
+      updateMapMarkers(visibles);
+    } else {
+    }
   }
 
   private class AddTask extends AsyncTask<Token, Void, Void> {
@@ -877,7 +897,10 @@ private void updateMapMarkers(List<Token> visible){
         .position(tempLatLng)
         .title(token.getTitle())));
   }
-  myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(visible.get(0).getMLatitude(), visible.get(0).getMLongitude())));
+
+  if (visible.size()>0) {
+    myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(visible.get(0).getMLatitude(), visible.get(0).getMLongitude())));
+  }
   myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
 }
 
