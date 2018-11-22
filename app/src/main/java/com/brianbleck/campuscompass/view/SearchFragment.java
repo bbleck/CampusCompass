@@ -2,6 +2,7 @@ package com.brianbleck.campuscompass.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.inputmethodservice.Keyboard.Key;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,9 +11,11 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +56,7 @@ public class SearchFragment extends Fragment {
   private List<Token> listForRecycler;
   private int callingViewId;
   private SearchFragListener searchFragListener;
+  private String searchInput;
 
 
   @Nullable
@@ -135,15 +139,26 @@ public class SearchFragment extends Fragment {
       @Override
       public void onClick(View v) {
         resetEditText();
+        searchInput="";
         updateListInAdapter();
         redrawListInAdapter();
       }
     });
+//    refineSearch.setOnKeyListener(new OnKeyListener() {
+//      @Override
+//      public boolean onKey(View v, int keyCode, KeyEvent event) {
+//        Toast.makeText(getContext(), "key pressed", Toast.LENGTH_SHORT).show();
+//
+//        return false;
+//      }
+//
+//    });
     refineSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        Toast.makeText(getContext(), "Edit Text entered", Toast.LENGTH_SHORT).show();
-        //todo: handle filtering of recyclerview contents to match edittext
+//        Toast.makeText(getContext(), "Edit Text entered", Toast.LENGTH_SHORT).show();
+        searchInput = refineSearch.getText().toString().toLowerCase();
+        filterList(searchInput);
         return false;
       }
     });
@@ -170,18 +185,40 @@ public class SearchFragment extends Fragment {
    */
   public void updateListInAdapter() {
     listForRecycler = new LinkedList<>();
-    listForRecycler = searchFragListener.getTokensList();
-    List<Token> cleanedTokensList = new LinkedList<>();
-    for (int i = 0; i < listForRecycler.size(); i++) {
-      if (listForRecycler.get(i).getMLatitude() == 0.0
-          || listForRecycler.get(i).getMLongitude() == 0.0) {
+    List<Token> tempTokensList = searchFragListener.getTokensList();
+    for (int i = 0; i < tempTokensList.size(); i++) {
+      if (tempTokensList.get(i).getMLatitude() == 0.0
+          || tempTokensList.get(i).getMLongitude() == 0.0) {
         Log.d(TAG, "updateListInAdapter: cleaned a 0.0 long/lat");
       } else {
-          listForRecycler.get(i).setDrawable(grabDrawable(listForRecycler.get(i)));
-        cleanedTokensList.add(listForRecycler.get(i));
+        tempTokensList.get(i).setDrawable(grabDrawable(tempTokensList.get(i)));
+        listForRecycler.add(tempTokensList.get(i));
       }
     }
   }
+
+  private void filterList(String searchTerm){
+    List<Token> filteredList = new LinkedList<>();
+    for (Token token :
+        listForRecycler) {
+      if (token.getTitle() != null && token.getDescription() != null && (
+          token.getTitle().toLowerCase().contains(searchTerm) || token
+              .getDescription().toLowerCase().contains(searchTerm))) {
+        filteredList.add(token);
+      }
+    }
+    drawFilteredList(filteredList);
+  }
+
+  private void drawFilteredList(List<Token> filteredList) {
+    adapter = new SearchFragAdapter(getActivity(), filteredList);
+    manager = new LinearLayoutManager(getContext());
+    adapter.notifyDataSetChanged();
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(manager);
+  }
+
+  //todo: generalize list draw method
 
   /**
    * Redraw list in adapter.
