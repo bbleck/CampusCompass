@@ -1,6 +1,13 @@
 # CampusCompass
-Android Individual Project: an android app that provides directions to locations on campus, as well as information related to particular locations.
-
+What does it do?
+- CampusCompass is an android app that provides directions to locations on the University of New Mexico (UNM) campus, as well as information related to particular locations.
+- The main menu allows users to select a type of destination, which will take them to the map screen.
+- The map screen contains a list of all destinations of the selected type. This list is sorted by distance, from closest to the user to farthest from the user.
+- The map screen also shows the map location of the visible destinations in the list and dynamically redraws itself as the user scrolls through the list of destinations. 
+- The map screen has a search option, which allows the user to use key words to filter the list results. The list is filtered using the destinations titles and descriptions, as provided by the UNM open data. The list and map will dynamically update as the user types characters into the search bar.
+- In the map screen, the items in the list have two buttons: an "Info" button and a "Get Directions" button.
+- The Info button summons a dialog that provides the user with more information related to the list item.
+- The Get Directions button takes the user into the Google Maps App (it must be installed on the user's device) where walking directions will be displayed that will lead the user to the list item's location.
 
 ## Aims and Motivations for CampusCompass
 The driving motivation for this project was my experience at the beginning of every semester, wishing there was an easier way to find buildings on campus. The framework of this project could be applied to any campus, geographic region, etc. At the heart of this project is the open data APIs provided by UNM.  Those APIs allow the app to supply the user with lists of related locations, which the user can search through and see dynamically displayed on an in-app googlemap.  The app uses user location to connect to the GoogleMaps app and provide detailed directions to help the user find the chosen location.  Additionally, the UNM APIs (sometimes) include extra information pertinent to particular locations.
