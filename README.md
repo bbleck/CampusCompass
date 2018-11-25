@@ -24,14 +24,12 @@ Dependencies:
 - implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 - implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 - implementation "com.squareup.retrofit2:adapter-rxjava:2.1.0"
-- implementation 'com.squareup.picasso:picasso:2.71828'
 - implementation 'com.google.android.gms:play-services-maps:16.0.0'
 - implementation 'com.google.android.gms:play-services-location:16.0.0'
 - implementation 'com.google.maps.android:android-maps-utils:0.5+'
 - implementation 'com.google.maps:google-maps-services:0.9.0'
 - implementation 'com.google.code.gson:gson:2.8.5'
 - annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
-- implementation 'com.facebook.stetho:stetho:1.5.0'
 - implementation "io.reactivex:rxjava:1.2.1"
 - implementation "io.reactivex:rxandroid:1.2.1"
 - implementation 'de.hdodenhof:circleimageview:2.2.0'
@@ -101,6 +99,18 @@ CREATE  INDEX `index_Token_token_type` ON `Token` (`token_type`);
 
 
 ## Copyrights and Licenses
+- General Google [Terms](https://developers.google.com/terms/site-policies)
+- Google Play Services [Dependencies](https://developers.google.com/android/guides/setup)
+- Google [Maps](https://developers.google.com/maps/documentation/android-sdk/intro)
+- Google [GSON](https://github.com/google/gson)
+- Google GSON [License](https://github.com/google/gson/blob/master/LICENSE)
+- [Retrofit](https://square.github.io/retrofit/)
+- Retrofit [License](http://www.apache.org/licenses/LICENSE-2.0)
+- [RxJava](https://github.com/ReactiveX/RxJava)
+- RxJava [License](https://github.com/ReactiveX/RxJava/blob/2.x/LICENSE)
+- Simple Logging Facade For Java [SLF4J](https://www.slf4j.org/license.html)
+- [CircleImageView](https://github.com/hdodenhof/CircleImageView)
+- CircleImageView [License](https://github.com/hdodenhof/CircleImageView/blob/master/LICENSE.txt)
 
 
 ## Instructions for Building CampusCompass
