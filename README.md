@@ -66,6 +66,11 @@ The app could be extended in the following ways:
 
 
 ## User Stories
+- As a UNM Student, I would like to be able to easily find academic buildings on campus so I can easily find where my classes are at the beginning of each semester.
+- As a Visitor to UNM, I would like to be able to get directions to places on campus, including where metered parking is located so that I don't have to wander around or search the internet for such information.
+- As UNM, I would like to be able to sell advertising for local restaurants in a way that will also provide students with useful information so they can easily discover nearby dining options.
+- As a human who is on the UNM campus, I would like to be able to easily find the closest blue phone and the closest restroom so that I can quickly find them in case of emergency.
+- As a user of the app, I would like to be able to filter the list of potential destinations and search for a particular one so that I can find it quickly.
 
 
 ## ERD
