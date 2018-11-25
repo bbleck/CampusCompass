@@ -3,6 +3,7 @@ package com.brianbleck.campuscompass.view;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard.Key;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.Main2Activity;
 import com.brianbleck.campuscompass.model.entity.Token;
+import com.google.maps.android.SphericalUtil;
+import com.google.maps.model.LatLng;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -259,6 +262,14 @@ public class SearchFragment extends Fragment {
     adapter.notifyDataSetChanged();
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(manager);
+  }
+
+  private Drawable grabBearingDrawable(Token token, Location userLoc){
+    com.google.android.gms.maps.model.LatLng userLatLng = new com.google.android.gms.maps.model.LatLng(userLoc.getLatitude(), userLoc.getLongitude());
+    com.google.android.gms.maps.model.LatLng destLatLng = new com.google.android.gms.maps.model.LatLng(token.getMLatitude(), token.getMLongitude());
+    double theBearing = SphericalUtil.computeHeading(userLatLng, destLatLng);
+    //todo: finish using bearing to get compass drawables
+    return null;
   }
 
   private Drawable grabDrawable(Token token) {
