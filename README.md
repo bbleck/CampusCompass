@@ -38,8 +38,8 @@ Dependencies:
 
 ## External Services
 The app consumes the following external services:
-- Open Data API from the University of New Mexico:  http://datastore.unm.edu/locations/
-- GoogleMaps API
+- [Open Data API](http://datastore.unm.edu/locations/) from the University of New Mexico  
+- [GoogleMaps API](https://developers.google.com/maps/documentation/)
 
 
 ## Cosmetic Improvements
