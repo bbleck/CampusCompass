@@ -127,3 +127,10 @@ CREATE  INDEX `index_Token_token_type`
 
 
 ## Instructions for Using CampusCompass
+- The initial screen is the Main Menu.  It presents users with the option to choose a type of destination.  To choose a destination, the user must click on one of the icons.
+- Upon clicking on an icon, the user is taken to the Map Screen.
+- To return to the Main Menu from the Map Screen the user must click on the top toolbar, either on the text indicating a return to the Main Menu or on the 'Home' button.
+- To quit the app, the user may press the Android 'Back Navigation' button at any time. 
+- In the Map Screen, the user may enter the name of the destination they are searching for or they may try entering key words.  For example, if the user selects "Find Building" on the Main Menu they may enter either "Center for the arts" or "popejoy" to find the same building (the building's official name is "Center For The Arts").
+- For any destination list item in the Map Screen, the user may press the Info button to see more information on the destination (if UNM open data provides more information).
+- For any destination list item in the Map Screen, the user may press the Get Directions buttons to get directions to the destination. Get Directions will take the user into the Google Maps App (must already be installed on the user's device) with the destination preloaded.
