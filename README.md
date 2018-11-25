@@ -19,21 +19,22 @@ This app has been extensively testing on a Google Pixel running Android Pie (API
 
 
 ## Third Party Libraries
-Dependencies:
-- implementation 'android.arch.persistence.room:runtime:1.1.1'
-- implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-- implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-- implementation "com.squareup.retrofit2:adapter-rxjava:2.1.0"
-- implementation 'com.google.android.gms:play-services-maps:16.0.0'
-- implementation 'com.google.android.gms:play-services-location:16.0.0'
-- implementation 'com.google.maps.android:android-maps-utils:0.5+'
-- implementation 'com.google.maps:google-maps-services:0.9.0'
-- implementation 'com.google.code.gson:gson:2.8.5'
-- annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
-- implementation "io.reactivex:rxjava:1.2.1"
-- implementation "io.reactivex:rxandroid:1.2.1"
-- implementation 'de.hdodenhof:circleimageview:2.2.0'
-- implementation 'org.slf4j:slf4j-simple:1.7.25'
+```
+implementation 'android.arch.persistence.room:runtime:1.1.1'
+implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+implementation "com.squareup.retrofit2:adapter-rxjava:2.1.0"
+implementation 'com.google.android.gms:play-services-maps:16.0.0'
+implementation 'com.google.android.gms:play-services-location:16.0.0'
+implementation 'com.google.maps.android:android-maps-utils:0.5+'
+implementation 'com.google.maps:google-maps-services:0.9.0'
+implementation 'com.google.code.gson:gson:2.8.5'
+annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+implementation "io.reactivex:rxjava:1.2.1"
+implementation "io.reactivex:rxandroid:1.2.1"
+implementation 'de.hdodenhof:circleimageview:2.2.0'
+implementation 'org.slf4j:slf4j-simple:1.7.25'
+```
 
 
 ## External Services
