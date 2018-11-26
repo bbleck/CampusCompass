@@ -16,7 +16,7 @@
 
   <application
     android:allowBackup="false"
-    android:icon="@mipmap/ic_launcher"
+    android:icon="@drawable/compass_ne"
     android:label="@string/app_name"
     android:name=".CampusCompassApp"
     android:roundIcon="@mipmap/ic_launcher_round"

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.Main2Activity;
@@ -84,6 +85,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
   @Override
   public void onBindViewHolder(@NonNull final Holder holder, int position) {
     holder.itemImage.setImageDrawable(listForRecycler.get(position).getDrawable());
+    holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
     holder.itemTitle.setText(listForRecycler.get(position).getTitle());
     String tempDistance = mActivity.getResources().getString(R.string.distance_away)
         + " " + listForRecycler.get(position).getDistance();

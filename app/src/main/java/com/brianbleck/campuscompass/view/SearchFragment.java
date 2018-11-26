@@ -279,21 +279,21 @@ public class SearchFragment extends Fragment {
     Drawable tempDrawable = null;
     if((Double.compare(theBearing, -22.5) >= 0 && Double.compare(theBearing, 0) <= 0 )
         || ( Double.compare(theBearing, 22.5) <= 0 && Double.compare(theBearing, 0) >= 0)){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_north, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_n, null);
     }else if(Double.compare(theBearing, 67.5) <= 0 && Double.compare(theBearing, 22.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_ne, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_ne, null);
     }else if(Double.compare(theBearing, 112.5) <= 0 && Double.compare(theBearing, 67.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_east, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_e, null);
     }else if(Double.compare(theBearing, 157.5) <= 0 && Double.compare(theBearing, 112.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_se, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_se, null);
     }else if(Double.compare(theBearing, 157.5) > 0 || Double.compare(theBearing, -157.5) < 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_south, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_s, null);
     }else if(Double.compare(theBearing, -112.5) <= 0 && Double.compare(theBearing, -157.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_sw, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_sw, null);
     }else if(Double.compare(theBearing, -67.5) <= 0 && Double.compare(theBearing, -112.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_west, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_w, null);
     }else if(Double.compare(theBearing, -22.5) <= 0 && Double.compare(theBearing, -67.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_nw, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_nw, null);
     }
     return tempDrawable;
   }
