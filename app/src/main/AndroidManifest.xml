@@ -16,10 +16,10 @@
 
   <application
     android:allowBackup="false"
-    android:icon="@drawable/compass_ne"
+    android:icon="@mipmap/ic_launch_compass_ne"
     android:label="@string/app_name"
     android:name=".CampusCompassApp"
-    android:roundIcon="@mipmap/ic_launcher_round"
+    android:roundIcon="@mipmap/ic_launch_compass_ne_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="GoogleAppIndexingWarning">
