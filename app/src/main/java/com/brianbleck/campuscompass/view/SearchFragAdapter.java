@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.util.DiffUtil;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,11 +53,17 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
   public interface SearchFragAdapterListener {
 
     /**
-     * Begin marker update.
+     * Begin {@link com.google.android.gms.maps.model.Marker} update.
      *
-     * @param position the position
+     * @param position the position in the {@link RecyclerView}
      */
     void beginMarkerUpdate(int position);
+
+    /**
+     * Begin a single {@link com.google.android.gms.maps.model.Marker} update.
+     * @param single the {@link Token} to center the map on
+     */
+    void beginSingleMarkerUpdate(Token single);
 
     /**
      * Switch to the {@link MapsFragment}.
@@ -117,6 +125,12 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
         startInfoPopup();
       }
     });
+    holder.constLay.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        searchFragAdapterListener.beginSingleMarkerUpdate(listForRecycler.get(holder.getAdapterPosition()));
+      }
+    });
     searchFragAdapterListener.beginMarkerUpdate(position);
 
   }
@@ -142,6 +156,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     private TextView distance;
     private Button infoButton;
     private Button goButton;
+    private ConstraintLayout constLay;
 
     /**
      * Instantiates a new Holder.
@@ -155,6 +170,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
       distance = itemView.findViewById(R.id.tv_search_item_distance);
       infoButton = itemView.findViewById(R.id.btn_search_item_info);
       goButton = itemView.findViewById(R.id.btn_search_item_go);
+      constLay = itemView.findViewById(R.id.constlay_search_item);
     }
   }
 }

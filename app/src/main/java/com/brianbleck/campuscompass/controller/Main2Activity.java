@@ -785,6 +785,15 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  @Override
+  public void beginSingleMarkerUpdate(Token single){
+    List<Token> visibles = new LinkedList<>();
+    visibles.add(single);
+    if(visibles.size()>0){
+      updateMapMarkers(visibles);
+    }
+  }
+
   private void beginFilteredMarkerUpdate(){
     List<Token> visibles = new LinkedList<>();
     if (filteredList.size()>0) {
