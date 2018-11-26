@@ -50,4 +50,6 @@
   <string name="start_loc">Your Start Location</string>
   <string name="google_directions_error">Error connecting to Google for directions.</string>
   <string name="return_to_main_menu">[ Return to Main Menu ]</string>
+  <string name="requires_gps">This application requires GPS to work properly, do you want to enable it?</string>
+  <string name="yes">Yes</string>
 </resources>

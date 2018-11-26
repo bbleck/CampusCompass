@@ -19,7 +19,7 @@ public interface TokenDao {
   /**
    * Inserts a {@link Token} into the {@link android.arch.persistence.room.Database}.
    * @param token the object to be inserted.
-   * @return
+   * @return the number inserted
    */
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   long insert(Token token);

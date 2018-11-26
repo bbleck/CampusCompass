@@ -55,7 +55,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -117,10 +116,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private LocationRequest mLocationRequest;
   private LocationCallback mLocationCallback;
   private Location mCurrentLocation;
-  private LatLng mGoToLocation;
-  private String mGoToLocationTitle;
   private GoogleMap myMap;
-  private LatLngBounds myMapBounds;
   private GeoApiContext mGeoApiContext;
   private List<String> serviceEndPoints;
   private HashMap<String, TokenType> serviceTypeMap;
@@ -128,6 +124,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   private List<Marker> mapMarkers = new LinkedList<>();
   private boolean isMainFrag = true;
   private List<Token> filteredList;
+  private int retriesAllowed;
+  private int boundsToShowRVItems;
 
   /**
    * Initializes {@link android.arch.persistence.room.Database}, initializes {@link View}, initializes data, and initializes location callback.
@@ -261,11 +259,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         mCurrentLocation = locationResult.getLastLocation();
         setTokenDistances();
         sortDBTokens();
-        if (searchFragment != null) {
-          if (searchFragment.getAdapter() != null) {
-//            searchFragment.updateListInAdapter();
-          }
-        }
       }
     };
   }
@@ -381,9 +374,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   private void buildAlertMessageNoGps() {//prompts user with dialog to enable gps
     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage("This application requires GPS to work properly, do you want to enable it?")
+    builder.setMessage(R.string.requires_gps)
         .setCancelable(false)
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
           public void onClick(@SuppressWarnings("unused") final DialogInterface dialog,
               @SuppressWarnings("unused") final int id) {
             Intent enableGpsIntent = new Intent(
@@ -487,7 +480,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    Log.d(TAG, "onActivityResult: called.");
     switch (requestCode) {
       case PERMISSIONS_REQUEST_ENABLE_GPS: {
         if (mLocationPermissionGranted) {
@@ -507,7 +499,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         public void onResponse(@NonNull Call<List<Token>> call,
             @NonNull Response<List<Token>> response) {
           if (!response.isSuccessful()) {
-            Log.d(TAG, "onResponse: code " + response.code());
             return;
           }
           List<Token> tokensFromApi = response.body();
@@ -525,7 +516,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
         @Override
         public void onFailure(@NonNull Call<List<Token>> call, @NonNull Throwable t) {
-          Log.d(TAG, "onFailure: shuttle" + t.getMessage());
           if(shouldStopRetrying()){
             Toast.makeText(getBaseContext(), getString(R.string.could_not_load_resource) + endPoint, Toast.LENGTH_SHORT).show();
             resetRetries();
@@ -537,7 +527,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   private boolean shouldStopRetrying() {
-    if(retries%11==0){
+    retriesAllowed = 11;
+    if(retries% retriesAllowed ==0){
       retries++;
       return true;
     } else {
@@ -609,29 +600,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     if (fragIn == null) {
       return;
     }
-//    fragmentManager.beginTransaction()
-//        .replace(fragContainer.getId(), fragIn)
-//        .commit();
     swapFrags(fragIn);
   }
-
-//  /**
-//   * Swaps the Fragment parameter into the fragment container, to bring it into view.
-//   * Uses the Token parameter to keep track of which Token the user wants more info on.
-//   * @param fragIn
-//   * @param item Token
-//   * @throws CloneNotSupportedException
-//   */
-//  protected void swapFrags(Fragment fragIn, Token item) throws CloneNotSupportedException {
-//    targetItem = (Token) item.clone();
-//    if (fragIn == null) {
-//      return;
-//    }
-////    fragmentManager.beginTransaction()
-////        .replace(fragContainer.getId(), fragIn)
-////        .commit();
-//    swapFrags(fragIn);
-//  }
 
   /**
    * Getter for callingViewId, which is the {@link View} representation of which {@link TokenType}
@@ -709,7 +679,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
    * Method to sort the private field dbTokens using {@link Collections} method to sort.
    */
   protected void sortDBTokens() {
-    Collections.sort(dbTokens, new Comparator<Token>() {
+    dbTokens.sort(new Comparator<Token>() {
       @Override
       public int compare(Token o1, Token o2) {
         return (Double.compare(o1.getDistance(), o2.getDistance()));
@@ -796,14 +766,15 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   @Override
   public void beginMarkerUpdate(int position){
     int first = 0;
-    if(position>2){
-      first = position - 2;
+    boundsToShowRVItems = 2;
+    if(position> boundsToShowRVItems){
+      first = position - boundsToShowRVItems;
     }
     List<Token> visibles = new LinkedList<>();
     List<Token> fullList = filteredList;
     int last = fullList.size() - 1;
-    if(position < last - 2){
-      last = position + 2;
+    if(position < last - boundsToShowRVItems){
+      last = position + boundsToShowRVItems;
     }
     for (int i = first; i < last; i++) {
       visibles.add(fullList.get(i));
@@ -819,7 +790,6 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     if (filteredList.size()>0) {
       visibles.add(filteredList.get(0));
       updateMapMarkers(visibles);
-    } else {
     }
   }
 
@@ -912,63 +882,5 @@ private void updateMapMarkers(List<Token> visible){
   public Location getmCurrentLocation() {
     return mCurrentLocation;
   }
-
-//  //thanks to Coding with Mitch YouTube for this framework for calculateDirections
-//  private void calculateDirections(){
-//    Log.d(TAG, "calculateDirections: calculating directions.");
-//
-//    com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(
-//        mGoToLocation.latitude,
-//        mGoToLocation.longitude
-//    );
-//    DirectionsApiRequest directions = new DirectionsApiRequest(mGeoApiContext);
-//    directions.mode(TravelMode.WALKING);
-//    directions.alternatives(true);
-//    directions.origin(
-//        new com.google.maps.model.LatLng(
-//            mCurrentLocation.getLatitude(),
-//            mCurrentLocation.getLongitude()
-//        )
-//    );
-//    directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
-//      @Override
-//      public void onResult(DirectionsResult result) {
-//        addPolylinesToMap(result);
-//      }
-//
-//      @Override
-//      public void onFailure(Throwable e) {
-//        Toast.makeText(getBaseContext(), getString(R.string.google_directions_error), Toast.LENGTH_SHORT).show();
-//      }
-//    });
-//  }
-
-//  //Thanks to Coding with Mitch on YouTube for this framework
-//  private void addPolylinesToMap(final DirectionsResult result){
-//    //must use Handler and Looper.getMainLooper to use main thread to make changes to google map
-//    new Handler(Looper.getMainLooper()).post(new Runnable() {
-//      @Override
-//      public void run() {
-//        Log.d(TAG, "run: result routes: " + result.routes.length);
-//
-//        for(DirectionsRoute route: result.routes){
-//          Log.d(TAG, "run: leg: " + route.legs[0].toString());
-//          List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
-//          List<LatLng> newDecodedPath = new ArrayList<>();
-//          // This loops through all the LatLng coordinates of ONE polyline.
-//          for(com.google.maps.model.LatLng latLng: decodedPath){
-//            newDecodedPath.add(new LatLng(
-//                latLng.lat,
-//                latLng.lng
-//            ));
-//          }
-//          Polyline polyline = myMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
-//          polyline.setColor(ContextCompat.getColor(Main2Activity.this, R.color.darkGray));
-//          polyline.setClickable(true);
-//
-//        }
-//      }
-//    });
-//  }
 
 }
