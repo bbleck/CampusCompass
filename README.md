@@ -146,4 +146,4 @@ Many thanks to Danielle Andazola for the compass graphics, inquiries for freelan
 
 
 ## CampusCompass, All Rights Reserved 
-[Campus Compass License](https://github.com/bbleck/CampusCompass/raw/master/LICENSE.md)
+[CampusCompass License](https://github.com/bbleck/CampusCompass/raw/master/LICENSE.md)
