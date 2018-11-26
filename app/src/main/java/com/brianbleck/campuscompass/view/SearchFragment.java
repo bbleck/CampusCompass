@@ -61,6 +61,13 @@ public class SearchFragment extends Fragment {
      * @param filteredList the {@link List} of {@link Token} representing the filtered list.
      */
     void updateFilteredList(List<Token> filteredList);
+
+    /**
+     * Gets current location of user.
+     *
+     * @return user's current {@link Location}
+     */
+    Location getmCurrentLocation();
   }
 
   private static final String TAG = "SearchFragment";
@@ -213,6 +220,7 @@ public class SearchFragment extends Fragment {
 
   /**
    * Update list in adapter.
+   * Scrub anything with a 0.0 lat/lng as that is  not a properly formed token
    */
   public void updateListInAdapter() {
     listForRecycler = new LinkedList<>();
@@ -222,7 +230,7 @@ public class SearchFragment extends Fragment {
           || tempTokensList.get(i).getMLongitude() == 0.0) {
         Log.d(TAG, "updateListInAdapter: cleaned a 0.0 long/lat");
       } else {
-        tempTokensList.get(i).setDrawable(grabDrawable(tempTokensList.get(i)));
+        tempTokensList.get(i).setDrawable(grabBearingDrawable(tempTokensList.get(i), searchFragListener.getmCurrentLocation()));
         listForRecycler.add(tempTokensList.get(i));
       }
     }
@@ -268,8 +276,26 @@ public class SearchFragment extends Fragment {
     com.google.android.gms.maps.model.LatLng userLatLng = new com.google.android.gms.maps.model.LatLng(userLoc.getLatitude(), userLoc.getLongitude());
     com.google.android.gms.maps.model.LatLng destLatLng = new com.google.android.gms.maps.model.LatLng(token.getMLatitude(), token.getMLongitude());
     double theBearing = SphericalUtil.computeHeading(userLatLng, destLatLng);
-    //todo: finish using bearing to get compass drawables
-    return null;
+    Drawable tempDrawable = null;
+    if((Double.compare(theBearing, -22.5) >= 0 && Double.compare(theBearing, 0) <= 0 )
+        || ( Double.compare(theBearing, 22.5) <= 0 && Double.compare(theBearing, 0) >= 0)){
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_north, null);
+    }else if(Double.compare(theBearing, 67.5) <= 0 && Double.compare(theBearing, 22.5) > 0){
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_ne, null);
+    }else if(Double.compare(theBearing, 112.5) <= 0 && Double.compare(theBearing, 67.5) > 0){
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_east, null);
+    }else if(Double.compare(theBearing, 157.5) <= 0 && Double.compare(theBearing, 112.5) > 0){
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_se, null);
+    }else if(Double.compare(theBearing, 157.5) > 0 || Double.compare(theBearing, -157.5) < 0){
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_south, null);
+    }else if(Double.compare(theBearing, -112.5) <= 0 && Double.compare(theBearing, -157.5) > 0){
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_sw, null);
+    }else if(Double.compare(theBearing, -67.5) <= 0 && Double.compare(theBearing, -112.5) > 0){
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_west, null);
+    }else if(Double.compare(theBearing, -22.5) <= 0 && Double.compare(theBearing, -67.5) > 0){
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.ic_placeholder_nw, null);
+    }
+    return tempDrawable;
   }
 
   private Drawable grabDrawable(Token token) {

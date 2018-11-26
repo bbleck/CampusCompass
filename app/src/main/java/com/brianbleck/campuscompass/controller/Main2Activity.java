@@ -904,6 +904,14 @@ private void updateMapMarkers(List<Token> visible){
   myMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
 }
 
+  /**
+   * Getter for user's current {@link Location}
+   * @return current {@link Location}
+   */
+  @Override
+  public Location getmCurrentLocation() {
+    return mCurrentLocation;
+  }
 
 //  //thanks to Coding with Mitch YouTube for this framework for calculateDirections
 //  private void calculateDirections(){

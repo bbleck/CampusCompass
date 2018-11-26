@@ -69,5 +69,5 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="@+id/tv_search_item_distance"
     app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/building"/>
+    app:srcCompat="@drawable/ic_placeholder_east"/>
 </android.support.constraint.ConstraintLayout>

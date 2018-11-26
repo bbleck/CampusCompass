@@ -61,6 +61,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/btn_search_reset"/>
+    app:layout_constraintTop_toBottomOf="@+id/btn_search_reset"
+    tools:listitem="@layout/rv_item_search_frag"/>
 
 </android.support.constraint.ConstraintLayout>
