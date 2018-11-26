@@ -16,28 +16,22 @@ import java.util.Random;
  */
 public class CampusCompassApp extends Application {
 
-
   /**
    * The {@link android.arch.persistence.room.Database}.
    */
   CampusInfoDB database;
 
-
   @Override
   public void onCreate() {
     super.onCreate();
     initSetupTasks();
-
   }
-
-
 
   private void initSetupTasks() {
     Stetho.initializeWithDefaults(this);
     database = CampusInfoDB.getInstance(this);
     database.getTokenDao();
   }
-
 
 
 }
