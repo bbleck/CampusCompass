@@ -52,4 +52,17 @@
   <string name="return_to_main_menu">[ Return to Main Menu ]</string>
   <string name="requires_gps">This application requires GPS to work properly, do you want to enable it?</string>
   <string name="yes">Yes</string>
+  <string name="iv_main_frag_string">iv_main_frag_</string>
+  <string name="tv_main_frag_string">tv_main_frag_</string>
+  <string name="id">id</string>
+  <string name="image_title_string">image_title_</string>
+  <string name="type_string">string</string>
+  <string name="html_signature"><![CDATA[<br]]></string>
+  <string name="infopopupfrag_tag">InfoPopupFrag</string>
+  <string name="google_base_query">google.navigation:q=</string>
+  <string name="a_comma">,</string>
+  <string name="google_walk_mode"><![CDATA[&mode=w]]></string>
+  <string name="google_maps_package">com.google.android.apps.maps</string>
+  <string name="a_space"/>
+  <string name="no_title_available">No Title Available</string>
 </resources>

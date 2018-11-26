@@ -2,7 +2,6 @@ package com.brianbleck.campuscompass.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.inputmethodservice.Keyboard.Key;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,22 +12,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyCharacterMap;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.brianbleck.campuscompass.R;
 import com.brianbleck.campuscompass.controller.Main2Activity;
 import com.brianbleck.campuscompass.model.entity.Token;
 import com.google.maps.android.SphericalUtil;
-import com.google.maps.model.LatLng;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -150,7 +143,7 @@ public class SearchFragment extends Fragment {
         searchTitle.setText(R.string.image_title_8);
         break;
       default:
-        Log.d(TAG, "setSearchTitle: unknown callingId error");
+        searchTitle.setText(getString(R.string.no_title_available));
     }
   }
 
@@ -187,19 +180,7 @@ public class SearchFragment extends Fragment {
         filterList(searchInput);
         searchFragListener.onSearchFiltered();
       }
-
     });
-
-
-//    refineSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//      @Override
-//      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-////        Toast.makeText(getContext(), "Edit Text entered", Toast.LENGTH_SHORT).show();
-//        searchInput = refineSearch.getText().toString().toLowerCase();
-//        filterList(searchInput);
-//        return false;
-//      }
-//    });
   }
 
   private void resetEditText() {
@@ -212,8 +193,7 @@ public class SearchFragment extends Fragment {
     try {
       searchFragListener = (SearchFragListener) getActivity();
     } catch (ClassCastException e) {
-      Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
-      //do nothing except logging it for debugging
+      //do nothing until/unless a way of handling this is discovered
     }
 
   }
@@ -228,7 +208,6 @@ public class SearchFragment extends Fragment {
     for (int i = 0; i < tempTokensList.size(); i++) {
       if (tempTokensList.get(i).getMLatitude() == 0.0
           || tempTokensList.get(i).getMLongitude() == 0.0) {
-        Log.d(TAG, "updateListInAdapter: cleaned a 0.0 long/lat");
       } else {
         tempTokensList.get(i).setDrawable(grabBearingDrawable(tempTokensList.get(i), searchFragListener.getmCurrentLocation()));
         listForRecycler.add(tempTokensList.get(i));

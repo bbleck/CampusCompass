@@ -71,7 +71,6 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     try {
       searchFragAdapterListener = (SearchFragAdapterListener) mActivity;
     } catch (ClassCastException e) {
-      Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
       //do nothing else except log it for debugging purposes
     }
     return new Holder(view);
@@ -88,7 +87,7 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
     holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
     holder.itemTitle.setText(listForRecycler.get(position).getTitle());
     String tempDistance = mActivity.getResources().getString(R.string.distance_away)
-        + " " + listForRecycler.get(position).getDistance();
+        + mActivity.getString(R.string.a_space) + listForRecycler.get(position).getDistance();
     holder.distance.setText(tempDistance);
     holder.goButton.setOnClickListener(new View.OnClickListener() {
       /**
@@ -97,12 +96,12 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
        */
       @Override
       public void onClick(View v) {
-        String directionsQuery = "google.navigation:q=" + listForRecycler.get(holder.getAdapterPosition()).getMLatitude().toString()
-            + "," + listForRecycler.get(holder.getAdapterPosition()).getMLongitude().toString()
-            + "&mode=w";
+        String directionsQuery = mActivity.getString(R.string.google_base_query) + listForRecycler.get(holder.getAdapterPosition()).getMLatitude().toString()
+            + mActivity.getString(R.string.a_comma) + listForRecycler.get(holder.getAdapterPosition()).getMLongitude().toString()
+            + mActivity.getString(R.string.google_walk_mode);
         Uri gmmIntentUri = Uri.parse(directionsQuery);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
+        mapIntent.setPackage(mActivity.getString(R.string.google_maps_package));
         mActivity.startActivity(mapIntent);
 
       }
@@ -125,9 +124,8 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
   private void startInfoPopup() {
     InfoPopupFrag infoPopupFrag = new InfoPopupFrag();
     FragmentManager fm = ((Main2Activity) mActivity).getSupportFragmentManager();
-    infoPopupFrag.show(fm, "InfoPopupFrag");
+    infoPopupFrag.show(fm, mActivity.getString(R.string.infopopupfrag_tag));
   }
-
 
   @Override
   public int getItemCount() {

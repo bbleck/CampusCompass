@@ -72,7 +72,8 @@ public class MapsFragment extends Fragment {
     try {
       mapsFragmentListener = (MapsFragmentListener) getActivity();
     } catch (ClassCastException e) {
-      Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
+      //do nothing for the time being
+      //todo: discover if there is anything that can be done
     }
 
   }

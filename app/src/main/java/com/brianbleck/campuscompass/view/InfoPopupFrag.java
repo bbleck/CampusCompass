@@ -87,12 +87,14 @@ public class InfoPopupFrag extends DialogFragment {
         itemUrl.setTextIsSelectable(true);
         itemAbbr.setText(theItem.getAbbr());
         String tempDesc = theItem.getDescription();
-        if(tempDesc.contains("<br")){
-          Spanned htmlAsSpanned = Html.fromHtml(tempDesc, 32);
-          itemDescription.setText(htmlAsSpanned);
-        }else{
-          itemDescription.setText(theItem.getDescription());
-        }
+    if (tempDesc != null) {
+      if(tempDesc.contains(getString(R.string.html_signature))){
+        Spanned htmlAsSpanned = Html.fromHtml(tempDesc, 32);
+        itemDescription.setText(htmlAsSpanned);
+      }else{
+        itemDescription.setText(theItem.getDescription());
+      }
+    }
   }
 
   private void initViews(View theView) {
@@ -121,7 +123,7 @@ public class InfoPopupFrag extends DialogFragment {
     try {
       infoPopupFragListener = (InfoPopupFragListener) getActivity();
     } catch (ClassCastException e) {
-      Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
+      //for the time being, do nothing
     }
 
   }

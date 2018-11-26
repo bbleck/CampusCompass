@@ -64,7 +64,6 @@ public class TokenPrepper {
   private static void fixTokenType(Token unprepped, Token prepped) {
     if(unprepped.getTokenType()==null){
       prepped.setTokenType(TokenType.BUILDING);
-      Log.d(TAG, "prep: error with null tokentype");
     }else{
       prepped.setTokenType(unprepped.getTokenType());
     }
@@ -73,9 +72,6 @@ public class TokenPrepper {
   private static void fixDrawable(Context activity, Token unprepped, Token prepped) {
     Drawable tempDrawable = ResourcesCompat
         .getDrawable(activity.getResources(), R.drawable.ic_magnifying_glass, null);
-    if(unprepped == null){
-      Log.d(TAG, "fixDrawable: unprepped is null");
-    }
     if(unprepped.getDrawable() == null){
       switch (prepped.getTokenType()){
         case BLUE_PHONE:

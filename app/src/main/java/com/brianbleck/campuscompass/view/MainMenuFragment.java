@@ -54,11 +54,11 @@ public class MainMenuFragment extends Fragment {
   private void initViews(View theView) {
     for (int i = 0; i < COUNT_SEARCHES; i++) {
       final int id = getResources()
-          .getIdentifier("iv_main_frag_" + i, "id", getContext().getPackageName());
+          .getIdentifier(getString(R.string.iv_main_frag_string) + i, getString(R.string.id), getContext().getPackageName());
       int idTxt = getResources()
-          .getIdentifier("tv_main_frag_" + i, "id", getContext().getPackageName());
+          .getIdentifier(getString(R.string.tv_main_frag_string) + i, getString(R.string.id), getContext().getPackageName());
       final String idTxtSetTxt = getString(getResources()
-          .getIdentifier("image_title_" + i, "string", getContext().getPackageName()));
+          .getIdentifier(getString(R.string.image_title_string) + i, getString(R.string.type_string), getContext().getPackageName()));
       imageItems[i] = theView.findViewById(id);
       textItems[i] = theView.findViewById(idTxt);
       textItems[i].setText(idTxtSetTxt);
@@ -87,7 +87,7 @@ public class MainMenuFragment extends Fragment {
     try {
       mainMenuFragListener = (MainMenuFragListener) getActivity();
     } catch (ClassCastException e) {
-      Log.e(TAG, "onAttach: ClassCastException" + e.getMessage());
+      //do nothing for the time being
     }
 
   }

@@ -105,10 +105,6 @@ public class Token implements Cloneable {
     return theClone;
   }
 
-  private void setDefaultImage() {
-    //todo: implement method
-  }
-
   /**
    * Gets token type.
    *
@@ -143,7 +139,6 @@ public class Token implements Cloneable {
    */
   public void setImage(String image) {
     this.image = image;
-    //todo:  create drawable object for URL if it is non null
   }
 
   /**
