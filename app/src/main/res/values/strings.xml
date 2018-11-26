@@ -65,4 +65,13 @@
   <string name="google_maps_package">com.google.android.apps.maps</string>
   <string name="a_space"/>
   <string name="no_title_available">No Title Available</string>
+  <string name="find_a_building_">Find a building.</string>
+  <string name="find_a_restroom_">Find a restroom.</string>
+  <string name="find_an_emergency_blue_phone_">Find an emergency blue phone.</string>
+  <string name="find_a_computer_pod_">Find a computer pod.</string>
+  <string name="find_healthy_vending_">Find healthy vending.</string>
+  <string name="find_dining_">Find dining.</string>
+  <string name="find_a_library_">Find a library.</string>
+  <string name="find_metered_parking_">Find metered parking.</string>
+  <string name="find_a_shuttle_stop_">Find a shuttle stop.</string>
 </resources>

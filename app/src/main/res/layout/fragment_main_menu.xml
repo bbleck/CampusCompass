@@ -5,23 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-      android:id="@+id/iv_main_frag_0"
-      android:layout_width="80dp"
-      android:layout_height="80dp"
-      android:layout_marginBottom="8dp"
-      android:layout_marginStart="24dp"
-      android:layout_marginEnd="8dp"
-      app:layout_constraintBottom_toTopOf="@+id/iv_main_frag_3"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/iv_main_frag_1"
-      app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintHorizontal_chainStyle="spread"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.0"
-      app:srcCompat="@drawable/building"
-      android:tint="@color/darkGray"/>
+  <ImageView
+    android:id="@+id/iv_main_frag_0"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="8dp"
+    android:contentDescription="@string/find_a_building_"
+    android:tint="@color/darkGray"
+    app:layout_constraintBottom_toTopOf="@+id/iv_main_frag_3"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/iv_main_frag_1"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintHorizontal_chainStyle="spread"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0"
+    app:srcCompat="@drawable/building"/>
 
   <ImageView
     android:id="@+id/iv_main_frag_1"
@@ -29,13 +30,14 @@
     android:layout_height="80dp"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
+    android:contentDescription="@string/find_a_restroom_"
+    android:tint="@color/restroomGray"
     app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_0"
     app:layout_constraintEnd_toStartOf="@+id/iv_main_frag_2"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toEndOf="@+id/iv_main_frag_0"
     app:layout_constraintTop_toTopOf="@+id/iv_main_frag_0"
-    app:srcCompat="@drawable/restroom"
-    android:tint="@color/restroomGray"/>
+    app:srcCompat="@drawable/restroom"/>
 
   <ImageView
     android:id="@+id/iv_main_frag_2"
@@ -43,19 +45,21 @@
     android:layout_height="80dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="24dp"
+    android:contentDescription="@string/find_an_emergency_blue_phone_"
+    android:tint="@color/colorPrimary"
     app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_1"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toEndOf="@+id/iv_main_frag_1"
     app:layout_constraintTop_toTopOf="@+id/iv_main_frag_1"
-    app:srcCompat="@drawable/blue_phone"
-    android:tint="@color/colorPrimary"/>
+    app:srcCompat="@drawable/blue_phone"/>
 
   <ImageView
     android:id="@+id/iv_main_frag_3"
     android:layout_width="80dp"
     android:layout_height="80dp"
     android:layout_marginTop="24dp"
+    android:contentDescription="@string/find_a_computer_pod_"
     app:layout_constraintBottom_toTopOf="@+id/iv_main_frag_6"
     app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_0"
     app:layout_constraintHorizontal_bias="0.5"
@@ -67,23 +71,25 @@
     android:id="@+id/iv_main_frag_4"
     android:layout_width="80dp"
     android:layout_height="80dp"
+    android:contentDescription="@string/find_healthy_vending_"
+    android:tint="@color/healthGreen"
     app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_3"
     app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_1"
     app:layout_constraintStart_toStartOf="@+id/iv_main_frag_1"
     app:layout_constraintTop_toTopOf="@+id/iv_main_frag_3"
-    app:srcCompat="@drawable/vending"
-    android:tint="@color/healthGreen"/>
+    app:srcCompat="@drawable/vending"/>
 
   <ImageView
     android:id="@+id/iv_main_frag_5"
     android:layout_width="80dp"
     android:layout_height="80dp"
+    android:contentDescription="@string/find_dining_"
+    android:tint="@color/foodBrown"
     app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_4"
     app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_2"
     app:layout_constraintStart_toStartOf="@+id/iv_main_frag_2"
     app:layout_constraintTop_toTopOf="@+id/iv_main_frag_4"
-    app:srcCompat="@drawable/food"
-    android:tint="@color/foodBrown"/>
+    app:srcCompat="@drawable/food"/>
 
   <ImageView
     android:id="@+id/iv_main_frag_6"
@@ -91,35 +97,38 @@
     android:layout_height="80dp"
     android:layout_marginTop="40dp"
     android:layout_marginBottom="40dp"
+    android:contentDescription="@string/find_a_library_"
+    android:tint="@color/libraryOrange"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_3"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toStartOf="@+id/iv_main_frag_3"
     app:layout_constraintTop_toBottomOf="@+id/iv_main_frag_3"
-    app:srcCompat="@drawable/library"
-    android:tint="@color/libraryOrange"/>
+    app:srcCompat="@drawable/library"/>
 
   <ImageView
     android:id="@+id/iv_main_frag_7"
     android:layout_width="80dp"
     android:layout_height="80dp"
+    android:contentDescription="@string/find_metered_parking_"
+    android:tint="@color/parkingBlue"
     app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_6"
     app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_4"
     app:layout_constraintStart_toStartOf="@+id/iv_main_frag_4"
     app:layout_constraintTop_toTopOf="@+id/iv_main_frag_6"
-    app:srcCompat="@drawable/parking"
-    android:tint="@color/parkingBlue"/>
+    app:srcCompat="@drawable/parking"/>
 
   <ImageView
     android:id="@+id/iv_main_frag_8"
     android:layout_width="80dp"
     android:layout_height="80dp"
+    android:contentDescription="@string/find_a_shuttle_stop_"
+    android:tint="@color/shuttlePurple"
     app:layout_constraintBottom_toBottomOf="@+id/iv_main_frag_7"
     app:layout_constraintEnd_toEndOf="@+id/iv_main_frag_5"
     app:layout_constraintStart_toStartOf="@+id/iv_main_frag_5"
     app:layout_constraintTop_toTopOf="@+id/iv_main_frag_7"
-    app:srcCompat="@drawable/shuttle_stop"
-    android:tint="@color/shuttlePurple"/>
+    app:srcCompat="@drawable/shuttle_stop"/>
 
     <TextView
         android:id="@+id/tv_main_frag_0"
