@@ -122,13 +122,20 @@ CREATE  INDEX `index_Token_token_type`
 
 
 ## Instructions for Building CampusCompass
+1. Clone the repository into a local Android Studio project.
+2. Add a live Google API key to: app -> res -> values -> google_maps_api.xml.  Cut the text "GOOGLE_KEY_NEEDS_TO_BE_PASTED_HERE" and replace it with the live key.
+3. The Google API keys in the version history of CampusCompass are all dead and will not work for you.
+4. 
 
 
 ## Instructions for Using CampusCompass
-- The initial screen is the Main Menu.  It presents users with the option to choose a type of destination.  To choose a destination, the user must click on one of the icons.
-- Upon clicking on an icon, the user is taken to the Map Screen.
-- To return to the Main Menu from the Map Screen the user must click on the top toolbar, either on the text indicating a return to the Main Menu or on the 'Home' button.
-- To quit the app, the user may press the Android 'Back Navigation' button at any time. 
-- In the Map Screen, the user may enter the name of the destination they are searching for or they may try entering key words.  For example, if the user selects "Find Building" on the Main Menu they may enter either "Center for the arts" or "popejoy" to find the same building (the building's official name is "Center For The Arts").
-- For any destination list item in the Map Screen, the user may press the Info button to see more information on the destination (if UNM open data provides more information).
-- For any destination list item in the Map Screen, the user may press the Get Directions buttons to get directions to the destination. Get Directions will take the user into the Google Maps App (must already be installed on the user's device) with the destination preloaded.
+1. The initial screen is the Main Menu.  It presents users with the option to choose a type of destination.  To choose a destination, the user must click on one of the icons.
+2. Upon clicking on an icon, the user is taken to the Map Screen.
+3. To return to the Main Menu from the Map Screen the user must click on the top toolbar, either on the text indicating a return to the Main Menu or on the 'Home' button.
+4. To quit the app, the user may press the Android 'Back Navigation' button at any time. 
+5. In the Map Screen, the user may enter the name of the destination they are searching for or they may try entering key words.  For example, if the user selects "Find Building" on the Main Menu they may enter either "Center for the arts" or "popejoy" to find the same building (the building's official name is "Center For The Arts").
+6. For any destination list item in the Map Screen, the user may press the Info button to see more information on the destination (if UNM open data provides more information).
+7. For any destination list item in the Map Screen, the user may press the Get Directions buttons to get directions to the destination. Get Directions will take the user into the Google Maps App (must already be installed on the user's device) with the destination preloaded.
+
+## Compass Graphics
+Many thanks to Danielle Andazola for the compass graphics, inquiries for freelance work can be directed to <Dzolamarketing@gmail.com> 
