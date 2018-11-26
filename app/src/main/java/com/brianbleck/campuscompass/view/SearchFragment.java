@@ -258,21 +258,21 @@ public class SearchFragment extends Fragment {
     Drawable tempDrawable = null;
     if((Double.compare(theBearing, -22.5) >= 0 && Double.compare(theBearing, 0) <= 0 )
         || ( Double.compare(theBearing, 22.5) <= 0 && Double.compare(theBearing, 0) >= 0)){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_n, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.crop_compass_n, null);
     }else if(Double.compare(theBearing, 67.5) <= 0 && Double.compare(theBearing, 22.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_ne, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.crop_compass_ne, null);
     }else if(Double.compare(theBearing, 112.5) <= 0 && Double.compare(theBearing, 67.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_e, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.crop_compass_e, null);
     }else if(Double.compare(theBearing, 157.5) <= 0 && Double.compare(theBearing, 112.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_se, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.crop_compass_se, null);
     }else if(Double.compare(theBearing, 157.5) > 0 || Double.compare(theBearing, -157.5) < 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_s, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.crop_compass_s, null);
     }else if(Double.compare(theBearing, -112.5) <= 0 && Double.compare(theBearing, -157.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_sw, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.crop_compass_sw, null);
     }else if(Double.compare(theBearing, -67.5) <= 0 && Double.compare(theBearing, -112.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_w, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.crop_compass_w, null);
     }else if(Double.compare(theBearing, -22.5) <= 0 && Double.compare(theBearing, -67.5) > 0){
-      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.compass_nw, null);
+      tempDrawable = ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.crop_compass_nw, null);
     }
     return tempDrawable;
   }

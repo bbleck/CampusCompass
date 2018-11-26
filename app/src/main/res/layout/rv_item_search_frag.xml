@@ -16,59 +16,67 @@
     android:textStyle="bold"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
+    android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
     android:gravity="start"
     android:textColor="@color/blackText"
-    android:textSize="14sp"
-    app:layout_constraintEnd_toStartOf="@+id/tv_search_item_distance"
-    app:layout_constraintHorizontal_bias="0.0"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="@+id/btn_search_item_go"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     tools:text="Item Title"/>
 
   <TextView
     android:id="@+id/tv_search_item_distance"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
     android:gravity="center_horizontal"
     android:text="@string/distance_away"
     android:textColor="@color/darkGray"
-    app:layout_constraintBottom_toBottomOf="@+id/btn_search_item_go"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toEndOf="@+id/btn_search_item_go"/>
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/iv_search_item_image"
+    app:layout_constraintStart_toEndOf="@+id/btn_search_item_go"
+    app:layout_constraintTop_toTopOf="@+id/tv_search_item_title"/>
 
   <Button
     android:id="@+id/btn_search_item_info"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp"
     android:text="@string/info"
+    android:textSize="12sp"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/tv_search_item_title"/>
+    app:layout_constraintTop_toBottomOf="@+id/tv_search_item_title"
+    app:layout_constraintVertical_bias="1.0"/>
 
   <Button
     android:id="@+id/btn_search_item_go"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp"
     android:text="@string/get_directions"
+    android:textSize="12sp"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toEndOf="@+id/btn_search_item_info"
-    app:layout_constraintTop_toBottomOf="@+id/tv_search_item_title"/>
+    app:layout_constraintTop_toBottomOf="@+id/tv_search_item_title"
+    app:layout_constraintVertical_bias="1.0"/>
   <ImageView
     android:id="@+id/iv_search_item_image"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="4dp"
+    android:layout_width="75dp"
+    android:layout_height="75dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:contentDescription="@string/directional_compass_image"
-    app:layout_constraintBottom_toTopOf="@+id/tv_search_item_distance"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="@+id/tv_search_item_distance"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toEndOf="@+id/btn_search_item_go"
     app:layout_constraintTop_toTopOf="parent"
     app:srcCompat="@drawable/ic_placeholder_east"/>
 </android.support.constraint.ConstraintLayout>
