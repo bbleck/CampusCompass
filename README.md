@@ -140,5 +140,10 @@ CREATE  INDEX `index_Token_token_type`
 7. For any destination list item in the Map Screen, the user may press the Get Directions buttons to get directions to the destination. Get Directions will take the user into the Google Maps App (must already be installed on the user's device) with the destination preloaded.
 8. For any destination list item in the Map Screen, the user may tap on the non-button portion of the item to center the map on that particular destination.
 
+
 ## Compass Graphics
 Many thanks to Danielle Andazola for the compass graphics, inquiries for freelance work can be directed to <Dzolamarketing@gmail.com> 
+
+
+## CampusCompass 
+[Campus Compass License](https://github.com/bbleck/CampusCompass/raw/master/LICENSE.md)
