@@ -785,6 +785,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Marks the map at the appropriate location for the user's selection.
+   * @param single the {@link Token} to center the map on
+   */
   @Override
   public void beginSingleMarkerUpdate(Token single){
     List<Token> visibles = new LinkedList<>();
@@ -874,7 +878,8 @@ private void updateMapMarkers(List<Token> visible){
     LatLng tempLatLng = new LatLng(token.getMLatitude(), token.getMLongitude());
     mapMarkers.add(myMap.addMarker(new MarkerOptions()
         .position(tempLatLng)
-        .title(token.getTitle())));
+        .title(token.getTitle())
+        ));
   }
 
   if (visible.size()>0) {
