@@ -74,7 +74,7 @@ The app could be extended in the following ways:
 
 
 ## ERD
-[Entity Relationship Diagram](CampusCompass/CampusCompass_ERD.pdf)
+[Entity Relationship Diagram](https://github.com/bbleck/CampusCompass/raw/master/CampusCompass_ERD.pdf)
 
 ## DDL
 ```
@@ -103,7 +103,7 @@ CREATE  INDEX `index_Token_token_type`
 ```
 
 ## Project Javadocs
-[CampusCompass Javadocs](CampusCompass/docs/index.html)
+[CampusCompass Javadocs](https://github.com/bbleck/CampusCompass/tree/master/docs)
 
 
 ## Copyrights and Licenses
