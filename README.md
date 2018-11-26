@@ -103,7 +103,7 @@ CREATE  INDEX `index_Token_token_type`
 ```
 
 ## Project Javadocs
-[CampusCompass Javadocs](https://github.com/bbleck/CampusCompass/tree/master/docs)
+[CampusCompass Javadocs](https://github.com/bbleck/CampusCompass/blob/master/docs/index.html)
 
 
 ## Copyrights and Licenses
