@@ -14,15 +14,12 @@ The driving motivation for this project was my experience at the beginning of ev
 
 
 ## Current State of CampusCompass
-CampusCompass is currently mostly functional.  Remaining fixes to be made are:
-- The list search functionality and dynamically updated RecyclerView.
-- Implementing compass drawables in the RecyclerView instead of the default drawables. The compasses should add tell the user the direction each location is from the user's current location.
-- Dynamically changing the Title in the Toolbar to indicate clicking on it will take the user back to the Main Menu.
+CampusCompass is currently functional.  Remaining fixes to be made are:
 - Working with UNM to add more locations to their API, particularly RestRooms which are currently limited to Gender Neutral restrooms and are mostly located off-campus.  Finding the closest restroom is a feature that would probably be broadly used.
 
 
 ## Android Version Testing
-This app has been extensively testing on a Google Pixel running Android Pie (API 28).  It has also been testing using the Android Studio Emulator running API 27 on a Nexus 5X.  Minimum API is 24, and recommended API is 28 (API 28 has superior location finding).  At present, there are not any known Android devices that do not support Campus Compass, so long as the minimum Android API is met and the user gives the require permissions. Orientation is locked in Portrait.  The app currently supports english only.  Users must enable location services and GPS in order to use the app.  Required permissions:  Internet, Fine Location.
+This app has been extensively testing on a Google Pixel running Android Pie (API 28).  It has also been testing using the Android Studio Emulator running API 27 on a Nexus 5X emulation.  Minimum API is 24, and recommended API is 28 (API 28 has superior location finding).  At present, there are not any known Android devices that do not support Campus Compass, so long as the minimum Android API is met and the user gives the required permissions. Orientation is locked in Portrait.  The app currently supports english only.  Users must enable location services and GPS in order to use the app.  Required permissions:  Internet, Fine Location.
 
 
 ## Third Party Libraries
@@ -53,7 +50,7 @@ The app consumes the following external services:
 ## Cosmetic Improvements
 The following cosmetic improvements could be made to the app:
 - Color scheme
-- Implementing the compass drawables
+- Increasing the size of compass drawables
 - Handling unexpected javascript in JSON strings (as seen in the extra info associated with some, but not all, library locations).
 - Clicking on a search list item should highlight and center the associated marker on the map.
 - Better graphical representation helping users to use the toolbar to navigate back to the main menu (this navigation is the expected way to return to main menu).
