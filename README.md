@@ -145,5 +145,5 @@ CREATE  INDEX `index_Token_token_type`
 Many thanks to Danielle Andazola for the compass graphics, inquiries for freelance work can be directed to <Dzolamarketing@gmail.com> 
 
 
-## CampusCompass 
+## CampusCompass, All Rights Reserved 
 [Campus Compass License](https://github.com/bbleck/CampusCompass/raw/master/LICENSE.md)
