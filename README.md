@@ -50,9 +50,7 @@ The app consumes the following external services:
 ## Cosmetic Improvements
 The following cosmetic improvements could be made to the app:
 - Color scheme
-- Increasing the size of compass drawables
 - Handling unexpected javascript in JSON strings (as seen in the extra info associated with some, but not all, library locations).
-- Clicking on a search list item should highlight and center the associated marker on the map.
 - Better graphical representation helping users to use the toolbar to navigate back to the main menu (this navigation is the expected way to return to main menu).
 
 
@@ -125,7 +123,7 @@ CREATE  INDEX `index_Token_token_type`
 1. Clone the repository into a local Android Studio project.
 2. Add a live Google API key to: app -> res -> values -> google_maps_api.xml.  Cut the text "GOOGLE_KEY_NEEDS_TO_BE_PASTED_HERE" and replace it with the live key.
 3. The Google API keys in the version history of CampusCompass are all dead and will not work for you.
-4. 
+4. Build the app onto a device running a minimum of API 24.
 
 
 ## Instructions for Using CampusCompass
@@ -136,6 +134,7 @@ CREATE  INDEX `index_Token_token_type`
 5. In the Map Screen, the user may enter the name of the destination they are searching for or they may try entering key words.  For example, if the user selects "Find Building" on the Main Menu they may enter either "Center for the arts" or "popejoy" to find the same building (the building's official name is "Center For The Arts").
 6. For any destination list item in the Map Screen, the user may press the Info button to see more information on the destination (if UNM open data provides more information).
 7. For any destination list item in the Map Screen, the user may press the Get Directions buttons to get directions to the destination. Get Directions will take the user into the Google Maps App (must already be installed on the user's device) with the destination preloaded.
+8. For any destination list item in the Map Screen, the user may tap on the non-button portion of the item to center the map on that particular destination.
 
 ## Compass Graphics
 Many thanks to Danielle Andazola for the compass graphics, inquiries for freelance work can be directed to <Dzolamarketing@gmail.com> 
