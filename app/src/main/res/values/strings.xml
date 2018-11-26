@@ -74,4 +74,9 @@
   <string name="find_a_library_">Find a library.</string>
   <string name="find_metered_parking_">Find metered parking.</string>
   <string name="find_a_shuttle_stop_">Find a shuttle stop.</string>
+  <string name="search_using_key_words">Search using key words</string>
+  <string name="reset">Reset</string>
+  <string name="return_to_search">Return</string>
+  <string name="directional_compass_image">Directional compass image.</string>
+  <string name="get_directions">Get Directions</string>
 </resources>

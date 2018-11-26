@@ -30,7 +30,7 @@
     android:drawableStart="@drawable/ic_magnifying_glass"
     android:drawableTint="@color/plainwhite"
     android:ems="10"
-    android:hint="Search using key words"
+    android:hint="@string/search_using_key_words"
     android:inputType="textAutoComplete"
     android:singleLine="true"
     android:textColor="@color/plainwhite"
@@ -39,14 +39,15 @@
     app:layout_constraintBottom_toBottomOf="@+id/btn_search_reset"
     app:layout_constraintEnd_toStartOf="@+id/btn_search_reset"
     app:layout_constraintStart_toStartOf="@+id/tv_search_title"
-    app:layout_constraintTop_toBottomOf="@+id/tv_search_title"/>
+    app:layout_constraintTop_toBottomOf="@+id/tv_search_title"
+    />
 
   <Button
     android:id="@+id/btn_search_reset"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="8dp"
-    android:text="Reset"
+    android:text="@string/reset"
     app:layout_constraintEnd_toEndOf="@+id/tv_search_title"
     app:layout_constraintTop_toBottomOf="@+id/tv_search_title"/>
 

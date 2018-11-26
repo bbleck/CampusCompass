@@ -14,6 +14,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
+    android:contentDescription="@string/directional_compass_image"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent"
@@ -29,24 +30,24 @@
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
     android:gravity="center_horizontal"
-    android:text="Title"
     android:textColor="@color/blackText"
     android:textSize="18sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@+id/iv_popup_info_image"
-    app:layout_constraintTop_toTopOf="@+id/iv_popup_info_image"/>
+    app:layout_constraintTop_toTopOf="@+id/iv_popup_info_image"
+    tools:text="Title"/>
 
   <TextView
     android:id="@+id/tv_popup_info_url"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:text="URL"
     android:textColor="@color/colorPrimaryDark"
     app:layout_constraintEnd_toEndOf="@+id/tv_popup_info_title"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="@+id/tv_popup_info_title"
-    app:layout_constraintTop_toBottomOf="@+id/tv_popup_info_keywords"/>
+    app:layout_constraintTop_toBottomOf="@+id/tv_popup_info_keywords"
+    tools:text="URL"/>
 
   <Button
     android:id="@+id/btn_popup_info_return"
@@ -55,7 +56,7 @@
     android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
-    android:text="Return"
+    android:text="@string/return_to_search"
     android:textColor="@color/blackText"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -72,33 +73,33 @@
     android:layout_marginEnd="8dp"
     android:lineSpacingExtra="4sp"
     android:scrollbars="vertical"
-    android:text="TextView"
     android:textColor="@color/blackText"
     android:textSize="18sp"
     app:layout_constraintBottom_toTopOf="@+id/btn_popup_info_return"
     app:layout_constraintEnd_toEndOf="@+id/tv_popup_info_url"
     app:layout_constraintStart_toStartOf="@+id/iv_popup_info_image"
-    app:layout_constraintTop_toBottomOf="@+id/tv_popup_info_url"/>
+    app:layout_constraintTop_toBottomOf="@+id/tv_popup_info_url"
+    tools:text="TextView"/>
   <TextView
     android:id="@+id/tv_popup_info_keywords"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:text="TextView"
     android:textColor="@color/colorPrimaryDark"
     app:layout_constraintEnd_toEndOf="@+id/tv_popup_info_title"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="@+id/tv_popup_info_title"
-    app:layout_constraintTop_toBottomOf="@+id/tv_popup_info_abbr"/>
+    app:layout_constraintTop_toBottomOf="@+id/tv_popup_info_abbr"
+    tools:text="TextView"/>
   <TextView
     android:id="@+id/tv_popup_info_abbr"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginEnd="8dp"
     android:gravity="end"
-    android:text="TextView"
     android:textColor="@color/blackText"
     app:layout_constraintEnd_toEndOf="@+id/tv_popup_info_title"
     app:layout_constraintStart_toStartOf="@+id/tv_popup_info_title"
-    app:layout_constraintTop_toBottomOf="@+id/tv_popup_info_title"/>
+    app:layout_constraintTop_toBottomOf="@+id/tv_popup_info_title"
+    tools:text="TextView"/>
 </android.support.constraint.ConstraintLayout>
