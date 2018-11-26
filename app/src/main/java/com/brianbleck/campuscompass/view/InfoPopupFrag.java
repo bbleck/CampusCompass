@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
@@ -88,7 +89,7 @@ public class InfoPopupFrag extends DialogFragment {
         itemAbbr.setText(theItem.getAbbr());
         String tempDesc = theItem.getDescription();
     if (tempDesc != null) {
-      if(tempDesc.contains(getString(R.string.html_signature))){
+      if(tempDesc.contains("<br")){
         Spanned htmlAsSpanned = Html.fromHtml(tempDesc, 32);
         itemDescription.setText(htmlAsSpanned);
       }else{
@@ -108,6 +109,7 @@ public class InfoPopupFrag extends DialogFragment {
     itemReturn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+
         dismiss();
       }
     });

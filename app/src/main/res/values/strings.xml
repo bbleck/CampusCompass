@@ -44,7 +44,7 @@
   <string name="unm_base_url">https://datastore.unm.edu/locations/</string>
   <string name="check_google_svc_version">isServicesOK: checking google services version</string>
   <string name="google_play_svcs_is_working">isServicesOK: Google Play Services is working</string>
-  <string name="google_play_svcs_error_can_fix">isServicesOK: an error occured but we can fix it</string>
+  <string name="google_play_svcs_error_can_fix">isServicesOK: an error occurred but we can fix it</string>
   <string name="cannot_make_map_requests">You can\'t make map requests</string>
   <string name="could_not_load_resource">Could not load resources at</string>
   <string name="start_loc">Your Start Location</string>
