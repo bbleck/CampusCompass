@@ -15,7 +15,8 @@ The driving motivation for this project was my experience at the beginning of ev
 
 ## Current State of CampusCompass
 CampusCompass is currently functional.  Remaining fixes to be made are:
-- Working with UNM to add more locations to their API, particularly RestRooms which are currently limited to Gender Neutral restrooms and are mostly located off-campus.  Finding the closest restroom is a feature that would probably be broadly used.
+- Working with UNM to add more restroom locations to their API.
+- Working with UNM to add other needed functionalities to their API and CampusCompass.
 
 
 ## Android Version Testing
@@ -50,7 +51,7 @@ The app consumes the following external services:
 ## Cosmetic Improvements
 The following cosmetic improvements could be made to the app:
 - Color scheme
-- Handling unexpected javascript in JSON strings (as seen in the extra info associated with some, but not all, library locations).
+- Handling unexpected javascript in JSON strings (as seen in the descriptions associated with some, but not all, library locations).
 - Better graphical representation helping users to use the toolbar to navigate back to the main menu (this navigation is the expected way to return to main menu).
 
 
@@ -63,6 +64,7 @@ The app could be extended in the following ways:
 ## Wireframes
 [Adobe XD Wireframe: CampusCompass](https://xd.adobe.com/view/6e52afdd-105d-4f56-64a1-5b48c37b17db-1863/)
 
+
 ## User Stories
 - As a UNM Student, I would like to be able to easily find academic buildings on campus so I can easily find where my classes are at the beginning of each semester.
 - As a Visitor to UNM, I would like to be able to get directions to places on campus, including where metered parking is located so that I don't have to wander around or search the internet for such information.
@@ -73,6 +75,7 @@ The app could be extended in the following ways:
 
 ## ERD
 [Entity Relationship Diagram](https://github.com/bbleck/CampusCompass/raw/master/CampusCompass_ERD.pdf)
+
 
 ## DDL
 ```
