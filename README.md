@@ -124,9 +124,10 @@ CREATE  INDEX `index_Token_token_type`
 
 ## Instructions for Building CampusCompass
 1. Clone the repository into a local Android Studio project.
-2. Add a live Google API key to: app -> res -> values -> google_maps_api.xml.  Cut the text "GOOGLE_KEY_NEEDS_TO_BE_PASTED_HERE" and replace it with the live key.
-3. The Google API keys in the version history of CampusCompass are all dead and will not work for you.
-4. Build the app onto a device running a minimum of API 24.
+2. Get a [GoogleMaps API Key](https://developers.google.com/maps/documentation/javascript/get-api-key)
+3. Add a live Google API key to: app -> res -> values -> google_maps_api.xml.  Cut the text "GOOGLE_KEY_NEEDS_TO_BE_PASTED_HERE" and replace it with the live key.
+4. The Google API keys in the version history of CampusCompass are all dead and will not work for you.
+5. Build the app onto a device running a minimum of API 24.
 
 
 ## Instructions for Using CampusCompass
