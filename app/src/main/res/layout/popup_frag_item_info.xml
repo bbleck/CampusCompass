@@ -43,6 +43,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:textColor="@color/colorPrimaryDark"
+    android:autoLink="web"
+    android:textColorLink="@color/healthGreen"
     app:layout_constraintEnd_toEndOf="@+id/tv_popup_info_title"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="@+id/tv_popup_info_title"

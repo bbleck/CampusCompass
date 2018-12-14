@@ -257,6 +257,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
           return;
         }
         mCurrentLocation = locationResult.getLastLocation();
+//        Toast.makeText(getBaseContext(), "Lat: " + mCurrentLocation.getLatitude() + "     Long: " + mCurrentLocation.getLongitude(), Toast.LENGTH_LONG).show();
         setTokenDistances();
         sortDBTokens();
       }
