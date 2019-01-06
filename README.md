@@ -13,7 +13,7 @@ Contact Information:
 
 Information for the contest that differs from what is below:  
 - I have included a live GoogleMaps key in my email invitation to the judges. This key may be pasted into the code as described in the "Instructions for Building CampusCompass" section below.
--Alternatively, judges may create their own GoogleMaps key and paste it into the code as described in the "Instructions for Building CampusCompass" section below.
+- Alternatively, judges may create their own GoogleMaps key and paste it into the code as described in the "Instructions for Building CampusCompass" section below.
 
 # CampusCompass
 What does it do?
