@@ -96,6 +96,9 @@ public class SearchFragment extends Fragment {
     redrawListInAdapter();
   }
 
+  /**
+   * Initializes the recycler view.
+   */
   private void initRecyclerView() {
     adapter = new SearchFragAdapter(getActivity(), listForRecycler);
     manager = new LinearLayoutManager(getContext());
@@ -103,6 +106,9 @@ public class SearchFragment extends Fragment {
     recyclerView.setLayoutManager(manager);
   }
 
+  /**
+   * Initializes the data references.
+   */
   private void initData() {
     try {
       callingViewId = ((Main2Activity) getActivity()).getCallingViewId();
@@ -113,6 +119,9 @@ public class SearchFragment extends Fragment {
     listForRecycler = searchFragListener.getTokensList();
   }
 
+  /**
+   * A method containing a switch that sets the search title.
+   */
   private void setSearchTitle() {
     switch (callingViewId) {
       case R.id.iv_main_frag_0:
@@ -147,7 +156,10 @@ public class SearchFragment extends Fragment {
     }
   }
 
-
+  /**
+   * A method that initializes the views for a given View object.
+   * @param theView
+   */
   private void initViews(View theView) {
     refineSearch = theView.findViewById(R.id.edit_text_search_filter_words);
     searchTitle = theView.findViewById(R.id.tv_search_title);
@@ -162,7 +174,7 @@ public class SearchFragment extends Fragment {
         redrawListInAdapter();
       }
     });
-//
+
     refineSearch.addTextChangedListener(new TextWatcher() {
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -174,6 +186,10 @@ public class SearchFragment extends Fragment {
 
       }
 
+      /**
+       * A method that filters the list each time the text is changed.
+       * @param s
+       */
       @Override
       public void afterTextChanged(Editable s) {
         searchInput = refineSearch.getText().toString().toLowerCase();
@@ -183,6 +199,9 @@ public class SearchFragment extends Fragment {
     });
   }
 
+  /**
+   * A method that resets the search text.
+   */
   private void resetEditText() {
     refineSearch.setText("", TextView.BufferType.NORMAL);
   }
@@ -216,6 +235,10 @@ public class SearchFragment extends Fragment {
     searchFragListener.updateFilteredList(listForRecycler);
   }
 
+  /**
+   * A method that filters the recyclerview list.
+   * @param searchTerm
+   */
   private void filterList(String searchTerm){
     List<Token> filteredList = new LinkedList<>();
     for (Token token :
@@ -230,6 +253,10 @@ public class SearchFragment extends Fragment {
     drawFilteredList(filteredList);
   }
 
+  /**
+   * A method that draws a new list in the recyclerview.
+   * @param filteredList
+   */
   private void drawFilteredList(List<Token> filteredList) {
     adapter = new SearchFragAdapter(getActivity(), filteredList);
     manager = new LinearLayoutManager(getContext());
@@ -237,8 +264,6 @@ public class SearchFragment extends Fragment {
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(manager);
   }
-
-  //todo: generalize list draw method
 
   /**
    * Redraw list in adapter.
@@ -251,6 +276,12 @@ public class SearchFragment extends Fragment {
     recyclerView.setLayoutManager(manager);
   }
 
+  /**
+   * A method that retrieves the correct drawable based on a user's bearing.
+   * @param token
+   * @param userLoc
+   * @return the correct bearing drawable
+   */
   private Drawable grabBearingDrawable(Token token, Location userLoc){
     com.google.android.gms.maps.model.LatLng userLatLng = new com.google.android.gms.maps.model.LatLng(userLoc.getLatitude(), userLoc.getLongitude());
     com.google.android.gms.maps.model.LatLng destLatLng = new com.google.android.gms.maps.model.LatLng(token.getMLatitude(), token.getMLongitude());
@@ -277,6 +308,11 @@ public class SearchFragment extends Fragment {
     return tempDrawable;
   }
 
+  /**
+   * A method that retrieves the correct drawable associated with a Token's TokenType.
+   * @param token
+   * @return the correct drawable
+   */
   private Drawable grabDrawable(Token token) {
     Drawable tempDrawable = null;
     try {

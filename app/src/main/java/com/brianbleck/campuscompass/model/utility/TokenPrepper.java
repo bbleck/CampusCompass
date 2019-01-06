@@ -37,6 +37,12 @@ public class TokenPrepper {
     return prepped;
   }
 
+  /**
+   * A method to set String link, ensuring there is never a null object for link.
+   * @param activity
+   * @param unprepped
+   * @param prepped
+   */
   private static void fixLinkString(Context activity, Token unprepped, Token prepped) {
     if(unprepped.getLink()==null || unprepped.getLink().isEmpty() ){
       prepped.setLink(activity.getString(R.string.default_link_string));
@@ -45,6 +51,12 @@ public class TokenPrepper {
     }
   }
 
+  /**
+   * A method to set String title, ensuring there is never a null object for title.
+   * @param activity
+   * @param unprepped
+   * @param prepped
+   */
   private static void fixTitle(Context activity, Token unprepped, Token prepped) {
     if(unprepped.getTitle()==null || unprepped.getTitle().isEmpty()){
       prepped.setTitle(activity.getString(R.string.default_title));
@@ -53,6 +65,12 @@ public class TokenPrepper {
     }
   }
 
+  /**
+   * A method to set String image, ensuring there is never a null object for image.
+   * @param activity
+   * @param unprepped
+   * @param prepped
+   */
   private static void fixImageUrlString(Context activity, Token unprepped, Token prepped) {
     if(unprepped.getImage()==null || unprepped.getImage().isEmpty()){
       prepped.setImage(activity.getString(R.string.default_image_url_string));
@@ -61,6 +79,11 @@ public class TokenPrepper {
     }
   }
 
+  /**
+   * A method to set TokenType, ensuring there is never a null object for TokenType.
+   * @param unprepped
+   * @param prepped
+   */
   private static void fixTokenType(Token unprepped, Token prepped) {
     if(unprepped.getTokenType()==null){
       prepped.setTokenType(TokenType.BUILDING);
@@ -69,6 +92,12 @@ public class TokenPrepper {
     }
   }
 
+  /**
+   * A method to set drawable, ensuring there is never a null object for drawable.
+   * @param activity
+   * @param unprepped
+   * @param prepped
+   */
   private static void fixDrawable(Context activity, Token unprepped, Token prepped) {
     Drawable tempDrawable = ResourcesCompat
         .getDrawable(activity.getResources(), R.drawable.ic_magnifying_glass, null);
@@ -108,6 +137,12 @@ public class TokenPrepper {
     prepped.setDrawable(tempDrawable);
   }
 
+  /**
+   * A method to set String description, ensuring there is never a null object for description.
+   * @param activity
+   * @param unprepped
+   * @param prepped
+   */
   private static void fixDescription(Context activity, Token unprepped, Token prepped) {
     if(unprepped.getDescription()==null || unprepped.getDescription().isEmpty()){
       prepped.setDescription(activity.getResources().getString(R.string.default_description));

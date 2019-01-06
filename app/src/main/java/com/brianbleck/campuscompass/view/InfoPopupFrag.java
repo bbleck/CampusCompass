@@ -98,6 +98,10 @@ public class InfoPopupFrag extends DialogFragment {
     }
   }
 
+  /**
+   * Initializes the views for a given View object.
+   * @param theView
+   */
   private void initViews(View theView) {
     itemImage = theView.findViewById(R.id.iv_popup_info_image);
     itemDescription = theView.findViewById(R.id.tv_popup_info_description);

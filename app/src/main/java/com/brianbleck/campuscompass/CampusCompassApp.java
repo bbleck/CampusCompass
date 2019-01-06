@@ -27,6 +27,9 @@ public class CampusCompassApp extends Application {
     initSetupTasks();
   }
 
+  /**
+   * Initializes stetho and database.
+   */
   private void initSetupTasks() {
     Stetho.initializeWithDefaults(this);
     database = CampusInfoDB.getInstance(this);

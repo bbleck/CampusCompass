@@ -50,6 +50,9 @@ public class MapsFragment extends Fragment {
     return theView;
   }
 
+  /**
+   * Initializes the map container with a map fragment.
+   */
   private void initMaps() {
     SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
         .findFragmentById(R.id.gm_map_frag);
@@ -58,6 +61,7 @@ public class MapsFragment extends Fragment {
       getActivity().getSupportFragmentManager().beginTransaction()
           .replace(R.id.frag_container_2b, mapFragment)
           .commit();
+      getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
     mapsFragmentListener.callMapAsync(mapFragment);
   }

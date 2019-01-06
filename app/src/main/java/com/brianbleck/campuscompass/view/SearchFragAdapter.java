@@ -135,6 +135,9 @@ public class SearchFragAdapter extends RecyclerView.Adapter<SearchFragAdapter.Ho
 
   }
 
+  /**
+   * A method that starts in the info dialog fragment.
+   */
   private void startInfoPopup() {
     InfoPopupFrag infoPopupFrag = new InfoPopupFrag();
     FragmentManager fm = ((Main2Activity) mActivity).getSupportFragmentManager();

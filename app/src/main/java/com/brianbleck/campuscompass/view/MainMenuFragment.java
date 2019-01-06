@@ -51,6 +51,10 @@ public class MainMenuFragment extends Fragment {
     return theView;
   }
 
+  /**
+   * Initializes the views for a given View object.
+   * @param theView
+   */
   private void initViews(View theView) {
     for (int i = 0; i < COUNT_SEARCHES; i++) {
       final int id = getResources()
