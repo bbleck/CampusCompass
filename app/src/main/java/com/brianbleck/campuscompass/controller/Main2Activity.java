@@ -190,6 +190,20 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
+   * Defines back button behavior. If back is pressed on home screen, exit app. Else, go to home screen.
+   */
+  @Override
+  public void onBackPressed() {
+    if(!isMainFrag){
+      isMainFrag = true;
+      swapFrags(new MainMenuFragment());
+    }else{
+      super.onBackPressed();
+    }
+  }
+
+
+  /**
    * Initializes the {@link android.arch.persistence.room.Database}.
    */
   @Override
@@ -576,9 +590,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     if (fragIn == null) {
       return;
     }
-      fragmentManager.beginTransaction()
+    fragmentManager.beginTransaction()
           .replace(fragContainer.getId(), fragIn)
           .commit();
+    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     if(!isMainFrag){
       mapFragContainer.setVisibility(View.VISIBLE);
       setTitle(R.string.return_to_main_menu);
@@ -757,6 +772,7 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     fragmentManager.beginTransaction()
         .replace(mapFragContainer.getId(), mapsFragment)
         .commit();
+    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
   }
 
   /**
