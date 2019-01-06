@@ -1,6 +1,22 @@
+# UNM APP CONTEST Information
+
+Application Title:  CampusCompass
+
+Application Developer: Brian Bleck
+
+Application Developer Bio: Born and raised in New Mexico, Brian is currently a CS student at UNM. During the fall of 2018, he attended the CNM STEMulus Deep Dive Coding Bootcamp focusing on Java and Android development. His work experience includes a summer internship at Los Alamos National Labs and a research assistant position with Dr. Moreu in the UNM Civil Engineering Department. In 2018, he co-founded Byter Developers, LLC, to develop mobile applications. He currently plans to finish his studies at UNM and then continue to develop exciting apps and to build his business in Albuquerque.
+
+Contact Information: 
+- <bbleck@unm.edu>
+- [Brian's LinkedIn profile](https://www.linkedin.com/in/brian-bleck-89854595/)
+- [Brian's GitHub](https://github.com/bbleck)
+
+Information for the contest that differs from what is below:  
+- The repository has been made private so that a live googlemaps key can be included in the code herein. I did this so that contest judges don't have to follow the Instructions for Building CampusCompass below. Cloning the repository and building it onto an Android device with a minimum API of 24 will be enough for the app to function properly for judges (assuming the user enables the proper permissions -- gps and location services). When the contest concludes, I will be deleting the key in my google cloud console and making the repository public again.
+
 # CampusCompass
 What does it do?
-- CampusCompass is an android app that provides directions to locations on the University of New Mexico (UNM) campus, as well as information related to particular locations.
+- CampusCompass is an Android app that provides directions to locations on the University of New Mexico (UNM) campus (and in some cases, locations nearby UNM campuses), as well as information related to the particular locations.
 - The main menu allows users to select a type of destination, which will take them to the map screen.
 - The map screen contains a list of all destinations of the selected type. This list is sorted by distance, from closest to the user to farthest from the user.
 - The map screen also shows the map location of the visible destinations in the list and dynamically redraws itself as the user scrolls through the list of destinations. 
@@ -10,7 +26,7 @@ What does it do?
 - The Get Directions button takes the user into the Google Maps App (it must be installed on the user's device) where walking directions will be displayed that will lead the user to the list item's location.
 
 ## Aims and Motivations for CampusCompass
-The driving motivation for this project was my experience at the beginning of every semester, wishing there was an easier way to find buildings on campus. The framework of this project could be applied to any campus, geographic region, etc. At the heart of this project is the open data APIs provided by UNM.  Those APIs allow the app to supply the user with lists of related locations, which the user can search through and see dynamically displayed on an in-app googlemap.  The app uses user location to connect to the GoogleMaps app and provide detailed directions to help the user find the chosen location.  Additionally, the UNM APIs (sometimes) include extra information pertinent to particular locations.
+The driving motivation for this project was my experience at the beginning of every semester, wishing there was an easier way to find buildings on campus. This feeling was echoed during each semester when I would find myself in need of a restroom, without knowing where the closest one was. The framework of this project could be applied to any campus, geographic region, etc. At the heart of this project is the open data APIs provided by UNM.  Those APIs allow the app to supply the user with lists of related locations, which the user can search through and see dynamically displayed on an in-app googlemap.  The app uses user location to connect to the GoogleMaps app and provide detailed directions to help the user find the chosen location.  Additionally, the UNM APIs (often, but not always) include extra information pertinent to particular locations.
 
 
 ## Current State of CampusCompass
@@ -52,13 +68,13 @@ The app consumes the following external services:
 The following cosmetic improvements could be made to the app:
 - Color scheme
 - Handling unexpected javascript in JSON strings (as seen in the descriptions associated with some, but not all, library locations).
-- Better graphical representation helping users to use the toolbar to navigate back to the main menu (this navigation is the expected way to return to main menu).
 
 
 ## Stretch Goals
 The app could be extended in the following ways:
 - As previousy mentioned, adding restroom locations for every restroom on campus would be ideal.
 - Working with UNM to add more useful information to their API and supporting that information within CampusCompass. For example, if UNM allowed nearby restaurants to advertise then CampusCompass could support such advertisements using the current framework. Advertising dollars could make CampusCompass self-sustaining and allow for it to be expanded (and help UNM create more APIs or to improve current APIs).
+- CampusCompass could be integrated into the current UNM app.
 
 
 ## Wireframes
@@ -133,8 +149,8 @@ CREATE  INDEX `index_Token_token_type`
 ## Instructions for Using CampusCompass
 1. The initial screen is the Main Menu.  It presents users with the option to choose a type of destination.  To choose a destination, the user must click on one of the icons.
 2. Upon clicking on an icon, the user is taken to the Map Screen.
-3. To return to the Main Menu from the Map Screen the user must click on the top toolbar, either on the text indicating a return to the Main Menu or on the 'Home' button.
-4. To quit the app, the user may press the Android 'Back Navigation' button at any time. 
+3. To return to the Main Menu from the Map Screen the user can use the standard Android 'Back Navigation' button. Alternatively, the user can click on the top toolbar, either on the text indicating a return to the Main Menu or on the 'Home' button.
+4. To quit the app, the user may press the Android 'Back Navigation' button when they are in the Main Menu screen. From any other screen, they may press the 'Back Navigation' button twice: once to  
 5. In the Map Screen, the user may enter the name of the destination they are searching for or they may try entering key words.  For example, if the user selects "Find Building" on the Main Menu they may enter either "Center for the arts" or "popejoy" to find the same building (the building's official name is "Center For The Arts").
 6. For any destination list item in the Map Screen, the user may press the Info button to see more information on the destination (if UNM open data provides more information).
 7. For any destination list item in the Map Screen, the user may press the Get Directions buttons to get directions to the destination. Get Directions will take the user into the Google Maps App (must already be installed on the user's device) with the destination preloaded.
