@@ -164,6 +164,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Inflates menu using xml resource.
+   * @param menu
+   * @return true
+   */
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
@@ -224,7 +229,8 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
   }
 
   /**
-   * Stops location updates.
+   * Handles tasks to do when activity is paused.
+   * Stops location updates to save battery.
    */
   @Override
   protected void onPause() {
@@ -232,22 +238,23 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     stopLocationUpdates();
   }
 
-//  private void toggleMapContainer(){
-//    if(mapFragContainer.getVisibility()==View.VISIBLE){
-//      mapFragContainer.setVisibility(View.GONE);
-//    }else{
-//      mapFragContainer.setVisibility(View.VISIBLE);
-//    }
-//  }
-
+  /**
+   * Stops location updates.
+   */
   private void stopLocationUpdates() {
     fusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
   }
 
+  /**
+   * Initializes database singleton.
+   */
   private void initDB() {
     database = CampusInfoDB.getInstance(this);
   }
 
+  /**
+   * Sets views for the first time activity is accessed.
+   */
   private void initViews() {
     callingViewId = R.id.building;
     fragContainer = findViewById(R.id.frag_container_2);
@@ -262,6 +269,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     });
   }
 
+  /**
+   * Initializes location request loop.
+   */
   private void initLoc() {
     createLocationRequest();
     mLocationCallback = new LocationCallback() {
@@ -278,6 +288,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     };
   }
 
+  /**
+   * Creates list of API end points, and creates hashmap to associate tokentypes with the end points. Initializes retrofit.
+   */
   private void initServices(){
     serviceEndPoints.add(BLUE_PHONE_API);
     serviceTypeMap.put(BLUE_PHONE_API, TokenType.BLUE_PHONE);
@@ -317,6 +330,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   }
 
+  /**
+   * Initializes the data components when activity is first accessed.
+   */
   private void initData() {
     dbTokens = new LinkedList<>();
     serviceEndPoints = new LinkedList<>();
@@ -340,6 +356,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   }
 
+  /**
+   * Checks permissions, then begins location updates.
+   */
   private void startLocationUpdates() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
@@ -362,6 +381,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
   }
 
+  /**
+   * Checks permissions, then retrieves the last known location of the device.
+   */
   private void getLastKnownLocation() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
@@ -380,6 +402,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
         });
   }
 
+  /**
+   * Checks to see if map services is enabled.
+   * @return boolean indicating whether map services is enabled.
+   */
   private boolean checkMapServices() {
     if (isServicesOK()) {
       return isMapsEnabled();
@@ -387,6 +413,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     return false;
   }
 
+  /**
+   * Prompts the user with a dialog to enable gps permission.
+   */
   private void buildAlertMessageNoGps() {//prompts user with dialog to enable gps
     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setMessage(R.string.requires_gps)
@@ -506,6 +535,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Takes an end point, uses retrofit to retrieve json from end point, packages the json into a token(s), adds the token(s) to the sqlite db.
+   * @param endPoint a string representing the end point
+   */
   private void fillDBwithAPI(final String endPoint) {
       Service service = retrofit.create(Service.class);
       Call<List<Token>> call = service.get(endPoint);
@@ -541,6 +574,10 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
       });
   }
 
+  /**
+   * Method to allow retries, but limit retries to 11.
+   * @return true when max retries has been reached.
+   */
   private boolean shouldStopRetrying() {
     retriesAllowed = 11;
     if(retries% retriesAllowed ==0){
@@ -552,10 +589,18 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Resets retries counter.
+   */
   private void resetRetries(){
     retries = 1;
   }
 
+  /**
+   * Takes an end point String and return the associated TokenType.
+   * @param endPoint
+   * @return TokenType
+   */
   private TokenType getServiceTokenType(String endPoint) {
     if(serviceTypeMap.containsKey(endPoint)){
       return serviceTypeMap.get(endPoint);
@@ -563,6 +608,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     return TokenType.BUILDING;
   }
 
+  /**
+   * A method for filling the DB with fake data.
+   */
   private void fillDBwithTest() {
     Random rng = new Random();
     List<Token> prepopulateList = new LinkedList<>();
@@ -651,11 +699,19 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Returns a new SearchFragment object.
+   * @return
+   */
   private SearchFragment getSearchFrag() {
     searchFragment = new SearchFragment();
     return searchFragment;
   }
 
+  /**
+   * A method containing a switch that defines which data types the search fragment recyclerview should filter for.
+   * @param callingViewId
+   */
   private void setRVList(int callingViewId) {
     switch (callingViewId) {
       case R.id.iv_main_frag_0:
@@ -740,11 +796,18 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     return dbTokens;
   }
 
+  /**
+   * Begins method for updating markers after filtering.
+   */
   @Override
   public void onSearchFiltered() {
     beginFilteredMarkerUpdate();
   }
 
+  /**
+   * Updates variable for filtered list to reference the most recent filtered list object.
+   * @param filteredList the {@link List} of {@link Token} representing the filtered list.
+   */
   @Override
   public void updateFilteredList(List<Token> filteredList) {
     this.filteredList = filteredList;
@@ -815,6 +878,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Method that begins the filtered marker update process.
+   */
   private void beginFilteredMarkerUpdate(){
     List<Token> visibles = new LinkedList<>();
     if (filteredList.size()>0) {
@@ -823,6 +889,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     }
   }
 
+  /**
+   * Inner class to add Tokens to the database.
+   */
   private class AddTask extends AsyncTask<Token, Void, Void> {
 
     @Override
@@ -835,6 +904,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   }
 
+  /**
+   * Inner class to retrieve Tokens from the database
+   */
   private class QueryTask extends AsyncTask<TokenType, Void, List<Token>> {
 
     @Override
@@ -854,6 +926,9 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
 
   }
 
+  /**
+   * A method to set Token distances from user.
+   */
   private void setTokenDistances() {
     for (Token token :
         dbTokens) {
@@ -884,7 +959,11 @@ public class Main2Activity extends AppCompatActivity implements SearchFragListen
     myMap.setMyLocationEnabled(true);
   }
 
-private void updateMapMarkers(List<Token> visible){
+  /**
+   * A method to update the map markers and zoom the map to them.
+   * @param visible
+   */
+  private void updateMapMarkers(List<Token> visible){
   for (Marker marker :
       mapMarkers) {
     marker.remove();
