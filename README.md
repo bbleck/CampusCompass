@@ -12,7 +12,8 @@ Contact Information:
 - [Brian's GitHub](https://github.com/bbleck)
 
 Information for the contest that differs from what is below:  
-- The repository has been made private so that a live googlemaps key can be included in the code herein. I did this so that contest judges don't have to follow the Instructions for Building CampusCompass below. Cloning the repository and building it onto an Android device with a minimum API of 24 will be enough for the app to function properly for judges (assuming the user enables the proper permissions -- gps and location services). When the contest concludes, I will be deleting the key in my google cloud console and making the repository public again.
+- I have included a live GoogleMaps key in my email invitation to the judges. This key may be pasted into the code as described in the "Instructions for Building CampusCompass" section below.
+-Alternatively, judges may create their own GoogleMaps key and paste it into the code as described in the "Instructions for Building CampusCompass" section below.
 
 # CampusCompass
 What does it do?
