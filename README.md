@@ -4,6 +4,10 @@ Application Title:  CampusCompass
 
 ![alt text](https://github.com/bbleck/CampusCompass/raw/master/Screenshot_20190106-224115.png)
 
+![alt text](https://github.com/bbleck/CampusCompass/raw/master/Screenshot_20190106-224153.png)
+
+![alt text](https://github.com/bbleck/CampusCompass/raw/master/Screenshot_20190106-224226.png)
+
 Application Developer: Brian Bleck
 
 Application Developer Bio: Born and raised in New Mexico, Brian is currently a CS student at UNM. During the fall of 2018, he attended the CNM STEMulus Deep Dive Coding Bootcamp focusing on Java and Android development. His work experience includes a summer internship at Los Alamos National Labs and a research assistant position with Dr. Moreu in the UNM Civil Engineering Department. In 2018, he co-founded Byter Developers, LLC, to develop mobile applications. He currently plans to finish his studies at UNM and then continue to develop exciting apps and to build his business in Albuquerque.
