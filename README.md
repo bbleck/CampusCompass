@@ -2,6 +2,8 @@
 
 Application Title:  CampusCompass
 
+![alt text](https://github.com/bbleck/CampusCompass/raw/master/Screenshot_20190106-224115.png)
+
 Application Developer: Brian Bleck
 
 Application Developer Bio: Born and raised in New Mexico, Brian is currently a CS student at UNM. During the fall of 2018, he attended the CNM STEMulus Deep Dive Coding Bootcamp focusing on Java and Android development. His work experience includes a summer internship at Los Alamos National Labs and a research assistant position with Dr. Moreu in the UNM Civil Engineering Department. In 2018, he co-founded Byter Developers, LLC, to develop mobile applications. He currently plans to finish his studies at UNM and then continue to develop exciting apps and to build his business in Albuquerque.
@@ -10,6 +12,9 @@ Contact Information:
 - <bbleck@unm.edu>
 - [Brian's LinkedIn profile](https://www.linkedin.com/in/brian-bleck-89854595/)
 - [Brian's GitHub](https://github.com/bbleck)
+
+CampusCompass Demo Video:
+[CampusCompass](https://youtu.be/YwmIh1FTN_E)
 
 Information for the contest that differs from what is below:  
 - I have included a live GoogleMaps key in my email invitation to the judges. This key may be pasted into the code as described in the "Instructions for Building CampusCompass" section below.
